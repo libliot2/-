@@ -26,6 +26,8 @@ COMMANDS = [
     ["python3", "scripts/write_main_report.py", "--final"],
     ["python3", "scripts/explore_theory_configurations_v3.py"],
     ["python3", "scripts/validate_round3.py"],
+    ["python3", "scripts/promote_final_delivery.py"],
+    ["python3", "scripts/validate_final_delivery.py"],
 ]
 
 TARGET_MODES = {
@@ -63,7 +65,7 @@ TARGET_MODES = {
     "outputs/reports/exploratory_extension_v2.md": "REGENERATED",
     "outputs/reports/revision_log_v2.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
     "outputs/reports/final_report_v2.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
-    "outputs/reports/final_report.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/final_report.md": "REGENERATED_FROM_FINAL_DELIVERY",
     "outputs/reports/agent_run_manifest.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
     "outputs/reviews/quantitative_audit_v2.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
     "outputs/reviews/qualitative_audit_v2.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
@@ -88,6 +90,22 @@ TARGET_MODES = {
     "outputs/reports/theoretical_revision_log_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
     "outputs/reviews/theoretical_fit_audit_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
     "outputs/reviews/multi_perspective_evidence_audit_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/final_synthesis_plan.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/findings_register.csv": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/version_reconciliation.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/evidence_hierarchy.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/final_analytical_framework.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/final_research_report.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/executive_summary.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/key_findings_one_page.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/research_question_evidence_matrix.csv": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/methods_and_audit_summary.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/artifact_index.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/final_evidence_audit.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/final_editorial_review.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/final_review_resolution.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/final_project_summary.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/final/final_validation_report.md": "REGENERATED",
 }
 
 
