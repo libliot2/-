@@ -25,7 +25,7 @@ DIRECT_VARIABLES = [
     ("q3_1_background_assumption", "初期背景预设"),
     ("q3_1_self_withdrawal", "初期因担忧而减少参与"),
     ("q3_3_member", "后期班级/学校成员感"),
-    ("q3_3_trusted_peer", "后期可信任同学"),
+    ("q3_3_trusted_peer", "后期至少一位可以信任并谈心的同学（复合题）"),
     ("q3_3_authentic_self", "后期自然表现自己"),
     ("q4_1_explain_differences", "解释两地差异"),
     ("q4_1_reduce_misunderstanding", "帮助减少误解"),

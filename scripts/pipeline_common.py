@@ -519,7 +519,12 @@ def sha256(path: Path) -> str:
 def write_csv(path: Path, fieldnames: list[str], rows: Iterable[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8-sig", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames, extrasaction="ignore")
+        writer = csv.DictWriter(
+            stream,
+            fieldnames=fieldnames,
+            extrasaction="ignore",
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(rows)
 

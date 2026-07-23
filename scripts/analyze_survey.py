@@ -27,6 +27,16 @@ TABLES = ROOT / "outputs/tables"
 REPORTS = ROOT / "outputs/reports"
 SPECIAL = {BLANK, CANNOT_REMEMBER, INVALID, NOT_APPLICABLE, UNWILLING}
 
+MULTISELECT_GROUP_SPECIAL = {
+    "q2_8_": ["q2_8_language_cannot_remember", "q2_8_language_unwilling"],
+    "q2_10_": ["q2_10_reason_unwilling"],
+    "q3_2_": ["q3_2_help_cannot_remember"],
+    "q5_3_": ["q5_3_good_student_cannot_remember"],
+    "q5_4_": ["q5_4_help_cannot_remember"],
+    "q6_1_pre_": ["q6_1_pre_cannot_remember", "q6_1_pre_unwilling"],
+    "q6_2_later_": ["q6_2_later_cannot_remember", "q6_2_later_unwilling"],
+}
+
 
 CONSTRUCTS = {
     "peer_cultural_boundary": [
@@ -109,6 +119,14 @@ def quantiles(values: pd.Series) -> tuple[float, float, float]:
         float(values.quantile(0.75, interpolation="midpoint")),
     )
 
+def multiselect_valid_mask(frame: pd.DataFrame, variable: str) -> pd.Series:
+    for prefix, special_columns in MULTISELECT_GROUP_SPECIAL.items():
+        if variable.startswith(prefix) and variable not in special_columns:
+            available = [column for column in special_columns if column in frame]
+            if available:
+                return ~frame[available].eq("选择").any(axis=1)
+    return pd.Series(True, index=frame.index)
+
 
 def write_sample_characteristics(frame: pd.DataFrame) -> None:
     variables = {
@@ -156,6 +174,39 @@ def write_sample_characteristics(frame: pd.DataFrame) -> None:
                         "small_cell_suppressed": "TRUE" if count < 3 else "FALSE",
                     }
                 )
+    multiple_choice_variables = {
+        **{
+            "q2_8_language_cantonese": "教学语言：粤语",
+            "q2_8_language_mandarin": "教学语言：普通话",
+            "q2_8_language_english": "教学语言：英语",
+            "q2_8_language_mixed": "教学语言：混合/其他课堂语言",
+            "q2_8_language_other": "教学语言：其他",
+        },
+        **{
+            "q2_10_reason_family_move": "迁移原因：家庭整体迁居",
+            "q2_10_reason_parent_work": "迁移原因：父母工作或事业安排",
+            "q2_10_reason_reunion": "迁移原因：与家人团聚",
+            "q2_10_reason_different_education": "迁移原因：接受不同教育制度",
+            "q2_10_reason_future_opportunity": "迁移原因：升学或未来发展机会",
+            "q2_10_reason_personal": "迁移原因：个人意愿",
+            "q2_10_reason_other": "迁移原因：其他",
+        },
+    }
+    for variable, label in multiple_choice_variables.items():
+        mask = multiselect_valid_mask(frame, variable)
+        valid_n = int(mask.sum())
+        count = int(frame.loc[mask, variable].eq("选择").sum())
+        rows.append(
+            {
+                "variable_name": variable,
+                "variable_label": label,
+                "category": "选择",
+                "valid_n": valid_n,
+                "n": "<3" if count < 3 else count,
+                "percentage": "SUPPRESSED" if count < 3 else f"{100 * count / valid_n:.1f}",
+                "small_cell_suppressed": "TRUE" if count < 3 else "FALSE",
+            }
+        )
     write_csv(
         TABLES / "sample_characteristics.csv",
         [
@@ -221,7 +272,12 @@ def item_stats(frame: pd.DataFrame) -> pd.DataFrame:
                     }
                 )
         elif spec.response_type in {"single_choice", "multiple_choice"} or spec.analysis_role == "support_gap":
-            valid = series[~series.isin(SPECIAL)]
+            group_mask = (
+                multiselect_valid_mask(frame, spec.variable_name)
+                if spec.response_type == "multiple_choice"
+                else pd.Series(True, index=frame.index)
+            )
+            valid = series[group_mask & ~series.isin(SPECIAL)]
             valid_n = len(valid)
             for category, count in valid.value_counts().items():
                 rows.append(
@@ -427,7 +483,7 @@ def write_constructs(frame: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 本分析仅保留四个概念一致、方向一致且缺失可管理的描述性指标：同伴文化边界、学校归属、初期学业适应困难、后期学术规则理解。逐题得分为 1–5，至少 80% 题项有效才计算个人均值。
 
-`outputs/tables/exploratory_constructs.csv` 报告完整个案数、中位数、IQR 和仅供诊断的 Cronbach α。α 不被用作“量表已验证”的证据；分析样本量为 35，各构念的实际有效 n 另见表中 `n_scored`，所有结果均属探索性。
+`outputs/tables/exploratory_constructs.csv` 报告完整个案数、中位数、IQR 和仅供诊断的 Cronbach α。α 不被用作“量表已验证”的证据；分析样本量为 35，各构念的实际有效 n 另见表中 `scored_n`，所有结果均属探索性。
 
 文化中介参与、文化中介压力和平台功能分工没有合成为指标：其项目数少，且内容本身代表不同维度。它们保留逐项描述，避免为便利而把概念不同的内容合并。
 
@@ -553,10 +609,10 @@ def write_open_text_summary(frame: pd.DataFrame) -> pd.DataFrame:
     definitions = [
         ("groupwork_turning_point", "小组作业/组队/汇报成为关系事件", ["小组", "组队", "project", "汇报"]),
         ("language_local_knowledge", "语言、粤语梗或本地知识边界", ["粤语", "本地", "话题", "梗", "听不懂", "插不上"]),
-        ("active_invitation", "同伴主动邀请、解释或放慢语速", ["主动", "邀请", "耐心", "放慢", "拉我"]),
+        ("active_invitation", "明确的同伴邀请或沟通调适词组索引", ["主动邀请", "邀请我", "叫我", "拉我", "放慢语速"]),
         ("distance_exclusion", "距离、落单、旁观或难以进入", ["距离", "落单", "旁观", "融不进", "游离", "插不进"]),
         ("explicit_rules_support", "希望清楚解释课程、答题或评分规则", ["评分", "规则", "课程", "教材", "答题", "课堂要求", "体系"]),
-        ("peer_buddy_support", "希望同伴结对、主动交流或分组支持", ["结对", "同学", "主动交流", "分组", "伙伴"]),
+        ("peer_buddy_support", "明确的朋辈结对或分组支持词组索引", ["结对", "伙伴", "主动交流", "协助分组", "安排同学"]),
         ("emotional_time_support", "希望给予情绪支持或适应时间", ["情绪", "心理", "压力", "焦虑", "时间适应", "适应需要时间"]),
     ]
     rows = []
@@ -573,7 +629,7 @@ def write_open_text_summary(frame: pd.DataFrame) -> pd.DataFrame:
                     "nonblank_n": len(valid),
                     "matched_response_n": count,
                     "matched_percentage": safe_percent(count, len(valid)),
-                    "interpretation_limit": "Keyword-assisted descriptive scan; overlapping themes; no prevalence inference beyond sample.",
+                    "interpretation_limit": "Keyword index only; not semantically validated theme prevalence; overlapping matches.",
                 }
             )
     result = pd.DataFrame(rows)
@@ -619,6 +675,10 @@ def write_findings(
     network = frame["q7_1_peer_network"].value_counts()
     open_q1 = int((frame["q8_1_boundary_event_text"] != BLANK).sum())
     open_q2 = int((frame["q8_2_support_request_text"] != BLANK).sum())
+    support_label = "；".join(support_top["item_text"].tolist())
+    support_prefix = "并列最高项目" if len(support_top) > 1 else "最高项目"
+    later_label = "、".join(later_top["platform"].tolist())
+    later_prefix = "并列最高" if len(later_top) > 1 else "最高"
     report = f"""# 完整问卷样本发现
 
 本报告只分析 {len(frame)} 份合资格问卷，所有比例均为本样本描述。
@@ -626,7 +686,7 @@ def write_findings(
 ## 同伴边界与归属
 
 - 插班初期，语言/幽默进入障碍达到“经常或非常经常”的有 {boundary[0]}/{boundary[1]}（{boundary[2]:.1f}%）；地方知识障碍为 {local_knowledge[0]}/{local_knowledge[1]}（{local_knowledge[2]:.1f}%）。来源：`survey_item_statistics.csv`。
-- 香港校内后期，认同“自己是学校或班级一员”的有 {belonging[0]}/{belonging[1]}（{belonging[2]:.1f}%）；认同至少有一位可信任同学的有 {trusted[0]}/{trusted[1]}（{trusted[2]:.1f}%）。
+- 香港校内后期，认同“自己是学校或班级一员”的有 {belonging[0]}/{belonging[1]}（{belonging[2]:.1f}%）；认同至少有一位可以信任并谈心的同学有 {trusted[0]}/{trusted[1]}（{trusted[2]:.1f}%）。后者是复合题，不能拆成“信任”和“谈心”的两个比例。
 - 同伴网络并非单一路径；各类别见 `sample_characteristics.csv`。由于背景表的小格抑制，不在正文复述稀有类别。
 
 ## 教育制度适应
@@ -636,26 +696,26 @@ def write_findings(
 
 ## 支持与支持缺口
 
-- 未满足支持需求最高计数为 {top_unmet_n}，并列项目包括：{"；".join(support_top['item_text'].tolist())}。各项目有效分母及比例见 `support_gap_analysis.csv`。
+- 未满足支持需求最高计数为 {top_unmet_n}，{support_prefix}为：{support_label}。各项目有效分母及比例见 `support_gap_analysis.csv`。
 - 这是获得状况与需求的描述，不能据此判断某类支持具有因果效果。
 
 ## 数字平台与关系
 
-- 插班前选择最多的平台为 {"、".join(pre_top['platform'].tolist())}（最高 {pre_top_n} 人）；香港校内后期选择最多的平台为 {"、".join(later_top['platform'].tolist())}（并列最高 {later_top_n} 人）。各自有效分母及比例见 `platform_transition_analysis.csv`。
+- 插班前选择最多的平台为 {"、".join(pre_top['platform'].tolist())}（最高 {pre_top_n} 人）；香港校内后期选择最多的平台为 {later_label}（{later_prefix} {later_top_n} 人）。各自有效分母及比例见 `platform_transition_analysis.csv`。
 - 微博缺少后期导出列，标为 `MISSING_FROM_EXPORT`，不解释为无人使用。
 - 平台变化只能说明本样本的媒体组合变化，不能作为文化认同、政治身份或融入程度的代理。
 
 ## 开放题
 
 - Q8.1 有 {open_q1}/{len(frame)} 份非空回答，Q8.2 有 {open_q2}/{len(frame)} 份非空回答。
-- 关键词辅助扫描显示，小组任务、同伴主动邀请/解释、语言与地方知识边界，以及对规则说明和朋辈支持的请求经常交叠。详见 `survey_open_text_summary.csv`。
-- 为降低间接识别风险，本报告不逐字刊载问卷开放题；关键词主题允许重叠，也不等同于正式质性饱和或主题频率。
+- 关键词表只用于定位可能相关的回答，不把泛词或命中数解释为主题频率、机制或“经常交叠”。详见 `survey_open_text_summary.csv`。
+- 为降低间接识别风险，本报告不逐字刊载问卷开放题；正式开放题语义结论须回到原回答人工核读，当前索引不构成质性饱和证据。
 
 ## 探索性关联
 
 {chr(10).join(f"- {row.analysis_id}: valid n={row.valid_n}, ρ={row.effect_size_rho:.3f}, bootstrap 95% CI=[{row.bootstrap_ci_95_lower:.3f}, {row.bootstrap_ci_95_upper:.3f}], 置换 p={row.p_permutation:.4f}, BH-FDR q={row.bh_fdr_q:.4f}。" for row in associations.itertuples(index=False))}
 
-五个关联中，A1 与 A4 在 BH-FDR 校正后 q<0.05；其余三项没有。由于资格口径在资料收集后扩展、样本非概率且分析为探索性，这两个关联只用于描述当前 35 份样本和引导访谈解释，不作总体、因果或验证性结论。
+五个关联中，A1 与 A4 在原规格下 BH-FDR q<0.05；其余三项没有。第二轮稳健性检查显示 A1 在替代缺失门槛、聚合方式与逐一删除回答时方向保持，分级为 `plausible exploratory finding`；A4 对同样合理的文化中介参与编码不稳，降为 `weak signal`，不进入主体发现。两者均不作总体、因果或验证性结论。
 """
     (REPORTS / "survey_findings.md").write_text(report, encoding="utf-8")
 

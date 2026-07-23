@@ -233,6 +233,12 @@ def main() -> None:
     parser.add_argument("--final", action="store_true", help="Write reviewed final report")
     args = parser.parse_args()
     REPORTS.mkdir(parents=True, exist_ok=True)
+    if args.final and (TABLES / "exploratory_extension_v2.csv").is_file():
+        from write_round2_reports import write_final_report
+
+        write_final_report()
+        print(f"wrote {REPORTS / 'final_report.md'} from round2 reviewed inputs")
+        return
     output = REPORTS / ("final_report.md" if args.final else "draft_report.md")
     output.write_text(report_text(args.final), encoding="utf-8")
     print(f"wrote {output.relative_to(ROOT)}")

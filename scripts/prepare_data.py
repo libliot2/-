@@ -36,6 +36,43 @@ REPORTS = ROOT / "outputs/reports"
 TABLES = ROOT / "outputs/tables"
 PROCESSED = ROOT / "data/processed"
 
+PARENT_QUESTION_TEXT = {
+    "Q2.8": "该学校主要使用哪些语言教学？",
+    "Q2.10": "你迁居香港的主要原因是：",
+    "Q2.12": "在香港校内后期，你与学校同学日常交往时使用以下语言的频率如何？",
+    "Q3.1": "请回想你第一次进入香港本地学校后的最初三个月。以下情况出现得有多频繁？",
+    "Q3.2": "在插班后的最初三个月，哪些方式最有助于你认识同学？",
+    "Q3.3": "请根据你在香港本地中学就读的最后一个完整学期回答。请判断以下说法与你当时的情况是否相符。",
+    "Q4.1": "请判断以下说法与你当时的情况是否相符。",
+    "Q5.1": "请回想你第一次进入香港本地学校后的最初三个月。以下事情对你来说有多困难？",
+    "Q5.2": "请根据你在香港本地中学就读的最后一个完整学期回答。请判断以下说法与你当时的情况是否相符。",
+    "Q5.3": "与插班香港之前相比，到香港校内后期时，你对“好学生”的理解出现了哪些变化？",
+    "Q5.4": "在适应香港本地学校的过程中，哪些人或资源对你的帮助最大？",
+    "Q5.5": "回顾你在香港本地学校就读期间，以下支持的实际情况是怎样的？",
+    "Q6.1": "在插班前，你经常使用哪些数字平台？",
+    "Q6.2": "在香港校内后期，你经常使用哪些数字平台？",
+    "Q6.5": "请根据香港校内后期的情况判断以下说法。",
+}
+
+MULTISELECT_GROUP_SPECIAL = {
+    "q2_8_": {
+        "q2_8_language_cannot_remember": CANNOT_REMEMBER,
+        "q2_8_language_unwilling": UNWILLING,
+    },
+    "q2_10_": {"q2_10_reason_unwilling": UNWILLING},
+    "q3_2_": {"q3_2_help_cannot_remember": CANNOT_REMEMBER},
+    "q5_3_": {"q5_3_good_student_cannot_remember": CANNOT_REMEMBER},
+    "q5_4_": {"q5_4_help_cannot_remember": CANNOT_REMEMBER},
+    "q6_1_pre_": {
+        "q6_1_pre_cannot_remember": CANNOT_REMEMBER,
+        "q6_1_pre_unwilling": UNWILLING,
+    },
+    "q6_2_later_": {
+        "q6_2_later_cannot_remember": CANNOT_REMEMBER,
+        "q6_2_later_unwilling": UNWILLING,
+    },
+}
+
 
 def ensure_dirs() -> None:
     for path in [
@@ -172,6 +209,7 @@ def write_codebook(headers: list[str]) -> list:
     specs = build_specs(headers)
     rows = []
     for spec in specs:
+        parent_id = spec.question_id.split("_", 1)[0]
         special = []
         if spec.value_map:
             special = sorted(set(spec.value_map.values()) & SPECIAL_VALUES)
@@ -181,7 +219,7 @@ def write_codebook(headers: list[str]) -> list:
             {
                 "variable_name": spec.variable_name,
                 "question_id": spec.question_id,
-                "question_text": headers[spec.index],
+                "question_text": PARENT_QUESTION_TEXT.get(parent_id, headers[spec.index]),
                 "item_text": spec.item_text or headers[spec.index],
                 "response_type": spec.response_type,
                 "allowed_values": allowed_values(spec),
@@ -278,6 +316,16 @@ def write_clean(
             quality_flags.append("SHORT_COMPLETION_LT300S")
         if raw[6] not in (None, "") and ip_counts[raw[6]] > 1:
             quality_flags.append("POTENTIAL_SHARED_IP")
+        multiselect_checks = [
+            ("Q2_10", range(28, 35), 2),
+            ("Q3_2", range(45, 57), 3),
+            ("Q5_4", range(98, 109), 3),
+        ]
+        for qid, indices, limit in multiselect_checks:
+            if sum(raw[index] == 1 for index in indices) > limit:
+                quality_flags.append(f"MULTISELECT_LIMIT_EXCEEDED_{qid}")
+        if raw[95] == 1 and any(raw[index] == 1 for index in [*range(87, 95), 96]):
+            quality_flags.append("MULTISELECT_EXCLUSIVE_CONFLICT_Q5_3")
         record: dict[str, Any] = {
             "survey_row_id": f"S{row_number:04d}",
             "eligible": "TRUE" if is_eligible else "FALSE",
@@ -325,15 +373,45 @@ def write_clean(
         column = spec.variable_name
         if column not in eligible:
             continue
-        counts = eligible[column].value_counts(dropna=False).to_dict()
+        series = eligible[column]
+        group_special: dict[str, str] = {}
+        for prefix, special_columns in MULTISELECT_GROUP_SPECIAL.items():
+            if column.startswith(prefix) and column not in special_columns:
+                group_special = special_columns
+                break
+        if spec.response_type == "multiple_choice" and group_special:
+            special_masks = {
+                missing_code: eligible[special_column].eq("选择")
+                for special_column, missing_code in group_special.items()
+                if special_column in eligible
+            }
+            group_invalid = (
+                pd.concat(special_masks.values(), axis=1).any(axis=1)
+                if special_masks
+                else pd.Series(False, index=eligible.index)
+            )
+            counts = series.loc[~group_invalid].value_counts(dropna=False).to_dict()
+            valid_n = int((~group_invalid).sum())
+            propagated = {
+                missing_code: int(mask.sum())
+                for missing_code, mask in special_masks.items()
+            }
+        else:
+            counts = series.value_counts(dropna=False).to_dict()
+            valid_n = int(sum(v for k, v in counts.items() if k not in SPECIAL_VALUES))
+            propagated = {}
         missing_rows.append(
             {
                 "variable_name": column,
-                "valid_n": int(sum(v for k, v in counts.items() if k not in SPECIAL_VALUES)),
+                "valid_n": valid_n,
                 "blank_n": int(counts.get(BLANK, 0)),
                 "not_applicable_n": int(counts.get("NOT_APPLICABLE", 0)),
-                "cannot_remember_n": int(counts.get(CANNOT_REMEMBER, 0)),
-                "unwilling_n": int(counts.get(UNWILLING, 0)),
+                "cannot_remember_n": int(
+                    propagated.get(CANNOT_REMEMBER, counts.get(CANNOT_REMEMBER, 0))
+                ),
+                "unwilling_n": int(
+                    propagated.get(UNWILLING, counts.get(UNWILLING, 0))
+                ),
                 "invalid_n": int(counts.get(INVALID, 0)),
             }
         )
@@ -369,6 +447,18 @@ def write_clean(
     exact_duplicates = int((frame["duplicate_flag"] == "EXACT_RESPONSE_DUPLICATE").sum())
     short_n = int(frame["data_quality_flag"].str.contains("SHORT_COMPLETION").sum())
     shared_ip_n = int(frame["data_quality_flag"].str.contains("POTENTIAL_SHARED_IP").sum())
+    q2_10_over_n = int(
+        frame["data_quality_flag"].str.contains("MULTISELECT_LIMIT_EXCEEDED_Q2_10").sum()
+    )
+    q3_2_over_n = int(
+        frame["data_quality_flag"].str.contains("MULTISELECT_LIMIT_EXCEEDED_Q3_2").sum()
+    )
+    q5_4_over_n = int(
+        frame["data_quality_flag"].str.contains("MULTISELECT_LIMIT_EXCEEDED_Q5_4").sum()
+    )
+    exclusive_conflict_n = int(
+        frame["data_quality_flag"].str.contains("MULTISELECT_EXCLUSIVE_CONFLICT_Q5_3").sum()
+    )
     invalid_items = sum(row["invalid_n"] for row in missing_rows)
     data_quality = f"""# 数据质量报告
 
@@ -379,12 +469,14 @@ def write_clean(
 - V2 排除：{len(frame) - len(eligible)}
 - 旧口径排除、V2 重新纳入：{int((frame["eligibility_reclassification"] == "NEWLY_INCLUDED_V2").sum())}
 - V2 只保留同意与成年作为伦理门槛；内地就学年限、居住/跨境方式和首次插班年级均改作背景变量。
-- 旧口径中，首次插班低于中二或类别不满足旧定义涉及 {legacy_exclusion_counts['首次进入香港本地学校低于中二或不符合本地课程插班条件']} 份，实际迁居条件涉及 {legacy_exclusion_counts['未确认实际迁居并居住香港']} 份，内地连续就学年限涉及 {legacy_exclusion_counts['未确认内地连续就读至少两个完整学年']} 份；原因可重叠。
+- 旧口径原因涉及首次插班年级或类别、实际迁居/跨境方式及内地连续就学年限，且可重叠；精确小格仅保存在受限 `sample_flow.csv`。
 
 ## 缺失与异常
 
 - 合资格样本逐项特殊缺失计数见 `outputs/tables/missingness_by_item.csv`。
 - 解码后无效响应总数：{invalid_items}。
+- 导出未执行问卷的限选约束：Q2.10 有 {q2_10_over_n}/35 份超过 2 项，Q3.2 有 {q3_2_over_n}/35 份超过 3 项，Q5.4 有 {q5_4_over_n}/35 份超过 3 项。保留原勾选，不删除整份问卷；正文把它们作为 endorsement，并另做符合上限的敏感性分析。
+- Q5.3 出现少量“没有明显变化”与具体变化项同时勾选的互斥冲突（精确小格受限）；保留原值并标记，不猜测参与者本意。
 - 开放题中的平台占位符“(空)”统一记为 `BLANK`，但不与“不适用”“记不清”“不愿回答”合并。
 - Q2.11 时点冲突和缺失的导出列不作为个体无效值；它们属于工具版本问题。
 
@@ -392,8 +484,7 @@ def write_clean(
 
 - 闭合题和开放题完整响应向量完全相同的记录：{exact_duplicates}。
 - 非匿名平台用户 ID 未发现重复；`guest` 是共享平台标签，不作为重复依据。
-- 有 {shared_ip_n} 条记录来自出现超过一次的 IP；共享网络或家庭设备均可能造成该现象，因此仅标记、不排除。
-- 有 {short_n} 条记录完成时间短于 300 秒；仅作敏感性警告，不以速度单独排除。
+- 少量记录来自重复出现的网络地址，且少量记录作答时间低于预设质量警戒线；共享网络、家庭设备和不同作答速度均可能解释，因此仅标记、不排除。精确小格保存在受限清洗层。
 - 没有基于开放题措辞相似度删除记录，因为相似叙述不足以证明重复或无效作答。
 
 ## 未解决问题

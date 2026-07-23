@@ -1,0 +1,111 @@
+﻿finding_id,domain,finding_class,analysis,numerator,denominator,estimate,sensitivity_result,evidence_source,interpretation_limit
+CASEPOS_P01_peer_cultural_boundary,linked_case_position,plausible exploratory finding,P01：peer_cultural_boundary 的样本内宽位置,,,WITHIN_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+CASEPOS_P01_school_belonging,linked_case_position,plausible exploratory finding,P01：school_belonging 的样本内宽位置,,,BELOW_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+CASEPOS_P01_academic_difficulty,linked_case_position,plausible exploratory finding,P01：academic_difficulty 的样本内宽位置,,,WITHIN_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+CASEPOS_P01_academic_rule_understanding,linked_case_position,plausible exploratory finding,P01：academic_rule_understanding 的样本内宽位置,,,BELOW_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+CASEPOS_P01_unmet_support_count,linked_case_position,plausible exploratory finding,P01：unmet_support_count 的样本内宽位置,,,ABOVE_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+CASEPOS_P02_peer_cultural_boundary,linked_case_position,plausible exploratory finding,P02：peer_cultural_boundary 的样本内宽位置,,,WITHIN_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+CASEPOS_P02_school_belonging,linked_case_position,plausible exploratory finding,P02：school_belonging 的样本内宽位置,,,WITHIN_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+CASEPOS_P02_academic_difficulty,linked_case_position,plausible exploratory finding,P02：academic_difficulty 的样本内宽位置,,,WITHIN_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+CASEPOS_P02_academic_rule_understanding,linked_case_position,plausible exploratory finding,P02：academic_rule_understanding 的样本内宽位置,,,WITHIN_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+CASEPOS_P02_unmet_support_count,linked_case_position,plausible exploratory finding,P02：unmet_support_count 的样本内宽位置,,,WITHIN_SAMPLE_IQR,,data/processed/survey_construct_scores.csv;data/processed/interview_survey_map.csv,只作当前35份样本内定位；不是抽样代表性、类型或总体百分位。
+SUPPORT_q5_5_cantonese_support_received_major_help,support_status,robust finding,粤语日常交流支持：received_major_help,17,30,56.7%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_cantonese_support_received_limited_help,support_status,robust finding,粤语日常交流支持：received_limited_help,6,30,20.0%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_cantonese_support_unmet_wanted,support_status,robust finding,粤语日常交流支持：unmet_wanted,<3,30,SUPPRESSED,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_english_support_received_major_help,support_status,robust finding,英文教材或英语学习适应支持：received_major_help,7,33,21.2%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_english_support_received_limited_help,support_status,robust finding,英文教材或英语学习适应支持：received_limited_help,21,33,63.6%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_english_support_unmet_wanted,support_status,robust finding,英文教材或英语学习适应支持：unmet_wanted,4,33,12.1%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_traditional_chinese_support_received_major_help,support_status,robust finding,繁体字及学科词汇支持：received_major_help,12,30,40.0%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_traditional_chinese_support_received_limited_help,support_status,robust finding,繁体字及学科词汇支持：received_limited_help,10,30,33.3%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_traditional_chinese_support_unmet_wanted,support_status,robust finding,繁体字及学科词汇支持：unmet_wanted,<3,30,SUPPRESSED,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_assessment_rules_support_received_major_help,support_status,robust finding,课程、作业和评分规则说明：received_major_help,13,32,40.6%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_assessment_rules_support_received_limited_help,support_status,robust finding,课程、作业和评分规则说明：received_limited_help,14,32,43.8%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_assessment_rules_support_unmet_wanted,support_status,robust finding,课程、作业和评分规则说明：unmet_wanted,3,32,9.4%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_participation_presentation_support_received_major_help,support_status,robust finding,课堂参与、小组合作和口头汇报训练：received_major_help,13,31,41.9%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_participation_presentation_support_received_limited_help,support_status,robust finding,课堂参与、小组合作和口头汇报训练：received_limited_help,12,31,38.7%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_participation_presentation_support_unmet_wanted,support_status,robust finding,课堂参与、小组合作和口头汇报训练：unmet_wanted,3,31,9.7%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_peer_buddy_support_received_major_help,support_status,robust finding,朋辈伙伴或学习伙伴支持：received_major_help,17,32,53.1%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_peer_buddy_support_received_limited_help,support_status,robust finding,朋辈伙伴或学习伙伴支持：received_limited_help,9,32,28.1%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_peer_buddy_support_unmet_wanted,support_status,robust finding,朋辈伙伴或学习伙伴支持：unmet_wanted,<3,32,SUPPRESSED,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_emotional_anti_exclusion_support_received_major_help,support_status,robust finding,情绪支持、归属感支持或反排斥支持：received_major_help,11,30,36.7%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_emotional_anti_exclusion_support_received_limited_help,support_status,robust finding,情绪支持、归属感支持或反排斥支持：received_limited_help,5,30,16.7%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_emotional_anti_exclusion_support_unmet_wanted,support_status,robust finding,情绪支持、归属感支持或反排斥支持：unmet_wanted,5,30,16.7%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_parent_system_explanation_support_received_major_help,support_status,robust finding,向家长解释香港学校制度和要求：received_major_help,8,29,27.6%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_parent_system_explanation_support_received_limited_help,support_status,robust finding,向家长解释香港学校制度和要求：received_limited_help,14,29,48.3%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+SUPPORT_q5_5_parent_system_explanation_support_unmet_wanted,support_status,robust finding,向家长解释香港学校制度和要求：unmet_wanted,4,29,13.8%,,data/processed/survey_clean.csv,当前非概率样本的直接状态分布；不估计总体需求率或支持效果。
+Q54_q5_4_help_homeroom_teacher,support_source_sensitivity,plausible exploratory finding,班主任：全有效回答与限选合规子集,15,34,44.1%,limit-compliant 8/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_subject_teacher,support_source_sensitivity,plausible exploratory finding,科任老师：全有效回答与限选合规子集,12,34,35.3%,limit-compliant 8/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_hk_peer,support_source_sensitivity,plausible exploratory finding,香港本地同学：全有效回答与限选合规子集,23,34,67.6%,limit-compliant 17/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_mainland_peer,support_source_sensitivity,plausible exploratory finding,具有内地生活或教育背景的同学：全有效回答与限选合规子集,19,34,55.9%,limit-compliant 12/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_family,support_source_sensitivity,plausible exploratory finding,父母或其他家庭成员：全有效回答与限选合规子集,12,34,35.3%,limit-compliant 7/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_counselling,support_source_sensitivity,plausible exploratory finding,学校辅导或心理支持：全有效回答与限选合规子集,7,34,20.6%,limit-compliant 6/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_school_orientation,support_source_sensitivity,plausible exploratory finding,学校迎新、适应课程或朋辈辅导：全有效回答与限选合规子集,3,34,8.8%,limit-compliant <3/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_tutor,support_source_sensitivity,plausible exploratory finding,补习老师或校外教育机构：全有效回答与限选合规子集,3,34,8.8%,limit-compliant <3/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_online_info,support_source_sensitivity,plausible exploratory finding,网络平台、论坛或社交媒体信息：全有效回答与限选合规子集,7,34,20.6%,limit-compliant 4/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_other,support_source_sensitivity,plausible exploratory finding,其他：全有效回答与限选合规子集,<3,34,SUPPRESSED,limit-compliant <3/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+Q54_q5_4_help_none,support_source_sensitivity,plausible exploratory finding,没有获得明显帮助：全有效回答与限选合规子集,<3,34,SUPPRESSED,limit-compliant <3/25,data/processed/survey_clean.csv,表单未执行最多三项；主结果是勾选率，合规子集只是敏感性检查。
+PLATFORM_wechat_retained,paired_platform_transition,robust finding,微信或朋友圈：retained,26,35,74.3%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_wechat_adopted,paired_platform_transition,robust finding,微信或朋友圈：adopted,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_wechat_stopped,paired_platform_transition,robust finding,微信或朋友圈：stopped,6,35,17.1%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_wechat_neither,paired_platform_transition,robust finding,微信或朋友圈：neither,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_qq_retained,paired_platform_transition,robust finding,QQ或QQ空间：retained,6,35,17.1%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_qq_adopted,paired_platform_transition,robust finding,QQ或QQ空间：adopted,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_qq_stopped,paired_platform_transition,robust finding,QQ或QQ空间：stopped,12,35,34.3%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_qq_neither,paired_platform_transition,robust finding,QQ或QQ空间：neither,16,35,45.7%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_xiaohongshu_retained,paired_platform_transition,robust finding,小红书：retained,9,35,25.7%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_xiaohongshu_adopted,paired_platform_transition,robust finding,小红书：adopted,7,35,20.0%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_xiaohongshu_stopped,paired_platform_transition,robust finding,小红书：stopped,9,35,25.7%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_xiaohongshu_neither,paired_platform_transition,robust finding,小红书：neither,10,35,28.6%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_bilibili_retained,paired_platform_transition,robust finding,哔哩哔哩：retained,8,35,22.9%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_bilibili_adopted,paired_platform_transition,robust finding,哔哩哔哩：adopted,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_bilibili_stopped,paired_platform_transition,robust finding,哔哩哔哩：stopped,11,35,31.4%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_bilibili_neither,paired_platform_transition,robust finding,哔哩哔哩：neither,14,35,40.0%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_douyin_retained,paired_platform_transition,robust finding,抖音：retained,11,35,31.4%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_douyin_adopted,paired_platform_transition,robust finding,抖音：adopted,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_douyin_stopped,paired_platform_transition,robust finding,抖音：stopped,11,35,31.4%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_douyin_neither,paired_platform_transition,robust finding,抖音：neither,11,35,31.4%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_whatsapp_retained,paired_platform_transition,robust finding,WhatsApp：retained,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_whatsapp_adopted,paired_platform_transition,robust finding,WhatsApp：adopted,26,35,74.3%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_whatsapp_stopped,paired_platform_transition,robust finding,WhatsApp：stopped,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_whatsapp_neither,paired_platform_transition,robust finding,WhatsApp：neither,9,35,25.7%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_instagram_retained,paired_platform_transition,robust finding,Instagram：retained,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_instagram_adopted,paired_platform_transition,robust finding,Instagram：adopted,22,35,62.9%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_instagram_stopped,paired_platform_transition,robust finding,Instagram：stopped,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_instagram_neither,paired_platform_transition,robust finding,Instagram：neither,12,35,34.3%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_youtube_retained,paired_platform_transition,robust finding,YouTube：retained,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_youtube_adopted,paired_platform_transition,robust finding,YouTube：adopted,15,35,42.9%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_youtube_stopped,paired_platform_transition,robust finding,YouTube：stopped,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_youtube_neither,paired_platform_transition,robust finding,YouTube：neither,18,35,51.4%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_discord_retained,paired_platform_transition,robust finding,Discord：retained,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_discord_adopted,paired_platform_transition,robust finding,Discord：adopted,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_discord_stopped,paired_platform_transition,robust finding,Discord：stopped,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_discord_neither,paired_platform_transition,robust finding,Discord：neither,35,35,100.0%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_telegram_retained,paired_platform_transition,robust finding,Telegram：retained,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_telegram_adopted,paired_platform_transition,robust finding,Telegram：adopted,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_telegram_stopped,paired_platform_transition,robust finding,Telegram：stopped,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_telegram_neither,paired_platform_transition,robust finding,Telegram：neither,33,35,94.3%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_game_chat_retained,paired_platform_transition,robust finding,线上游戏内聊天：retained,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_game_chat_adopted,paired_platform_transition,robust finding,线上游戏内聊天：adopted,4,35,11.4%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_game_chat_stopped,paired_platform_transition,robust finding,线上游戏内聊天：stopped,<3,35,SUPPRESSED,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_game_chat_neither,paired_platform_transition,robust finding,线上游戏内聊天：neither,30,35,85.7%,,data/processed/survey_clean.csv,同一参与者的两段回顾性勾选；说明媒体组合，不说明融入、身份或平台效果。
+PLATFORM_FUNCTION_q6_5_separate_relations,platform_function,robust finding,分别维持内地与香港关系,32,32,100.0%,,data/processed/survey_clean.csv,题项自报的功能或经验，不验证平台机制、实际行为频率或文化融入。
+PLATFORM_FUNCTION_q6_5_different_expression,platform_function,robust finding,不同平台采用不同表达,32,33,97.0%,,data/processed/survey_clean.csv,题项自报的功能或经验，不验证平台机制、实际行为频率或文化融入。
+PLATFORM_FUNCTION_q6_5_hk_platform_participation,platform_function,robust finding,香港常用平台帮助参与活动或获取校内信息,30,30,100.0%,,data/processed/survey_clean.csv,题项自报的功能或经验，不验证平台机制、实际行为频率或文化融入。
+PLATFORM_FUNCTION_q6_5_old_network_emotional_support,platform_function,robust finding,旧平台与老友网络提供情绪支持,31,33,93.9%,,data/processed/survey_clean.csv,题项自报的功能或经验，不验证平台机制、实际行为频率或文化融入。
+PLATFORM_FUNCTION_q6_5_multiple_roles,platform_function,robust finding,多个平台承担不同作用,28,30,93.3%,,data/processed/survey_clean.csv,题项自报的功能或经验，不验证平台机制、实际行为频率或文化融入。
+PLATFORM_FUNCTION_q6_5_online_rule_barrier,platform_function,robust finding,平台或线上规则形成信息/参与障碍,14,33,42.4%,,data/processed/survey_clean.csv,题项自报的功能或经验，不验证平台机制、实际行为频率或文化融入。
+ROBUST_A1_standard_80pct_mean,association_robustness,plausible exploratory finding,A1_standard_80pct_mean,,30,rho=-0.499,"leave-one-out [-0.584, -0.444]",data/processed/survey_clean.csv,方向对计分与单案删除较稳，但资格口径事后扩展、样本非概率且为回顾性；不支持因果。
+ROBUST_A1_complete_case_mean,association_robustness,plausible exploratory finding,A1_complete_case_mean,,28,rho=-0.478,"leave-one-out [-0.560, -0.416]",data/processed/survey_clean.csv,方向对计分与单案删除较稳，但资格口径事后扩展、样本非概率且为回顾性；不支持因果。
+ROBUST_A1_60pct_mean,association_robustness,plausible exploratory finding,A1_60pct_mean,,35,rho=-0.604,"leave-one-out [-0.659, -0.567]",data/processed/survey_clean.csv,方向对计分与单案删除较稳，但资格口径事后扩展、样本非概率且为回顾性；不支持因果。
+ROBUST_A1_80pct_median,association_robustness,plausible exploratory finding,A1_80pct_median,,30,rho=-0.548,"leave-one-out [-0.660, -0.497]",data/processed/survey_clean.csv,方向对计分与单案删除较稳，但资格口径事后扩展、样本非概率且为回顾性；不支持因果。
+ROBUST_A4_original_explain_item,association_robustness,weak signal,A4_original_explain_item,,32,rho=-0.430,"leave-one-out [-0.510, -0.364]",data/processed/survey_clean.csv,对合理参与编码不稳，只能描述特定单项；不得进入主体发现或解释为中介保护作用。
+ROBUST_A4_participation_mean_at_least_one_item,association_robustness,weak signal,A4_participation_mean_at_least_one_item,,32,rho=-0.363,"leave-one-out [-0.462, -0.289]",data/processed/survey_clean.csv,对合理参与编码不稳，只能描述特定单项；不得进入主体发现或解释为中介保护作用。
+ROBUST_A4_participation_mean_both_items,association_robustness,weak signal,A4_participation_mean_both_items,,30,rho=-0.233,"leave-one-out [-0.345, -0.196]",data/processed/survey_clean.csv,对合理参与编码不稳，只能描述特定单项；不得进入主体发现或解释为中介保护作用。
+QUAL_CFG01,qualitative_configuration,plausible exploratory finding,任务、语言与关系进入在具体场景交叠,,3,,leave-one-case-out=NO,outputs/agent_runs/20260723_independent_review_extension_v2/restricted_extension/case_configuration_matrix_v2.csv,只有受限第三案例提供完整同场景事件链；不得写成三案共同机制。
+QUAL_CFG02,qualitative_configuration,plausible exploratory finding,支持的来源、正式度、时机与可见性需分开,,3,,leave-one-case-out=YES,outputs/agent_runs/20260723_independent_review_extension_v2/restricted_extension/case_configuration_matrix_v2.csv,三案以不同配置支持；仍只作回顾性个案解释。
+QUAL_CFG03,qualitative_configuration,plausible exploratory finding,成员感、复合信任谈心题、求助、亲密与群体门槛不等价,,3,,leave-one-case-out=YES,outputs/agent_runs/20260723_independent_review_extension_v2/restricted_extension/case_configuration_matrix_v2.csv,跨案仍成立，但问卷复合题不能拆成信任和谈心的总体比例。
+QUAL_CFG05,qualitative_configuration,robust finding,访谈中的平台—受众—功能机制,,0,,leave-one-case-out=YES,outputs/agent_runs/20260723_independent_review_extension_v2/restricted_extension/case_configuration_matrix_v2.csv,三份访谈均无可核对机制链；只说明访谈证据沉默，不说明平台无作用。
+ALIGNMENT_EXPANSION,alignment_adjudication,robust finding,75条对照经三条件复核后：EXPANSION,34,75,45.3%,,outputs/agent_runs/20260723_independent_review_extension_v2/revised_qualitative/alignment_adjudication_v2.csv,这是证据关系分类，不是参与者或主题频率。
+ALIGNMENT_CONVERGENCE,alignment_adjudication,robust finding,75条对照经三条件复核后：CONVERGENCE,21,75,28.0%,,outputs/agent_runs/20260723_independent_review_extension_v2/revised_qualitative/alignment_adjudication_v2.csv,这是证据关系分类，不是参与者或主题频率。
+ALIGNMENT_SILENCE,alignment_adjudication,robust finding,75条对照经三条件复核后：SILENCE,11,75,14.7%,,outputs/agent_runs/20260723_independent_review_extension_v2/revised_qualitative/alignment_adjudication_v2.csv,这是证据关系分类，不是参与者或主题频率。
+ALIGNMENT_DIVERGENCE,alignment_adjudication,robust finding,75条对照经三条件复核后：DIVERGENCE,9,75,12.0%,,outputs/agent_runs/20260723_independent_review_extension_v2/revised_qualitative/alignment_adjudication_v2.csv,这是证据关系分类，不是参与者或主题频率。

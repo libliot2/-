@@ -118,3 +118,43 @@
   and must receive linked-case analysis. Analysis v1 and tag `analysis-v1`
   remain preserved for provenance; the expanded analysis uses run ID
   `20260723_expanded_eligibility` and will be tagged separately.
+
+## 2026-07-23 — Independent review and extension decisions (analysis v3)
+
+- The four independent second-round audits were closed before canonical
+  revision. Reviewer A/B/C used separate subagents; Reviewer D was performed
+  by the main agent without editing first-round outputs during the audit.
+- Multiple-choice export values remain recoverable. Exceeding a questionnaire
+  selection limit creates a question-specific quality flag, not whole-record
+  exclusion. Q5.4 is reported as endorsement with group-level special missing
+  propagated to its denominator, plus a limit-compliant sensitivity subset.
+- Q3.3 item 2 is a composite statement about at least one peer who can be
+  trusted and confided in. It must not be shortened to trust alone or split
+  into separate full-sample trust and confiding percentages.
+- A survey–interview relationship is labelled `DIVERGENCE` only when the
+  comparison concerns the same construct, has an overlapping timeframe, and
+  points in opposite directions. All 75 alignments receive an explicit
+  second-round adjudication; capped-choice non-selection is not a negative
+  response.
+- New findings use exactly four possible grades. `robust finding` is a
+  reproducible description of the current dataset, not population
+  generalisability; `plausible exploratory finding` is traceable but has live
+  competing explanations; `weak signal` appears only in robustness,
+  limitations, or future research; `unsupported` interpretations are removed
+  rather than retained in the finding table.
+- A1 is retained as a plausible exploratory association because its direction
+  survives specified scoring and leave-one-out checks. A4 is a weak signal
+  because reasonable brokerage-participation encodings materially reduce it.
+  Neither association supports causal or population claims.
+- Full third-case positions, line references, configurations, and revised
+  alignments remain restricted. Current public derivatives omit its anonymous
+  ID, line ranges, rare background/resource combinations, and unsuppressed
+  cells below three. First-round files remain recoverable from `analysis-v2`
+  and a restricted preservation directory.
+- Reproducibility is reported in two modes: deterministic regeneration, and
+  promotion of frozen interpretive inputs after explicit semantic review.
+  The latter is not described as algorithmically rediscovering qualitative
+  judgements.
+- Second-round run ID:
+  `20260723_independent_review_extension_v2`. The next completion tag is
+  `analysis-v3`.
