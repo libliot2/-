@@ -40,7 +40,8 @@ Stages 0–15 已按依赖顺序实际执行。扩展资格决定解决了旧版
 Git 由主代理自动管理。原始问卷、原始访谈、参与者级 processed/qualitative 产物及独立 Overleaf 仓库均不进入公开历史；受限产物只保留在本地工作区供授权审计和再现。`analysis-v1` 保持不变，V2 完成交付使用 annotated tag `analysis-v2`。
 
 ```text
-f1250c2 (HEAD -> main, tag: analysis-v1) chore: validate and finalise analysis pipeline
+e1fc04b (HEAD -> main) analysis: rerun expanded eligibility mixed-methods pipeline
+f1250c2 (tag: analysis-v1) chore: validate and finalise analysis pipeline
 64971e3 docs: add independently reviewed final report
 cc3ea0e analysis: add reproducible mixed-methods pipeline
 9faee95 chore: initialise public-safe research repository
