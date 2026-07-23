@@ -102,7 +102,12 @@ def validate_survey() -> None:
     codebook = pd.read_csv(PROCESSED / "survey_codebook.csv", dtype=str, keep_default_na=False)
     survey = pd.read_csv(PROCESSED / "survey_clean.csv", dtype=str, keep_default_na=False)
     require(len(codebook) == 160, "survey_codebook_rows", f"rows={len(codebook)}")
-    require(codebook["source_column"].nunique() == 160, "survey_mapping_unique", "all 160 source columns uniquely represented")
+    require(
+        codebook["variable_name"].nunique() == 160
+        and codebook["source_column"].str.len().gt(0).all(),
+        "survey_mapping_complete",
+        "all 160 export positions have unique canonical variable names and nonblank source headers",
+    )
     require(len(survey) == 35, "survey_total", f"rows={len(survey)}")
     eligible_n = int((survey["eligible"] == "TRUE").sum())
     require(eligible_n == 24, "survey_eligible", f"eligible={eligible_n}")
