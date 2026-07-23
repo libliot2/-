@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""Write the main-agent disposition of both independent audits."""
+
+from __future__ import annotations
+
+from pipeline_common import ROOT
+
+
+RUN = ROOT / "outputs/agent_runs/20260723_full_pipeline/reviews"
+REPORT = ROOT / "outputs/reports/review_resolution.md"
+
+
+TEXT = """# 独立审查问题处理记录
+
+## 审查范围
+
+主代理逐项核对了 Reviewer A 的证据一致性审计和 Reviewer B 的隐私—概念—方法审计。两份审计均未直接编辑初稿。以下处理已落实到生成脚本、重新生成的 canonical 产物或 Git 交付层。
+
+## Reviewer A
+
+| 编号 | 处理 | 结果 |
+|---|---|---|
+| E1 支持特殊缺失隐式计零 | 接受并重算 | Q5.5 计数要求至少 7/8 项为四类有效状态；特殊缺失不贡献 0。A3 重算为 valid n=22、ρ=0.213、置换 p=0.337、BH-FDR q=0.421，所有依赖产物已重生。 |
+| E2 渐进轨迹来源过强 | 接受 | 终稿只把渐进过程归于 P01 的访谈回顾，并明确问卷不能验证连续轨迹。 |
+| E3 身份关系类型误并为 silence | 接受 | 身份协商/场景化表达保持 `EXPANSION`；文化中介过程和平台过程保持 `SILENCE`。 |
+| E4 P02 行号范围 | 接受 | 终稿扩展至支撑该释义的完整行范围，并把稀有家庭细节概括为日常条件。 |
+| E5 模糊量词 | 接受 | 终稿改为三个可复核的 n/valid n，并保留非量表限定。 |
+| E6 平台“保留”配对含义 | 接受 | 终稿和文献比较改写为两个回顾时点的边际选择人数，不再主张同一个体保留或替代。 |
+| E7 提前声称验证完成 | 接受 | 终稿在自动验证实际生成并通过后再次生成和复核。 |
+
+## Reviewer B
+
+| 编号 | 处理 | 结果 |
+|---|---|---|
+| PRIV-01 受限资料进入 Git 历史 | 接受，发布前强制修复 | 参与者级清洗表、链接键、个案档案、编号转录、逐字编码与 worker 产物全部列入 restricted ignore；脚本中的资料特定明文标识已移除。活动仓库历史重新建立，并对所有 refs 和对象路径执行禁入扫描。受限产物仅保留在本地工作区。 |
+| PRIV-02 个案精确值公开链接 | 接受 | 联合展示的个案定位改为方向性描述，去除逐个案精确构念均值、支持计数和平台组合；完整表作为本地受限产物。 |
+| PRIV-03 引文与稀有经历指纹 | 接受 | 逐字编码、框架矩阵、个案 memo 和跨案工作报告不进入 Git；终稿只保留必要短证据，并概括家庭、能力和交往细节。 |
+| PRIV-04 不合资格参与身份 | 接受 | 对外只报告“3 份中 2 份合资格、1 份不进入分析”，不公布其匿名 ID、转录长度或脱敏事件。 |
+| PRIV-05 小格不一致 | 接受 | 终稿将敏感需求小格写为 `<3`；精确项目表保留在本地受限层，不进入 Git。 |
+| PRIV-06 来源指纹 | 接受 | 问卷来源使用稳定别名；哈希明细和库存明细保留在本地受限审计层，公开终稿只报告完整性验证结论。 |
+| PRIV-07 性别化代词 | 接受 | 终稿分析叙述统一为“该参与者/其”。 |
+| METH-01 渐进轨迹 | 接受 | 与 E2 同步修订。 |
+| METH-02 模糊数量 | 接受 | 与 E5 同步修订。 |
+| 其余方法检查 | 确认 PASS | 探索性题组、非等价时点、非因果、访谈边界、文化与平台解释、替代解释均继续保留。 |
+
+## 结论
+
+两份审计中的有效问题均已接受并处理；没有以解释性文字替代脚本修正。受影响的问卷关联、链接/转录聚合报告、混合方法产物、文献比较和终稿均已重新生成。最终验收以 `validation_report.md` 和活动 Git tag 的对象扫描为准。
+"""
+
+
+def main() -> None:
+    for name in ["evidence_audit.md", "privacy_method_audit.md"]:
+        if not (RUN / name).is_file():
+            raise FileNotFoundError(RUN / name)
+    REPORT.parent.mkdir(parents=True, exist_ok=True)
+    REPORT.write_text(TEXT, encoding="utf-8")
+    print("review resolution generated")
+
+
+if __name__ == "__main__":
+    main()
