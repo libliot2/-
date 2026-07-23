@@ -1,0 +1,48 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+~$*.xlsx
+~$*.docx
+.vscode/
+.idea/
+outputs/tmp/
+data/processed/tmp/
+
+# Unredacted research data remain local and are tracked by checksums, not Git.
+data/raw/
+data/interview/
+
+# Separate Overleaf checkout bundled beside the analysis materials.
+6a58bbb68d0662ee12b5ab75/
+
+# Restricted participant-level processed data remain local. They are
+# reproducible from ignored raw sources but must not enter Git history.
+data/processed/survey_clean.csv
+data/processed/survey_construct_scores.csv
+data/processed/interview_survey_map.csv
+data/processed/restricted_redaction_terms.txt
+data/processed/linked_cases/
+data/processed/interviews/
+
+# Participant-level qualitative evidence and worker artefacts are restricted.
+outputs/agent_runs/
+outputs/agent_runs/20260723_full_pipeline/P01/
+outputs/agent_runs/20260723_full_pipeline/P02/
+outputs/agent_runs/20260723_full_pipeline/survey/
+outputs/agent_runs/20260723_full_pipeline/qualitative_synthesis/
+outputs/agent_runs/20260723_full_pipeline/mixed_methods/
+outputs/qualitative/
+outputs/tables/
+
+# Generated internal reports remain local. Only the reviewed public-safe
+# deliverables and independent audits are committed.
+outputs/reports/*
+!outputs/reports/final_report.md
+!outputs/reports/validation_report.md
+!outputs/reports/pipeline_summary.md
+!outputs/reports/agent_run_manifest.md
+!outputs/reports/review_resolution.md
