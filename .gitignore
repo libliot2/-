@@ -38,6 +38,7 @@ outputs/agent_runs/20260723_full_pipeline/mixed_methods/
 outputs/qualitative/
 outputs/tables/*
 !outputs/tables/exploratory_extension_v2.csv
+!outputs/tables/mechanism_propositions_v3.csv
 
 # Generated internal reports remain local. Only the reviewed public-safe
 # deliverables and independent audits are committed.
@@ -52,3 +53,13 @@ outputs/reports/*
 !outputs/reports/revision_log_v2.md
 !outputs/reports/validation_report_v2.md
 !outputs/reports/pipeline_summary_v2.md
+!outputs/reports/theoretical_exploration_plan_v3.md
+!outputs/reports/framework_notes_v3.md
+!outputs/reports/cross_framework_synthesis_v3.md
+!outputs/reports/abductive_exploration_v3.md
+!outputs/reports/proposed_analytical_framework_v3.md
+!outputs/reports/theoretical_revision_log_v3.md
+!outputs/reports/theoretical_extension_report_v3.md
+!outputs/reports/final_report_v3.md
+!outputs/reports/validation_report_v3.md
+!outputs/reports/pipeline_summary_v3.md

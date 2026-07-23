@@ -24,6 +24,8 @@ COMMANDS = [
     ["python3", "scripts/write_literature_comparison.py"],
     ["python3", "scripts/write_round2_reports.py"],
     ["python3", "scripts/write_main_report.py", "--final"],
+    ["python3", "scripts/explore_theory_configurations_v3.py"],
+    ["python3", "scripts/validate_round3.py"],
 ]
 
 TARGET_MODES = {
@@ -67,6 +69,25 @@ TARGET_MODES = {
     "outputs/reviews/qualitative_audit_v2.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
     "outputs/reviews/integration_audit_v2.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
     "outputs/reviews/reproducibility_privacy_audit_v2.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/agent_runs/20260723_multi_theory_abductive_v3/synthesis/construct_quantiles_v3.csv": "REGENERATED",
+    "outputs/agent_runs/20260723_multi_theory_abductive_v3/synthesis/anomaly_configurations_v3.csv": "REGENERATED",
+    "outputs/agent_runs/20260723_multi_theory_abductive_v3/synthesis/anomaly_counts_public_v3.csv": "REGENERATED",
+    "outputs/agent_runs/20260723_multi_theory_abductive_v3/synthesis/open_text_prompt_pattern_audit_v3.csv": "REGENERATED",
+    "outputs/theory/framework_inventory_v3.csv": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/theory/cross_framework_matrix_v3.csv": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/tables/mechanism_propositions_v3.csv": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/theoretical_exploration_plan_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/framework_notes_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/cross_framework_synthesis_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/abductive_exploration_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/proposed_analytical_framework_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/theoretical_extension_report_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/final_report_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/pipeline_summary_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reports/validation_report_v3.md": "REGENERATED",
+    "outputs/reports/theoretical_revision_log_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reviews/theoretical_fit_audit_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
+    "outputs/reviews/multi_perspective_evidence_audit_v3.md": "FROZEN_ANALYTIC_INPUT_PROMOTED",
 }
 
 
