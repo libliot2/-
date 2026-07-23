@@ -69,10 +69,14 @@ def format_indicators(
     for variable, label in labels.items():
         value = float(participant_scores[variable])
         sample = pd.to_numeric(all_scores[variable], errors="coerce").dropna()
+        if pd.isna(value):
+            lines.append(f"- {label}：UNAVAILABLE（未达到派生指标完整度门槛）")
+            continue
         rank = percentile(sample, value)
         lines.append(
             f"- {label}：{value:.2f}；完整样本 median={sample.median():.2f}，"
-            f"IQR={sample.quantile(.25):.2f}–{sample.quantile(.75):.2f}，"
+            f"IQR={sample.quantile(.25, interpolation='midpoint'):.2f}–"
+            f"{sample.quantile(.75, interpolation='midpoint'):.2f}，"
             f"经验百分位（≤该值）={rank:.1f}%"
         )
     return "\n".join(lines)
@@ -92,7 +96,7 @@ def profile_warning(participant_id: str) -> str:
             "回忆、填答或转写；不得擅自裁定哪一方正确。\n"
             "- 访谈为未经录音核对的机器转写。"
         )
-    return "- 无额外警告。"
+    return "- 访谈为未经录音核对的机器转写；保留口语与可能的识别错误。"
 
 
 def main() -> None:
@@ -104,6 +108,9 @@ def main() -> None:
     created = 0
     for link in mapping.itertuples(index=False):
         if link.mapping_status != "MATCHED":
+            stale_profile = out_dir / f"{link.participant_id}_profile.md"
+            if stale_profile.exists():
+                stale_profile.unlink()
             note = f"""# {link.participant_id} 排除说明
 
 - 链接状态：{link.mapping_status}
@@ -112,6 +119,9 @@ def main() -> None:
 """
             (out_dir / f"{link.participant_id}_exclusion_note.md").write_text(note, encoding="utf-8")
             continue
+        stale_exclusion = out_dir / f"{link.participant_id}_exclusion_note.md"
+        if stale_exclusion.exists():
+            stale_exclusion.unlink()
         row = survey[survey["survey_row_id"] == link.survey_row_id].iloc[0]
         participant_scores = scores[scores["survey_row_id"] == link.survey_row_id].iloc[0]
         open_text = (

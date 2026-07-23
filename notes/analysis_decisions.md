@@ -94,3 +94,27 @@
 - Cultural brokerage and platform-role claims remain survey-supported but
   interview-silent. Interview silence is not interpreted as evidence that the
   experience did not occur.
+
+## 2026-07-23 — Expanded eligibility decision (analysis v2)
+
+- The investigator explicitly broadened the target from the earlier
+  high-grade, resident-migrant definition to all respondents with a
+  Mainland-to-Hong Kong school-transfer experience.
+- The former thresholds of at least two confirmed Mainland school years,
+  actual residence migration to Hong Kong, and first transfer at S2 or above
+  are now background descriptors rather than exclusion rules.
+- Cross-border commuters, respondents uncertain about two continuous
+  Mainland school years, lower-grade transfer entrants, and the response
+  category “other” are included.
+- Consent and adult status remain ethical gates. All 35 submissions satisfy
+  both, so analysis v2 uses 35/35 records. Eleven records formerly excluded in
+  analysis v1 are explicitly marked as reclassified, not silently relabelled.
+- This population-definition change was made after the complete v1 analysis,
+  independent reviews, and tagged results were available. It reflects the
+  investigator's conceptual expansion of the target population, not a data-
+  quality correction or a significance-driven screening decision. V1/V2
+  differences are therefore reported as post-hoc specification sensitivity.
+- All three uniquely linked interview files now map to eligible survey records
+  and must receive linked-case analysis. Analysis v1 and tag `analysis-v1`
+  remain preserved for provenance; the expanded analysis uses run ID
+  `20260723_expanded_eligibility` and will be tagged separately.

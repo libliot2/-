@@ -249,6 +249,11 @@ def write_transcripts() -> None:
     ineligible_n = sum(r["mapping_status"] == "INELIGIBLE" for r in report_rows)
     summary_n = sum(r["source_type"].startswith("整理式") for r in report_rows)
     machine_n = len(report_rows) - summary_n
+    eligibility_handling = (
+        "- 唯一链接但不合资格的访谈只保留受限脱敏审计副本，不进行实质编码。"
+        if ineligible_n
+        else "- V2 扩展资格口径下三份访谈均进入链接个案分析；旧口径状态只作版本溯源。"
+    )
     report = f"""# 访谈转录准备报告
 
 ## 处理结果
@@ -266,7 +271,7 @@ def write_transcripts() -> None:
 - 保留口语、重复、停顿词及明显机器识别错误，不静默改写参与者话语。
 - 整理式记录只有标为 `Participant` 的行可作逐字引语，`Source note` 只可作为来源说明，不能放入引号。
 - 机器实时转写在引用时必须保留“机器转写可能有误”的限定。
-- 唯一链接但不合资格的访谈只保留受限脱敏审计副本，不进行实质编码。
+{eligibility_handling}
 
 ## 不确定性与剩余风险
 

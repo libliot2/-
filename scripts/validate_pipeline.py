@@ -13,7 +13,7 @@ from typing import Callable
 
 import pandas as pd
 
-from pipeline_common import INTERVIEW_DIR, ROOT, SURVEY_PATH
+from pipeline_common import INTERVIEW_DIR, ROOT, RUN_ID, SURVEY_PATH
 
 REPORTS = ROOT / "outputs/reports"
 TABLES = ROOT / "outputs/tables"
@@ -80,8 +80,8 @@ def validate_required_files() -> None:
         REPORTS / "pipeline_summary.md",
         REPORTS / "reproducibility_results.csv",
         REPORTS / "review_resolution.md",
-        ROOT / "outputs/agent_runs/20260723_full_pipeline/reviews/evidence_audit.md",
-        ROOT / "outputs/agent_runs/20260723_full_pipeline/reviews/privacy_method_audit.md",
+        ROOT / "outputs/agent_runs" / RUN_ID / "reviews/evidence_audit.md",
+        ROOT / "outputs/agent_runs" / RUN_ID / "reviews/privacy_method_audit.md",
     ]
     missing = [path.relative_to(ROOT).as_posix() for path in required if not path.is_file()]
     require(not missing, "required_outputs", f"missing={missing or 'none'}")
@@ -110,8 +110,25 @@ def validate_survey() -> None:
     )
     require(len(survey) == 35, "survey_total", f"rows={len(survey)}")
     eligible_n = int((survey["eligible"] == "TRUE").sum())
-    require(eligible_n == 24, "survey_eligible", f"eligible={eligible_n}")
-    require(int((survey["eligible"] == "FALSE").sum()) == 11, "survey_excluded", "excluded=11")
+    require(eligible_n == 35, "survey_eligible_v2", f"eligible={eligible_n}")
+    require(int((survey["eligible"] == "FALSE").sum()) == 0, "survey_excluded_v2", "excluded=0")
+    require(
+        int((survey["eligibility_reclassification"] == "NEWLY_INCLUDED_V2").sum()) == 11,
+        "survey_reclassified_v2",
+        "11 records excluded under v1 are explicitly reclassified and included",
+    )
+    require(
+        int(survey["legacy_eligible_v1"].eq("TRUE").sum()) == 24
+        and int(survey["legacy_eligible_v1"].eq("FALSE").sum()) == 11,
+        "survey_legacy_eligibility_audit",
+        "legacy v1 split remains recoverable as 24 eligible / 11 excluded",
+    )
+    require(
+        survey["q0_1_consent"].eq("同意参加").all()
+        and survey["q1_4_age18"].eq("是").all(),
+        "survey_v2_ethical_gates",
+        "all 35 records pass consent and adult-status gates",
+    )
     require(
         not survey["duplicate_flag"].eq("EXACT_RESPONSE_DUPLICATE").any(),
         "survey_exact_duplicates",
@@ -131,27 +148,29 @@ def validate_survey() -> None:
     )
     associations = pd.read_csv(TABLES / "exploratory_associations.csv")
     require(len(associations) == 5, "association_count", f"analyses={len(associations)}")
+    retained_ids = set(associations.loc[associations["bh_fdr_q"] < 0.05, "analysis_id"])
     require(
-        int((associations["bh_fdr_q"] < 0.05).sum()) == 0,
+        retained_ids == {"A1", "A4"},
         "association_multiplicity",
-        "no BH-FDR q<0.05; all treated as exploratory",
+        f"BH-FDR q<0.05 only for {sorted(retained_ids)}; still exploratory",
     )
     flow = pd.read_csv(TABLES / "sample_flow.csv", dtype=str, keep_default_na=False)
     flow_counts = {
         row.stage: int(row.n)
         for row in flow.itertuples(index=False)
-        if row.stage in {"原始提交", "合资格样本", "排除"}
+        if row.stage in {"原始提交", "V2合资格样本", "V2排除", "V2重新纳入"}
     }
     require(
-        flow_counts == {"原始提交": 35, "合资格样本": 24, "排除": 11},
+        flow_counts
+        == {"原始提交": 35, "V2合资格样本": 35, "V2排除": 0, "V2重新纳入": 11},
         "sample_flow_consistency",
         f"flow={flow_counts}",
     )
     exclusions = survey.loc[survey["eligible"] == "FALSE", "exclusion_reason"]
     require(
-        len(exclusions) == 11 and exclusions.str.len().gt(0).all(),
+        len(exclusions) == 0,
         "exclusions_traceable",
-        "all 11 excluded rows have explicit reasons",
+        "no v2 exclusions; legacy reasons retained in separate audit fields",
     )
     stats = pd.read_csv(TABLES / "survey_item_statistics.csv", dtype=str, keep_default_na=False)
     support_stats = (
@@ -183,15 +202,14 @@ def validate_linkage() -> None:
     require(mapping["participant_id"].is_unique, "linkage_participant_unique", "participant IDs unique")
     require(mapping["questionnaire_sequence"].is_unique, "linkage_sequence_unique", "restricted sequences unique")
     statuses = mapping["mapping_status"].value_counts().to_dict()
-    require(statuses == {"MATCHED": 2, "INELIGIBLE": 1}, "linkage_statuses", f"statuses={statuses}")
+    require(statuses == {"MATCHED": 3}, "linkage_statuses", f"statuses={statuses}")
     merged = mapping.merge(
         survey[["survey_row_id", "eligible"]], on="survey_row_id", how="left", validate="one_to_one"
     )
     correct = (
         merged.loc[merged["mapping_status"] == "MATCHED", "eligible"].eq("TRUE").all()
-        and merged.loc[merged["mapping_status"] == "INELIGIBLE", "eligible"].eq("FALSE").all()
     )
-    require(correct, "linkage_eligibility", "matched cases eligible; ineligible case excluded")
+    require(correct, "linkage_eligibility", "all three uniquely mapped cases are v2 eligible")
     matched_ids = set(mapping.loc[mapping["mapping_status"] == "MATCHED", "participant_id"])
     nonmatched_ids = set(mapping.loc[mapping["mapping_status"] != "MATCHED", "participant_id"])
     matched_profiles_exist = all(
@@ -205,7 +223,7 @@ def validate_linkage() -> None:
     require(
         matched_profiles_exist and nonmatched_profiles_absent,
         "linked_profiles",
-        "profiles exist only for the two eligible linked cases",
+        "profiles exist for all three eligible linked cases",
     )
 
 
@@ -244,7 +262,7 @@ def validate_transcripts_and_quotes() -> None:
     require(
         set(master["participant_id"]) == matched_ids,
         "qualitative_case_scope",
-        "only the two eligible linked cases are coded",
+        "all and only the three eligible linked cases are coded",
     )
     require(
         set(master["confidence"]) <= {"HIGH", "MEDIUM", "LOW"},
@@ -353,10 +371,44 @@ def validate_git_privacy() -> None:
 
 def validate_final_claims() -> None:
     final = (REPORTS / "final_report.md").read_text(encoding="utf-8")
+    public_codebook = pd.read_csv(
+        PROCESSED / "qualitative_codebook.csv", dtype=str, keep_default_na=False
+    )
     require("完整问卷样本" in final, "report_distinguishes_survey", "full survey section present")
     require("链接个案" in final, "report_distinguishes_cases", "linked-case section present")
     require("文献" in final, "report_distinguishes_literature", "literature comparison present")
-    require("24" in final and "35" in final and "11" in final, "report_sample_counts", "35/24/11 represented")
+    require(
+        "35" in final and "11" in final and "0" in final,
+        "report_sample_counts",
+        "v2 flow 35 eligible / 0 excluded / 11 reclassified represented",
+    )
+    require(
+        "V1 结果可见后" in final and "独立复核" in final,
+        "report_posthoc_eligibility_timing",
+        "eligibility expansion is disclosed as post-v1-results and requires independent replication",
+    )
+    require(
+        "P03" not in final,
+        "report_cross_version_case_minimization",
+        "third-case anonymous ID is not linked to public v2 case details",
+    )
+    small_cell_patterns = [r"\b1/35\b", r"少于\s*300", r"10\s*份涉及", r"1\s*份涉及"]
+    require(
+        not any(re.search(pattern, final) for pattern in small_cell_patterns),
+        "report_small_cell_suppression",
+        "review-identified n<3 background, quality, and platform cells are suppressed",
+    )
+    inductive = public_codebook["source"].isin(["INDUCTIVE", "MIXED"])
+    require(
+        set(public_codebook["status"]) <= {"ACTIVE", "PROPOSED"}
+        and public_codebook.loc[inductive, "example"].eq("").all()
+        and not public_codebook.astype(str)
+        .agg(" ".join, axis=1)
+        .str.contains(r"\bP0[123]\b|L\d{4}", regex=True)
+        .any(),
+        "public_codebook_privacy",
+        "public codebook excludes retired/merged audit rows and participant-shaped examples",
+    )
     source_refs = [
         "sample_flow.csv",
         "survey_item_statistics.csv",
@@ -381,11 +433,12 @@ def write_report() -> int:
     result.to_csv(REPORTS / "validation_results.csv", index=False, encoding="utf-8-sig")
     failures = result[result["status"] == "FAIL"]
     warnings = [
-        "一份访谈文件唯一映射至不合资格问卷记录，已按合同排除链接个案分析。",
-        "合资格访谈包含一份整理式记录和一份未经录音核对、存在工具情境风险的机器转写。",
+        "资格口径在V1分析、审查和结果可见后扩展；旧口径排除的11份现全部纳入，V1/V2差异属于事后口径敏感性。",
+        "三份访谈包含一份整理式记录和两份未经录音核对、存在不同工具情境风险的机器转写。",
         "Q2.11 时点措辞冲突，Q3.1 第6项与 Q6.2 微博列缺失。",
-        "五项探索性关联经 BH-FDR 校正后均无 q<0.05；未运行回归或因子分析。",
+        "A1与A4在V2样本中BH-FDR q<0.05，但仍为非概率、事后扩展口径下的探索性关联；未运行回归或因子分析。",
         "开放题为关键词辅助多标签扫描；未宣称质性饱和或总体流行程度。",
+        "第三个链接个案的完整证据保留在受限层；公开报告已切断跨版本间接识别链。",
     ]
     status = "PASS" if failures.empty else "FAIL"
     table = "\n".join(

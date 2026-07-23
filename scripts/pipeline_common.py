@@ -21,7 +21,7 @@ QUESTIONNAIRE_PATH = (
     ROOT
     / "research_materials/内地迁居香港高年级插班学生的学校适应、同伴关系与数字生活调查.md"
 )
-RUN_ID = "20260723_full_pipeline"
+RUN_ID = "20260723_expanded_eligibility"
 
 BLANK = "BLANK"
 NOT_APPLICABLE = "NOT_APPLICABLE"

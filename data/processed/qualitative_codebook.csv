@@ -1,40 +1,41 @@
 ﻿code_id,code_name,parent_code,definition,include_when,exclude_when,example,source,status,notes
-MIGRATION_CONTEXT,迁移背景,,迁居、插班节点及其制度位置,材料描述迁居或插班背景,只描述一般学校生活,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-PRIOR_RESOURCES,既有资源,,迁居前语言、学习、关系或家庭资源,既有经验被参与者用于适应,迁居后新获得的支持,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-SYSTEM_LANGUAGE_DISCONTINUITY,教学语言断裂,教育制度断裂,粤语、英语、繁体字或学科语言造成的制度接口变化,语言变化影响课堂理解或参与,纯粹同伴幽默边界,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-SYSTEM_ASSESSMENT_RULES,评价规则变化,教育制度断裂,作业、考试、汇报或评分要求改变,参与者比较或学习评价要求,没有规则内容的一般学业压力,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-HIDDEN_CURRICULUM,隐性规则,教育制度断裂,未明确说明但需逐渐识别的学校规则,参与者不知道默认程序或标准,已明确告知的正式规定,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-PEER_LANGUAGE_HUMOUR_BOUNDARY,语言与幽默边界,同伴文化边界,语言、口音、俗语或幽默与差别化参与相连,具体互动显示难以进入谈话或群体,仅报告语言能力差异而无参与后果,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-PEER_LOCAL_KNOWLEDGE_BOUNDARY,地方知识边界,同伴文化边界,地方经验、学校传统或共同记忆影响参与,地方知识与插不上话等后果相连,一般兴趣不同,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-LABELING_ASSUMPTION,标签与预设,同伴文化边界,来源、口音或内地经历触发预设或差别对待,参与者明确描述预设、刻板印象或分组,研究者推断他人态度,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-PARTICIPATION_WITHDRAWAL,减少参与,适应策略与能动性,担忧、陌生或边界使参与者减少主动互动,参与者明确描述沉默、回避或退出,单纯缺少机会,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-PEER_INVITATION,同伴邀请,适应策略与能动性,同伴主动邀请进入互动或活动,有具体邀请行动,泛称同伴友好,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-GROUPWORK_ENTRY,小组活动进入关系,适应策略与能动性,小组作业、汇报或活动成为关系进入点,具体小组事件改变互动,只描述课程形式,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-MAINLAND_PEER_SUPPORT,内地背景同伴支持,支持资源,具有内地经历的同伴提供信息、情绪或关系支持,支持者背景及行动均明确,研究者按语言猜测背景,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-HK_PEER_SUPPORT,香港本地同伴支持,支持资源,本地同伴提供关系、学业或信息支持,有明确支持行动,仅共同在场,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-TEACHER_SUPPORT,教师支持,支持资源,教师解释、安排、关怀或提供机会,具体教师行动及作用,一般学校制度,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-FAMILY_SUPPORT,家庭支持,支持资源,家庭成员提供情绪、信息或物质支持,材料明确家庭行动,只说明迁居由家庭决定,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-SELF_INITIATED_ADAPTATION,主动适应,适应策略与能动性,参与者主动练习、接近、询问或调整策略,具体自主行动,只有结果没有行动,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-RULE_LEARNING,规则学习,适应策略与能动性,通过观察、解释、试错或支持掌握学校规则,材料呈现学习规则的过程,静态规则理解评分,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-LEARNER_IDENTITY_RENEGOTIATION,学习者身份重构,归属与身份结果,参与者重新理解能力、优势或好学生标准,明确区分规则陌生与能力或描述标准变化,研究者推断自尊,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-BELONGING,被接纳与归属,归属与身份结果,参与者感到成为班级成员、可自然参与或有人信任,具体感受或互动后果,只报告平台加入,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-EXCLUSION,排斥或孤立,归属与身份结果,参与者明确描述被排除、孤立或差别参与,存在事件或直接报告,未被提及,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-BROKERAGE_ACTION,解释翻译与连接行动,文化中介,参与者在不同背景者之间解释、翻译或连接,有具体行为,仅位于多群体网络,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-BROKERAGE_BENEFIT,中介收益,文化中介,中介行动带来认可、关系或能力收益,行动与收益均有证据,只发生一次解释,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-BROKERAGE_PRESSURE,中介负担,文化中介,解释者或中间人角色带来疲惫、压力或边缘感,参与者明确报告负担,研究者推断,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-PLATFORM_OLD_TIES,平台维持旧关系,数字平台实践,平台用于维持迁居前关系或获得支持,关系、平台和功能明确,只列平台名称,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-PLATFORM_HK_SCHOOL,平台参与香港学校关系,数字平台实践,平台用于班群、学校信息或本地同伴互动,平台功能与学校关系明确,只安装平台,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-PLATFORM_DIFFERENTIATION,平台功能分工,数字平台实践,多个平台按关系、受众或功能并存,至少两类关系或用途的对照,单平台使用,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-PLATFORM_RULE_BARRIER,线上规则门槛,数字平台实践,不熟悉平台或班群规则造成信息或参与障碍,存在具体线上后果,一般技术困难,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-TURNING_POINT,转折点,,改变适应、关系或规则理解的关键事件,材料呈现事件前后变化,研究者仅按时间切段,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-SURVEY_INTERVIEW_DIVERGENCE,问卷访谈分歧,矛盾与反例,两类资料对同一主题指向不同,可定位具体问卷项与访谈段,时点不同但方向不冲突,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-NON_CULTURAL_ALTERNATIVE,非文化替代解释,矛盾与反例,学校类型、教学语言、年级、个性、家庭资源或班级结构等解释,材料支持或合理限定的替代机制,无证据猜测心理状态,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed; case agents may suggest but not directly edit.
-SUPPORT_SAFETY_CIRCLE_TRADEOFF,支持性安全圈的时序性权衡,支持资源,同一同伴网络早期提供进入、信息或语言支持而后期因关系稳定减少拓展其他关系的动力或机会,同一参与者明确叙述支持网络的前后变化及参与后果,仅有同背景朋友或仅报告获得帮助而没有时序与后果,早期同伴帮助进入学校而后期安全圈降低拓展关系的积极性,INDUCTIVE,PROPOSED,保留为 P01 个案级过程码；只有出现明确时序与后果时才使用，不推广为跨案例规律。
-LANGUAGE_CONSTRAINED_SELF_EXPRESSION,语言限制下的自我表达,归属与身份结果,语言限制与表达内容或发言位置相连,语言被直接联系到较少表达或处于倾听位置,只说语言困难而没有参与后果,语言限制使参与者较少表达想法,INDUCTIVE,MERGED,合并到 SYSTEM_LANGUAGE_DISCONTINUITY 与 PARTICIPATION_WITHDRAWAL 的双重编码；现有 schema 已能保留该关系。
-GRADUAL_ADAPTATION_PATH,渐进适应路径,适应策略与能动性,参与者明确把适应或改变描述为逐步累积而非单一事件完成,参与者直接说明变化缓慢或渐进并弱化单一转折,研究者只按时间顺序推断渐进变化,适应被描述为慢慢改变的过程,INDUCTIVE,PROPOSED,保留为 TURNING_POINT 的过程性负例；目前只由 P01 支持。
-INTERVIEW_INSTRUMENT_MISMATCH,访谈工具或问卷错配,矛盾与反例,访谈现场明确显示调用了错误个案问卷或预填资料,访谈员或参与者明确确认工具错配,一般记忆分歧或题意差异,访谈员承认调错问卷,INDUCTIVE,RETIRED,不作为参与者经验主题码；改在证据质量与溯源审计中记录，以免把研究过程错误当成参与者主题。
-PEER_COMMUNICATION_PROXY,同伴代为沟通,支持资源,同伴在参与者不愿或难以开口的场景中代为与第三方交流,材料明确同伴替参与者沟通,参与者自己跨群体解释或连接；后者使用 BROKERAGE_ACTION,朋友在具体场景中替参与者交流,INDUCTIVE,PROPOSED,保留以防止把 P02 接受的沟通代理误作其文化中介行为；目前只由 P02 支持。
-SELF_DESCRIBED_INTERACTION_RELUCTANCE,自述交往迟疑,适应策略与能动性,参与者用自己的措辞描述开口犹豫或较少主动参加,参与者直接说明交往倾向及参与后果,研究者凭沉默推断性格或作心理诊断,参与者说开口前会反复犹豫,INDUCTIVE,MERGED,合并到 PARTICIPATION_WITHDRAWAL 与 NON_CULTURAL_ALTERNATIVE；保留原话但不建立心理化类型。
-HOUSEHOLD_COST_PARTICIPATION_CONSTRAINT,家庭作息与成本约束参与,非文化替代解释,家庭作息交通或生活成本限制课后活动,材料把具体日常安排或费用与未参加活动相连,一般家庭支持或宽泛经济状况,用餐时间与外出成本限制放学后活动,INDUCTIVE,MERGED,合并到 NON_CULTURAL_ALTERNATIVE 并在适当时辅以 FAMILY_SUPPORT；单案例下避免过窄代码增殖。
-POST_EXIT_TIE_RECONFIGURATION,离港后关系重组,归属与身份结果,离开香港后不同背景友谊随距离见面便利或生活轨迹而重组,材料明确比较在港时期与离港后的联系状态,只报告在港后期朋友圈结构,离港后本地联系减少而较易见面的旧友仍有联系,INDUCTIVE,PROPOSED,保留时点边界；不得反推在港期间缺乏归属或把平台视为原因。
-NON_INTRUSIVE_SUPPORT_PREFERENCE,非显眼式支持偏好,支持资源,参与者偏好自然低显眼度支持并担心高强度特殊关注带来压力,参与者明确比较支持形式及个人感受,一般拒绝所有支持或研究者猜测需求,希望同伴自然接纳而不希望被高度特别关注,INDUCTIVE,PROPOSED,保留为 P02 个案级支持偏好与问卷分歧；不可推广为所有插班生的最佳支持模式。
+MIGRATION_CONTEXT,迁移背景,,迁居、插班节点及其制度位置,材料描述迁居或插班背景,只描述一般学校生活,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+PRIOR_RESOURCES,既有资源,,迁居前语言、学习、关系或家庭资源,既有经验被参与者用于适应,迁居后新获得的支持,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+SYSTEM_LANGUAGE_DISCONTINUITY,教学语言断裂,教育制度断裂,粤语、英语、繁体字或学科语言造成的制度接口变化,语言变化影响课堂理解或参与,纯粹同伴幽默边界,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+SYSTEM_ASSESSMENT_RULES,评价规则变化,教育制度断裂,作业、考试、汇报或评分要求改变,参与者比较或学习评价要求,没有规则内容的一般学业压力,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+HIDDEN_CURRICULUM,隐性规则,教育制度断裂,未明确说明但需逐渐识别的学校规则,参与者不知道默认程序或标准,已明确告知的正式规定,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+PEER_LANGUAGE_HUMOUR_BOUNDARY,语言与幽默边界,同伴文化边界,语言、口音、俗语或幽默与差别化参与相连,具体互动显示难以进入谈话或群体,仅报告语言能力差异而无参与后果,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+PEER_LOCAL_KNOWLEDGE_BOUNDARY,地方知识边界,同伴文化边界,地方经验、学校传统或共同记忆影响参与,地方知识与插不上话等后果相连,一般兴趣不同,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+LABELING_ASSUMPTION,标签与预设,同伴文化边界,来源、口音或内地经历触发预设或差别对待,参与者明确描述预设、刻板印象或分组,研究者推断他人态度,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+PARTICIPATION_WITHDRAWAL,减少参与,适应策略与能动性,担忧、陌生或边界使参与者减少主动互动,参与者明确描述沉默、回避或退出,单纯缺少机会,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+PEER_INVITATION,同伴邀请,适应策略与能动性,同伴主动邀请进入互动或活动,有具体邀请行动,泛称同伴友好,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+GROUPWORK_ENTRY,小组活动进入关系,适应策略与能动性,小组作业、汇报或活动成为关系进入点,具体小组事件改变互动,只描述课程形式,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+MAINLAND_PEER_SUPPORT,内地背景同伴支持,支持资源,具有内地经历的同伴提供信息、情绪或关系支持,支持者背景及行动均明确,研究者按语言猜测背景,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+HK_PEER_SUPPORT,香港本地同伴支持,支持资源,本地同伴提供关系、学业或信息支持,有明确支持行动,仅共同在场,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+TEACHER_SUPPORT,教师支持,支持资源,教师解释、安排、关怀或提供机会,具体教师行动及作用,一般学校制度,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+FAMILY_SUPPORT,家庭支持,支持资源,家庭成员提供情绪、信息或物质支持,材料明确家庭行动,只说明迁居由家庭决定,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+SELF_INITIATED_ADAPTATION,主动适应,适应策略与能动性,参与者主动练习、接近、询问或调整策略,具体自主行动,只有结果没有行动,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+RULE_LEARNING,规则学习,适应策略与能动性,通过观察、解释、试错或支持掌握学校规则,材料呈现学习规则的过程,静态规则理解评分,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+LEARNER_IDENTITY_RENEGOTIATION,学习者身份重构,归属与身份结果,参与者重新理解能力、优势或好学生标准,明确区分规则陌生与能力或描述标准变化,研究者推断自尊,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+BELONGING,被接纳与归属,归属与身份结果,参与者感到成为班级成员、可自然参与或有人信任,具体感受或互动后果,只报告平台加入,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+EXCLUSION,排斥或孤立,归属与身份结果,参与者明确描述被排除、孤立或差别参与,存在事件或直接报告,未被提及,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+BROKERAGE_ACTION,解释翻译与连接行动,文化中介,参与者在不同背景者之间解释、翻译或连接,有具体行为,仅位于多群体网络,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+BROKERAGE_BENEFIT,中介收益,文化中介,中介行动带来认可、关系或能力收益,行动与收益均有证据,只发生一次解释,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+BROKERAGE_PRESSURE,中介负担,文化中介,解释者或中间人角色带来疲惫、压力或边缘感,参与者明确报告负担,研究者推断,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+PLATFORM_OLD_TIES,平台维持旧关系,数字平台实践,平台用于维持迁居前关系或获得支持,关系、平台和功能明确,只列平台名称,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+PLATFORM_HK_SCHOOL,平台参与香港学校关系,数字平台实践,平台用于班群、学校信息或本地同伴互动,平台功能与学校关系明确,只安装平台,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+PLATFORM_DIFFERENTIATION,平台功能分工,数字平台实践,多个平台按关系、受众或功能并存,至少两类关系或用途的对照,单平台使用,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+PLATFORM_RULE_BARRIER,线上规则门槛,数字平台实践,不熟悉平台或班群规则造成信息或参与障碍,存在具体线上后果,一般技术困难,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+TURNING_POINT,转折点,,改变适应、关系或规则理解的关键事件,材料呈现事件前后变化,研究者仅按时间切段,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+SURVEY_INTERVIEW_DIVERGENCE,问卷访谈分歧,矛盾与反例,两类资料对同一主题指向不同,可定位具体问卷项与访谈段,时点不同但方向不冲突,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+NON_CULTURAL_ALTERNATIVE,非文化替代解释,矛盾与反例,学校类型、教学语言、年级、个性、家庭资源或班级结构等解释,材料支持或合理限定的替代机制,无证据猜测心理状态,,DEDUCTIVE,ACTIVE,Stage 7 shared deductive seed.
+SUPPORT_SAFETY_CIRCLE_TRADEOFF,支持—安全圈权衡,支持资源,同一同伴网络在早期提供信息或关系入口并在后期伴随跨群体拓展动力下降,参与者明确叙述支持网络的早期扩展功能及后期网络或动机变化,只有同背景朋友圈而无时间变化或支持功能,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。
+GRADUAL_ADAPTATION_PATH,渐进适应路径,适应策略与能动性,参与者把适应明确描述为累积性变化而非单一事件,材料直接说明缓慢变化或多个节点共同参与,研究者仅凭时间顺序推断渐进过程,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。
+PEER_COMMUNICATION_PROXY,同伴代为沟通,支持资源,同伴在参与者难以或尚未开口的具体情境中代其与第三方沟通,材料明确同伴替参与者表达询问或处理交流,参与者本人在不同背景者之间解释或连接,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。
+NON_INTRUSIVE_SUPPORT_PREFERENCE,非侵入式支持偏好,支持资源,参与者希望支持可获得但不过度显眼密集或特殊化,明确区分需要支持与不希望被突出并提出低压力方式,只说不需要支持或只批评无效,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。
+POST_EXIT_TIE_RECONFIGURATION,离校后的关系重组,归属与身份结果,离开香港学校后关系因距离、可见面性或生活阶段而重新维持或淡化,材料说明离校后的联系变化及至少一个条件,只说现在联系少而无变化条件,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。
+SCHOOL_DISCIPLINARY_RULES,学校纪律与仪容规则,教育制度断裂,校服、发型、出勤或行为纪律进入参与者对学校严格程度的理解,参与者以明确纪律或仪容规则说明制度体验,作业评分或考试内容,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。
+PEER_SCAFFOLDED_ENTRY,同伴支架式进入,适应策略与能动性,同一同伴通过调节沟通、主动邀请与日常解释帮助新生进入课堂和非正式关系场景,材料同时呈现具体同伴调适行动及参与后果,只称同伴友好或只有邀请无进入过程,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。
+RESOURCE_MEDIATED_LANGUAGE_ADAPTATION,资源中介的语言适应,支持资源,课堂语言接口不足时借助家庭可购买或组织的校外资源建立额外学习通道,家庭安排或支付补习且参与者把它与课堂理解或交流相连,一般家庭鼓励或无资源行动的自学,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。
+EDUCATIONAL_PATH_RESELECTION,教育路径重选,迁移背景,适应或就读一段时间后因升学风险、课程可承受性或个人适合感重新选择地区或教育路径,明确说明离开返回或再转校决定及其理由且不把此前经历全盘否定,单纯毕业或无理由的被动离校,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。
+TRANSFERRED_SELF_MANAGEMENT_PRACTICE,跨情境保留的自我管理实践,归属与身份结果,离开插班学校后仍明确保留在那里形成的计划、任务管理或自主学习做法,现在的具体实践被参与者连接到过去学校经历并跨情境延续,只说变得独立而无具体实践,,INDUCTIVE,PROPOSED,归纳分析代码；逐字例证与个案来源仅保存在受限分析层，不得作为类型、频率或普遍机制。

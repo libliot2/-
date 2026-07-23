@@ -8,9 +8,9 @@ import shutil
 
 import pandas as pd
 
-from pipeline_common import ROOT
+from pipeline_common import ROOT, RUN_ID
 
-RUN = ROOT / "outputs/agent_runs/20260723_full_pipeline/mixed_methods"
+RUN = ROOT / "outputs/agent_runs" / RUN_ID / "mixed_methods"
 TABLES = ROOT / "outputs/tables"
 REPORTS = ROOT / "outputs/reports"
 

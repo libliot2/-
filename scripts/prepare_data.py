@@ -151,7 +151,7 @@ def write_inventory(sheet_name: str, headers: list[str], rows: list[tuple[Any, .
 
 - 问卷导出与最终问卷存在少量版本差异，详见 `survey_mapping_report.md`。
 - 原始问卷含直接或准直接平台元数据；所有分析输出均排除其原值。
-- 一份访谈对应不合资格问卷记录；该文件只做映射和脱敏转录，不进入链接个案解释。
+- 三份访谈均可按文件名规则链接；新口径下三份问卷记录均合资格。
 """
     (REPORTS / "repository_inventory.md").write_text(report, encoding="utf-8")
 
@@ -232,7 +232,7 @@ def write_codebook(headers: list[str]) -> list:
     return specs
 
 
-def eligibility(raw: tuple[Any, ...]) -> tuple[bool, list[str]]:
+def legacy_eligibility(raw: tuple[Any, ...]) -> tuple[bool, list[str]]:
     reasons = []
     if raw[8] != 1:
         reasons.append("未同意参与")
@@ -247,6 +247,16 @@ def eligibility(raw: tuple[Any, ...]) -> tuple[bool, list[str]]:
     return not reasons, reasons
 
 
+def eligibility(raw: tuple[Any, ...]) -> tuple[bool, list[str]]:
+    """Expanded v2 eligibility: prior screeners are background variables."""
+    reasons = []
+    if raw[8] != 1:
+        reasons.append("未同意参与")
+    if raw[12] != 1:
+        reasons.append("未确认年满18岁")
+    return not reasons, reasons
+
+
 def write_clean(
     headers: list[str], rows: list[tuple[Any, ...]], specs: list
 ) -> pd.DataFrame:
@@ -255,9 +265,12 @@ def write_clean(
     clean_rows = []
     missing_rows = []
     exclusion_counts: collections.Counter[str] = collections.Counter()
+    legacy_exclusion_counts: collections.Counter[str] = collections.Counter()
     for row_number, raw in enumerate(rows, start=1):
         is_eligible, reasons = eligibility(raw)
+        legacy_is_eligible, legacy_reasons = legacy_eligibility(raw)
         exclusion_counts.update(reasons)
+        legacy_exclusion_counts.update(legacy_reasons)
         quality_flags = []
         completion_match = re.search(r"\d+", str(raw[3] or ""))
         completion_seconds = int(completion_match.group()) if completion_match else None
@@ -269,6 +282,14 @@ def write_clean(
             "survey_row_id": f"S{row_number:04d}",
             "eligible": "TRUE" if is_eligible else "FALSE",
             "exclusion_reason": "；".join(reasons) if reasons else "",
+            "eligibility_version": "V2_EXPANDED_TRANSFER",
+            "legacy_eligible_v1": "TRUE" if legacy_is_eligible else "FALSE",
+            "legacy_exclusion_reason_v1": "；".join(legacy_reasons) if legacy_reasons else "",
+            "eligibility_reclassification": (
+                "RETAINED_V1_ELIGIBLE"
+                if legacy_is_eligible
+                else "NEWLY_INCLUDED_V2"
+            ),
             "duplicate_flag": (
                 "EXACT_RESPONSE_DUPLICATE"
                 if response_hash_counts[tuple(raw[8:])] > 1
@@ -286,6 +307,10 @@ def write_clean(
         "questionnaire_sequence",
         "eligible",
         "exclusion_reason",
+        "eligibility_version",
+        "legacy_eligible_v1",
+        "legacy_exclusion_reason_v1",
+        "eligibility_reclassification",
         "duplicate_flag",
         "data_quality_flag",
     ]
@@ -327,10 +352,18 @@ def write_clean(
     )
     flow = [
         {"stage": "原始提交", "reason": "", "n": len(frame)},
-        {"stage": "合资格样本", "reason": "满足全部筛选条件", "n": len(eligible)},
-        {"stage": "排除", "reason": "至少一项筛选条件不满足", "n": len(frame) - len(eligible)},
+        {"stage": "V2合资格样本", "reason": "同意、成年且纳入全部内地—香港插班经历", "n": len(eligible)},
+        {"stage": "V2排除", "reason": "未满足伦理门槛", "n": len(frame) - len(eligible)},
+        {
+            "stage": "V2重新纳入",
+            "reason": "旧口径排除、按扩展插班生定义重新纳入",
+            "n": int((frame["eligibility_reclassification"] == "NEWLY_INCLUDED_V2").sum()),
+        },
     ]
-    flow.extend({"stage": "排除原因（可重叠）", "reason": reason, "n": n} for reason, n in exclusion_counts.items())
+    flow.extend(
+        {"stage": "旧口径排除原因（可重叠）", "reason": reason, "n": n}
+        for reason, n in legacy_exclusion_counts.items()
+    )
     write_csv(TABLES / "sample_flow.csv", ["stage", "reason", "n"], flow)
 
     exact_duplicates = int((frame["duplicate_flag"] == "EXACT_RESPONSE_DUPLICATE").sum())
@@ -342,11 +375,11 @@ def write_clean(
 ## 样本流程
 
 - 原始提交：{len(frame)}
-- 合资格：{len(eligible)}
-- 排除：{len(frame) - len(eligible)}
-- 排除原因按记录可重叠，完整计数见 `outputs/tables/sample_flow.csv`。
-- 主要排除原因是首次进入香港本地学校低于中二或不符合本地课程插班条件（{exclusion_counts['首次进入香港本地学校低于中二或不符合本地课程插班条件']} 份）。
-- 另有 {exclusion_counts['未确认实际迁居并居住香港']} 份未满足实际迁居条件，{exclusion_counts['未确认内地连续就读至少两个完整学年']} 份未确认内地连续就学年限。
+- V2 合资格：{len(eligible)}
+- V2 排除：{len(frame) - len(eligible)}
+- 旧口径排除、V2 重新纳入：{int((frame["eligibility_reclassification"] == "NEWLY_INCLUDED_V2").sum())}
+- V2 只保留同意与成年作为伦理门槛；内地就学年限、居住/跨境方式和首次插班年级均改作背景变量。
+- 旧口径中，首次插班低于中二或类别不满足旧定义涉及 {legacy_exclusion_counts['首次进入香港本地学校低于中二或不符合本地课程插班条件']} 份，实际迁居条件涉及 {legacy_exclusion_counts['未确认实际迁居并居住香港']} 份，内地连续就学年限涉及 {legacy_exclusion_counts['未确认内地连续就读至少两个完整学年']} 份；原因可重叠。
 
 ## 缺失与异常
 
@@ -451,7 +484,7 @@ def write_linkage(frame: pd.DataFrame) -> None:
 
 ## 处理决定
 
-所有文件名均只有一个约定数字标记，且问卷序号列唯一。一份唯一匹配记录未通过资格筛选；该访谈只保留受限脱敏审计副本，不建立合资格链接个案档案、不编码，也不参与跨个案综合。
+所有文件名均只有一个约定数字标记，且问卷序号列唯一。扩展 V2 资格口径下，三份唯一匹配记录均合资格，可建立链接个案档案并进入个案及跨个案综合。旧口径下曾有一份访谈不进入实质分析；该旧状态只作版本溯源，不沿用到 V2。
 
 本项目没有根据姓名、平台账号、IP、联系方式或访谈内容反向改写链接。
 """

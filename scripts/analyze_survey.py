@@ -427,7 +427,7 @@ def write_constructs(frame: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 本分析仅保留四个概念一致、方向一致且缺失可管理的描述性指标：同伴文化边界、学校归属、初期学业适应困难、后期学术规则理解。逐题得分为 1–5，至少 80% 题项有效才计算个人均值。
 
-`outputs/tables/exploratory_constructs.csv` 报告完整个案数、中位数、IQR 和仅供诊断的 Cronbach α。α 不被用作“量表已验证”的证据；样本量为 24，所有结果均属探索性。
+`outputs/tables/exploratory_constructs.csv` 报告完整个案数、中位数、IQR 和仅供诊断的 Cronbach α。α 不被用作“量表已验证”的证据；分析样本量为 35，各构念的实际有效 n 另见表中 `n_scored`，所有结果均属探索性。
 
 文化中介参与、文化中介压力和平台功能分工没有合成为指标：其项目数少，且内容本身代表不同维度。它们保留逐项描述，避免为便利而把概念不同的内容合并。
 
@@ -530,6 +530,7 @@ def write_associations(scores: pd.DataFrame, frame: pd.DataFrame) -> pd.DataFram
         row["bh_fdr_q"] = q
     result = pd.DataFrame(rows)
     result.to_csv(TABLES / "exploratory_associations.csv", index=False, encoding="utf-8-sig")
+    retained = result.loc[result["bh_fdr_q"] < 0.05, "analysis_id"].tolist()
     report_rows = "\n".join(
         f"- `{row.analysis_id}`：valid n={row.valid_n}，ρ={row.effect_size_rho:.3f}，"
         f"bootstrap 95% CI=[{row.bootstrap_ci_95_lower:.3f}, {row.bootstrap_ci_95_upper:.3f}]，"
@@ -542,7 +543,7 @@ def write_associations(scores: pd.DataFrame, frame: pd.DataFrame) -> pd.DataFram
 
 {report_rows}
 
-五个检验统一使用 BH-FDR 校正；校正后没有 q<0.05 的结果。所有效应只用于描述本样本排序关联，不作为因果或总体推断。尤其是“初期困难—后期规则理解”的正相关可能反映回顾性对比、规则学习过程、共同反应方式或其他未测因素，不能解释为困难带来掌握。未运行回归或因子分析。
+五个检验统一使用 BH-FDR 校正；校正后 q<0.05 的分析为：{", ".join(retained) if retained else "无"}。这些仍是口径扩展后非概率小样本中的探索性排序关联，不构成总体、因果或验证性结论。尤其是“初期困难—后期规则理解”的正相关可能反映回顾性对比、规则学习过程、共同反应方式或其他未测因素，不能解释为困难带来掌握；解释差异与疲惫的负向关联也不能解释为中介行为具有保护作用。未运行回归或因子分析。
 """
     (REPORTS / "exploratory_analysis.md").write_text(report, encoding="utf-8")
     return result
@@ -654,7 +655,7 @@ def write_findings(
 
 {chr(10).join(f"- {row.analysis_id}: valid n={row.valid_n}, ρ={row.effect_size_rho:.3f}, bootstrap 95% CI=[{row.bootstrap_ci_95_lower:.3f}, {row.bootstrap_ci_95_upper:.3f}], 置换 p={row.p_permutation:.4f}, BH-FDR q={row.bh_fdr_q:.4f}。" for row in associations.itertuples(index=False))}
 
-五个关联经 BH-FDR 校正后均无 q<0.05；样本小且来自非概率招募，只作为后续访谈解释线索。
+五个关联中，A1 与 A4 在 BH-FDR 校正后 q<0.05；其余三项没有。由于资格口径在资料收集后扩展、样本非概率且分析为探索性，这两个关联只用于描述当前 35 份样本和引导访谈解释，不作总体、因果或验证性结论。
 """
     (REPORTS / "survey_findings.md").write_text(report, encoding="utf-8")
 

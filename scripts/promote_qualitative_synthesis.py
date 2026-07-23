@@ -9,9 +9,9 @@ from pathlib import Path
 
 import pandas as pd
 
-from pipeline_common import ROOT
+from pipeline_common import ROOT, RUN_ID
 
-RUN = ROOT / "outputs/agent_runs/20260723_full_pipeline/qualitative_synthesis"
+RUN = ROOT / "outputs/agent_runs" / RUN_ID / "qualitative_synthesis"
 PROCESSED = ROOT / "data/processed"
 QUALITATIVE = ROOT / "outputs/qualitative"
 REPORTS = ROOT / "outputs/reports"
@@ -75,18 +75,19 @@ def main() -> None:
     codebook = pd.read_csv(RUN / "proposed_qualitative_codebook.csv", dtype=str, keep_default_na=False)
     segments = pd.read_csv(RUN / "coded_segments_master.csv", dtype=str, keep_default_na=False)
     framework = pd.read_csv(RUN / "framework_matrix.csv", dtype=str, keep_default_na=False)
+    mapping = pd.read_csv(PROCESSED / "interview_survey_map.csv", dtype=str, keep_default_na=False)
+    matched_ids = set(mapping.loc[mapping["mapping_status"] == "MATCHED", "participant_id"])
     if list(codebook.columns) != CODEBOOK_FIELDS:
         raise ValueError(f"Codebook schema mismatch: {list(codebook.columns)}")
     if list(segments.columns) != SEGMENT_FIELDS:
         raise ValueError(f"Coded segment schema mismatch: {list(segments.columns)}")
-    if set(framework.columns) == set(FRAMEWORK_FIELDS) - {"P03_summary", "P03_evidence"}:
-        framework["P03_summary"] = "NOT_ANALYSED_INELIGIBLE"
-        framework["P03_evidence"] = ""
-        framework = framework[FRAMEWORK_FIELDS]
     if list(framework.columns) != FRAMEWORK_FIELDS:
         raise ValueError(f"Framework schema mismatch: {list(framework.columns)}")
-    if set(segments["participant_id"]) - {"P01", "P02"}:
-        raise ValueError("Only eligible P01/P02 may appear in canonical coded segments")
+    if set(segments["participant_id"]) != matched_ids:
+        raise ValueError(
+            f"Coded segments must cover all matched cases: expected={sorted(matched_ids)} "
+            f"actual={sorted(set(segments['participant_id']))}"
+        )
     if set(codebook["source"]) - {"DEDUCTIVE", "INDUCTIVE", "MIXED"}:
         raise ValueError("Invalid qualitative code source")
     if set(codebook["status"]) - {"ACTIVE", "MERGED", "RETIRED", "PROPOSED"}:
@@ -107,13 +108,26 @@ def main() -> None:
             )
     QUALITATIVE.mkdir(parents=True, exist_ok=True)
     REPORTS.mkdir(parents=True, exist_ok=True)
-    codebook.to_csv(PROCESSED / "qualitative_codebook.csv", index=False, encoding="utf-8-sig")
+    # The canonical codebook is public-facing. Retired/merged audit rows and
+    # participant-shaped examples remain in the restricted worker output.
+    public_codebook = codebook.loc[
+        codebook["status"].isin(["ACTIVE", "PROPOSED"])
+    ].copy()
+    inductive = public_codebook["source"].isin(["INDUCTIVE", "MIXED"])
+    public_codebook.loc[inductive, "example"] = ""
+    public_codebook.loc[inductive, "notes"] = (
+        "归纳分析代码；逐字例证与个案来源仅保存在受限分析层，"
+        "不得作为类型、频率或普遍机制。"
+    )
+    public_codebook.to_csv(
+        PROCESSED / "qualitative_codebook.csv", index=False, encoding="utf-8-sig"
+    )
     segments.to_csv(QUALITATIVE / "coded_segments_master.csv", index=False, encoding="utf-8-sig")
     framework.to_csv(QUALITATIVE / "framework_matrix.csv", index=False, encoding="utf-8-sig")
     shutil.copy2(RUN / "cross_case_analysis.md", REPORTS / "cross_case_analysis.md")
     print(
         f"promoted qualitative synthesis segments={len(segments)} "
-        f"codes={len(codebook)} themes={len(framework)}"
+        f"public_codes={len(public_codebook)} themes={len(framework)}"
     )
 
 
