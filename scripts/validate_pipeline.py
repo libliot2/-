@@ -337,7 +337,12 @@ def validate_git_privacy() -> None:
         capture_output=True,
         text=True,
     ).stdout.splitlines()
-    historical_paths = [line.split(" ", 1)[1] for line in object_lines if " " in line]
+    tree_containers = {"data", "data/processed", "outputs", "outputs/reports"}
+    historical_paths = [
+        line.split(" ", 1)[1]
+        for line in object_lines
+        if " " in line and line.split(" ", 1)[1] not in tree_containers
+    ]
     history_findings = sorted({path for path in historical_paths if prohibited(path)})
     require(
         not history_findings,
