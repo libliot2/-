@@ -1,0 +1,17 @@
+# Dual-license notice
+
+Copyright (c) 2026 内地—香港学校插班经历研究项目
+
+This repository uses two licenses:
+
+1. Source code under `scripts/` is licensed under the MIT License. See
+   `LICENSE-MIT`.
+2. Original documentation, reports, tables, questionnaire materials and other
+   non-code content are licensed under the Creative Commons Attribution 4.0
+   International License (CC BY 4.0). See `LICENSE-CC-BY-4.0`.
+
+Third-party publications, bibliographic metadata, quotations and cited
+materials remain subject to their respective rights. The licenses in this
+repository do not grant access to, or permission to redistribute, any raw or
+participant-level research data. Those restricted data are not included in
+Git.

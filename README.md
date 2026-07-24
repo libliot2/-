@@ -107,6 +107,7 @@
 ├── docs/                    # 研究设计、数据契约、流水线和文献背景
 ├── research_materials/      # 问卷研究材料
 ├── scripts/                 # 清洗、分析、报告生成与验证脚本
+├── .github/                 # GitHub Actions与依赖更新配置
 ├── data/
 │   ├── raw/                 # 受限原始问卷，本地保留，不进入 Git
 │   ├── interview/           # 受限原始访谈，本地保留，不进入 Git
@@ -195,12 +196,7 @@
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install \
-  pandas==3.0.3 \
-  numpy==2.1.3 \
-  scipy==1.17.1 \
-  openpyxl==3.1.5 \
-  python-docx==1.2.0
+python -m pip install -r requirements.txt
 ```
 
 ## 复现与验证
@@ -213,6 +209,7 @@ GitHub 版本包含代码、规范、公开安全表格和经审查报告，但�
 
 ```bash
 python -m compileall -q scripts
+python3 scripts/validate_github_repository.py
 ```
 
 ### 获授权的完整本地环境
@@ -249,6 +246,8 @@ reproducibility checked=81 failures=0
 
 私有 GitHub 仓库也不自动构成适合存放这些资料的受控研究数据环境。任何后续共享必须先确认研究授权、访问范围、存储条件与去标识要求，并通过独立隐私审查。当前 `.gitignore` 是数据保护边界的一部分，不应为方便推送而删除相关规则。
 
+完整政策见[数据可用性与访问边界](DATA_AVAILABILITY.md)。
+
 ## 分析演变与版本历史
 
 Git标签记录执行批次，报告文件中的`v2`、`v3`记录报告修订代次，两者用途不同：
@@ -278,4 +277,16 @@ Git标签记录执行批次，报告文件中的`v2`、`v3`记录报告修订代
 
 > 内地—香港学校插班经历研究项目（2026）。《内地—香港学校插班经历者的学校适应、同伴关系与数字生活》。Git tag: `analysis-final`。
 
-正式对外发布前仍需补充仓库许可证和机器可读的引用文件。受限参与者资料不随任何仓库许可证授权或分发。
+GitHub可通过[`CITATION.cff`](CITATION.cff)读取机器可读引用信息。
+
+## 许可
+
+- `scripts/`中的原创代码按[MIT License](LICENSE-MIT)授权；
+- 原创文档、报告、表格和问卷材料按
+  [Creative Commons Attribution 4.0 International](LICENSE-CC-BY-4.0)
+  授权；
+- 第三方文献、引语和引用材料保留各自权利；
+- 受限参与者资料不随任何仓库许可证授权或分发。
+
+完整双许可证说明见[`LICENSE`](LICENSE)。协作和安全报告方式分别见
+[`CONTRIBUTING.md`](CONTRIBUTING.md)与[`SECURITY.md`](SECURITY.md)。

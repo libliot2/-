@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "如使用本仓库的代码、方法或研究成果，请引用此项目。"
+type: software
+title: "内地—香港学校插班经历者的学校适应、同伴关系与数字生活"
+authors:
+  - name: "内地—香港学校插班经历研究项目"
+version: "analysis-final"
+date-released: 2026-07-23
+repository-code: "https://github.com/libliot2/-"
+url: "https://github.com/libliot2/-"
+keywords:
+  - mixed methods
+  - school transfer
+  - school belonging
+  - academic socialization
+  - Mainland China
+  - Hong Kong
