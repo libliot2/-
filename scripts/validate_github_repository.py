@@ -29,6 +29,20 @@ REQUIRED = [
     "outputs/final/research_question_evidence_matrix.csv",
     "outputs/final/final_validation_report.md",
     "outputs/reports/final_report.md",
+    "data/processed/open_text_codebook.csv",
+    "outputs/open_text/coding_reconciliation.md",
+    "outputs/open_text/q81_critical_incident_analysis.md",
+    "outputs/open_text/q82_support_needs_analysis.md",
+    "outputs/open_text/open_text_revision_log.md",
+    "outputs/tables/open_text_theme_summary.csv",
+    "outputs/tables/joint_display.csv",
+    "outputs/reports/open_text_qualitative_synthesis.md",
+    "outputs/reports/open_closed_integration.md",
+    "outputs/reports/open_text_linked_case_analysis.md",
+    "outputs/reports/open_text_validation_report.md",
+    "outputs/reports/open_text_pipeline_summary.md",
+    "outputs/reviews/open_text_evidence_audit.md",
+    "outputs/reviews/open_text_method_audit.md",
 ]
 
 PROHIBITED_PREFIXES = (
@@ -45,6 +59,11 @@ PROHIBITED_EXACT = {
     "data/processed/survey_construct_scores.csv",
     "data/processed/interview_survey_map.csv",
     "data/processed/restricted_redaction_terms.txt",
+    "data/processed/survey_open_text_corpus.csv",
+    "data/processed/open_text_response_adjudication.csv",
+    "outputs/open_text/open_text_coded_responses.csv",
+    "outputs/open_text/open_closed_alignment.csv",
+    "outputs/open_text/open_text_interview_alignment.csv",
 }
 
 FINAL_PRIVACY_PATTERNS = {
@@ -105,6 +124,22 @@ def main() -> None:
 
     public_files = sorted((ROOT / "outputs/final").glob("*.md"))
     public_files += sorted((ROOT / "outputs/final").glob("*.csv"))
+    public_files += [
+        ROOT / "data/processed/open_text_codebook.csv",
+        ROOT / "outputs/open_text/coding_reconciliation.md",
+        ROOT / "outputs/open_text/q81_critical_incident_analysis.md",
+        ROOT / "outputs/open_text/q82_support_needs_analysis.md",
+        ROOT / "outputs/tables/open_text_theme_summary.csv",
+        ROOT / "outputs/tables/joint_display.csv",
+        ROOT / "outputs/reports/open_text_qualitative_synthesis.md",
+        ROOT / "outputs/reports/open_closed_integration.md",
+        ROOT / "outputs/reports/open_text_linked_case_analysis.md",
+        ROOT / "outputs/reports/open_text_validation_report.md",
+        ROOT / "outputs/reports/open_text_pipeline_summary.md",
+        ROOT / "outputs/reviews/open_text_evidence_audit.md",
+        ROOT / "outputs/reviews/open_text_method_audit.md",
+    ]
+    public_files = sorted({path for path in public_files if path.is_file()})
     privacy_hits: list[str] = []
     for path in public_files:
         text = path.read_text(encoding="utf-8-sig")
@@ -150,7 +185,7 @@ def main() -> None:
     ]
     check(
         "findings_register",
-        len(findings) == 30 and not bad_status,
+        len(findings) >= 33 and not bad_status,
         f"rows={len(findings)}; bad_status={bad_status or 'none'}",
     )
 

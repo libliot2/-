@@ -1,0 +1,48 @@
+﻿code_id,code_name,definition,include_when,exclude_when,example_excerpt,example_text_id,inductive_or_deductive,related_research_question,related_theory,status,notes
+OTC01,GROUP_FORMATION_GATE,是否能迅速找到组员或被纳入小组构成进入或距离的关口,回答明确把组队速度或分组接纳作为关键经验,一般课堂合作但未涉及进入或排除,起初同学们大多优先和熟识的同伴组队,OT-R15-Q81,MIXED,RQ1,school belonging; ecological/institutional context,ACTIVE,可与同伴邀请或既有圈优先同时编码
+OTC02,PEER_INITIATED_INVITATION,同伴主动发起交友邀约或邀请参与共同活动,同伴主动拉入小组约饭结伴或直接交朋友,仅与参与者被动同处但无主动邀约,那一刻我感受到被接纳,OT-R01-Q81,MIXED,RQ1,school belonging; relationship functions,ACTIVE,不推断邀请者动机
+OTC03,TEACHER_PERSONAL_RECOGNITION,教师以点名询问或主动注意的方式确认学生的在场和参与机会,教师主动叫名字并询问参与意愿,一般授课或规则说明,大家都笑了，只有自己没明白什么意思,OT-R10-Q81,INDUCTIVE,RQ1,school belonging; relationship functions,ACTIVE,强调被看见而非一般行政安排
+OTC04,TEACHER_RELATIONAL_CONVERSATION,教师在非正式情境中倾听并交流适应经验,参与者描述与教师谈心或分享差异和困难,只报告教师授课或分组,,,INDUCTIVE,RQ1,school belonging; relationship functions,ACTIVE,非正式地点本身不是必要条件
+OTC05,SHARED_EVERYDAY_ROUTINE,吃饭同行如厕或放学等日常共同行动成为关系接近的场景,回答把非正式日常活动与进入关系联系,只有正式小组任务且无课后延伸,被人惦记的感觉,OT-R06-Q81,MIXED,RQ1,school belonging; relationship functions,ACTIVE,不把日常共处自动等同深关系
+OTC06,COLLABORATIVE_TASK_ENTRY,小组作业课题或汇报提供可共同做事和接触的入口,任务合作被描述为关系变化的关键场景,只提学术规则而无合作关系经验,那一刻我感受到被接纳,OT-R01-Q81,MIXED,RQ1;RQ2,school belonging; academic socialization,ACTIVE,任务也可能继续维持距离
+OTC07,LANGUAGE_PACING_OR_EXPLANATION,同伴通过放慢语速换用易懂表达或解释用语来维持互动,回答明确描述语言节奏调整或现场解释,仅报告语言不同但无人提供调节,那一刻我感受到被接纳,OT-R01-Q81,MIXED,RQ1,boundary work; relationship functions,ACTIVE,不判断是否属于能力补救
+OTC08,SPOKEN_LANGUAGE_ACCESS_BARRIER,听说粤语或英语的可理解性直接阻碍课堂或闲聊参与,参与者明确说听不懂跟不上或因不流利而退缩,粤语流利但不熟悉本地共同经历,很少主动和我搭话,OT-R05-Q81,MIXED,RQ1,boundary work,ACTIVE,与本地参照缺口区分
+OTC09,LOCAL_REFERENT_GAP,本地童年地区流行文化笑话或共同经历使参与者难以接话,语言本身可懂但话题背景不熟或笑点不明,只描述语速或一般语言能力,那一刻我感受到被接纳,OT-R01-Q81,MIXED,RQ1,boundary work,ACTIVE,不得自动归因于固定文化差异
+OTC10,CONTRIBUTION_RECOGNITION,同伴对参与者的观点技能或行动给予正向承认,观点被听取球技被称赞或参与获得明确肯定,只有邀请但未出现贡献被认可,那种被认可的感觉,OT-R25-Q81,MIXED,RQ1;RQ2,school belonging; learner identity,ACTIVE,认可可发生于学术或非学术场景
+OTC11,STRENGTH_BASED_ROLE,共同任务按参与者擅长之处分配实质角色,明确把擅长的资料或文字工作交给参与者,一般分工但未提个人优势,,,MIXED,RQ1;RQ2,learner identity,ACTIVE,不推断能力客观高低
+OTC12,RELATIONSHIP_EXTENSION_BEYOND_TRIGGER,一次任务之后关系延伸到聊天同行吃饭或持续互助,明确出现从触发事件到后续非正式互动,只描述一次性任务或当场感受,不再是班里的外来者,OT-R03-Q81,MIXED,RQ1,school belonging; relationship functions; temporal trajectory,ACTIVE,可作为叙述中的后续影响
+OTC13,DIGITAL_GROUP_ENTRY,线下事件后被纳入班级线上群组,明确提到被加入群组或线上群成为进入结果,只泛称平台或线上学习但无关系进入,不再是班里的外来者,OT-R03-Q81,MIXED,RQ3,platform and relationship functions,ACTIVE,平台被视为关系过程的一环
+OTC14,SOLITARY_OR_PERIPHERAL_POSITION,参与者描述独坐独自行动旁观或在班级边缘,明确出现独自旁观游离或无人搭话,仅说陌生但未描述关系位置,很少主动和我搭话,OT-R05-Q81,MIXED,RQ1,school belonging,ACTIVE,不把沉默自动解释为主动退缩
+OTC15,ESTABLISHED_PEER_CIRCLE_PRIORITY,原有熟人组队或既有同伴结伴使新来者暂时难以进入,回答明确说同学优先找熟识者或已结伴,单纯没有邀请但未说明既有圈优先,起初同学们大多优先和熟识的同伴组队,OT-R15-Q81,MIXED,RQ1,school belonging; ecological/institutional context,ACTIVE,属于情境性关系结构解释
+OTC16,EXTRACURRICULAR_OR_SPORT_ENTRY,运动会体育或课外活动成为被邀请或获得认可的关系入口,关键事件发生在运动或正式课堂外活动,一般小组课业或吃饭,那种被认可的感觉,OT-R25-Q81,MIXED,RQ1,school belonging; relationship functions,ACTIVE,与学术任务入口形成对照
+OTC17,SOCIAL_UPTAKE_OR_FOLLOWERSHIP,参与者以他人开始追随或进入朋友圈描述社会位置改变,原文直接使用追随或开始进入朋友圈等笼统表述,有具体邀请或任务过程时优先使用更具体代码,开始进入朋友圈子,OT-R33-Q81,INDUCTIVE,RQ1,school belonging (weak fit),ACTIVE,含义较模糊时降低置信度；综合后只作低置信度社会位置描述，不进入机制判断
+OTC18,FELT_CARE_AND_EMOTIONAL_RELIEF,被惦记被照顾或互动带来明显舒服安心感,回答明确表达被关照后的情绪舒缓,一般被邀请但无情绪评价,被人惦记的感觉,OT-R06-Q81,INDUCTIVE,RQ1,relationship functions; school belonging,ACTIVE,不推断持续心理状态
+OTC19,MIXED_INCLUSION_AND_DISTANCE,同一回答同时保留进入与距离经验,同一人明确叙述一方面融入另一方面仍插不上话或有距离,不同回答者分别报告进入和距离,那一刻我感受到被接纳,OT-R01-Q81,MIXED,RQ1,school belonging; boundary work,ACTIVE,属于回答层面的方向共存
+OTC20,SELF_RESTRAINT_OR_ANTICIPATED_AWKWARDNESS,担心语言表现或群体活动尴尬而收缩参与,原文说怕跟不上局促不敢主动或预期尴尬,只有外部排斥但无自我收缩,不再是班里的外来者,OT-R03-Q81,INDUCTIVE,RQ1,agency and structure; boundary work,ACTIVE,可能来自语言陌生或一般性格等多种解释
+OTC21,PEER_RULE_EXPLANATION,同伴在具体合作中解释课堂作业表达或校园规则,回答明确说同伴说明本地课业要求课堂习惯或用语,教师一般性规则讲解,起初同学们大多优先和熟识的同伴组队,OT-R15-Q81,MIXED,RQ1;RQ2,academic socialization; hidden curriculum,ACTIVE,关系支持与规则支持可重叠
+OTC22,VIEWPOINT_TAKEN_SERIOUSLY,同伴在合作中耐心听取并讨论参与者观点,明确描述倾听想法或认真讨论,只分配任务但未涉及观点,愿意耐心听我的想法,OT-R30-Q81,MIXED,RQ1,school belonging; learner identity,ACTIVE,与技能认可区分
+OTC23,PROACTIVE_CHECK_IN,学校教师或同伴主动询问插班者现况并持续关注适应,明确提出多询问多关注或追踪适应情况,仅提供一次性信息,多询问插班生的情况,OT-R23-Q82,MIXED,RQ1;RQ2,relationship functions; institutional context,ACTIVE,支持内容可能未具体化
+OTC24,INDIVIDUALIZED_NEED_ASSESSMENT,支持应先了解语言性格能力或个人需要再安排,回答强调人各有异或了解每名学生具体状况,将所有插班生视为同一需要,香港学校已经做得相当之好了,OT-R10-Q82,MIXED,RQ1;RQ2,ecological/institutional context,ACTIVE,不将性格标签当作固定类别
+OTC25,STRUCTURED_PEER_BUDDY_OR_SEATING,由学校安排结对老生帮助座位邻近或朋辈桥梁,提出明确的结对座位或新老生桥接机制,一般希望同伴友善但无结构安排,可以先了解做一个预备的工作,OT-R06-Q82,MIXED,RQ1;RQ2,relationship functions; school belonging,ACTIVE,包括正式或半正式朋辈支持
+OTC26,EMOTIONAL_SUPPORT,希望获得情绪支持并关注焦虑压力或排斥相关感受,明确提出情绪问题情绪支援或关注情绪变化,仅提学业压力但无情绪支持诉求,香港学校已经做得相当之好了,OT-R10-Q82,MIXED,RQ1;RQ2,school belonging; relationship functions,ACTIVE,不作临床心理推断
+OTC27,ADAPTATION_TIME,要求承认转入新环境需要缓冲磨合或逐步适应,明确提出需要时间过渡期或不要因初期表现下结论,仅陈述差异但未提时间,不是学习能力薄弱,OT-R03-Q82,MIXED,RQ1;RQ2,temporal trajectory; academic socialization,ACTIVE,回顾性诉求不证明具体所需时长
+OTC28,ANTI_DEFICIT_STEREOTYPE,反对把制度陌生沉默或语言困难等同于能力差内向或不愿融入,回答明确否定能力薄弱不愿参与或性格解释,只说需要帮助但未反驳标签,不是学习能力薄弱,OT-R03-Q82,MIXED,RQ1;RQ2,learner identity; boundary work,ACTIVE,以参与者表达为准而非研究者替其辩护
+OTC29,CURRICULUM_AND_CONTENT_BRIDGE,希望说明或补足课程体系教材进度和知识内容差异,明确要求衔接课程梳理大纲或补足落下课业,只要求评分规则说明,不是学习能力薄弱,OT-R03-Q82,MIXED,RQ2,academic socialization,ACTIVE,内容衔接与能力评价分开
+OTC30,ASSESSMENT_AND_RULE_CLARITY,希望清楚说明作业评分课堂活动或校园隐性规则,明确提出规则标准要求评价方式的解释,只希望补充知识内容,同学们不用刻意迁就改成普通话,OT-R04-Q82,MIXED,RQ2,academic socialization; hidden curriculum,ACTIVE,包含提前告知规则；只有明确表示规则未预先告知时才进一步解释为hidden curriculum
+OTC31,LANGUAGE_AND_TERMINOLOGY_SUPPORT,希望在粤语英语学科术语或陌生用语方面得到支持,明确提到语言兼顾术语标注解释或交流调整,只讨论本地话题但无语言支持诉求,同学们不用刻意迁就改成普通话,OT-R04-Q82,MIXED,RQ1;RQ2,academic socialization; boundary work,ACTIVE,支持不必等于改用普通话
+OTC32,PEER_INITIATED_CONTACT,希望同学主动搭话邀约分享并创造自然互动机会,回答提出同学多主动交流分享或邀请,结构化结对安排另编码IND25,同学们不用刻意迁就改成普通话,OT-R04-Q82,MIXED,RQ1,school belonging; relationship functions,ACTIVE,不假定接受者必须回应
+OTC33,TEACHER_ASSIGNED_GROUPING,希望教师在分组时主动配置成员以促进接触,明确要求老师分配小组或避免组队落单,一般朋辈结对或自行组队,,,MIXED,RQ1;RQ2,ecological/institutional context,ACTIVE,教师介入的影响需要后续资料检验
+OTC34,MULTI_DOMAIN_ADAPTATION_PRESSURE,同时适应语言课程社交环境或旧关系带来复合负担,一条回答明确并列多个适应领域或总体压力,只提出单项语言或学业困难,有很多的规则是并不理解也并不提前知道的,OT-R20-Q82,MIXED,RQ1;RQ2,ecological/institutional context; temporal trajectory,ACTIVE,不解释为个体脆弱
+OTC35,SILENCE_OR_HESITATION_MISREAD,参与者提醒沉默或少参与可能来自陌生不安而非拒绝沟通,明确反驳对沉默不参与的动机判断,一般性反刻板印象但未涉及参与行为,不是学习能力薄弱,OT-R03-Q82,MIXED,RQ1;RQ2,learner identity; school belonging,ACTIVE,原文有语病时只作保守概括
+OTC36,DIFFERENCE_TOLERANCE_AND_EQUAL_INTERACTION,希望差异被包容并获得平等而不过度特殊化的互动机会,明确提出包容平等或减少标签隔阂,仅要求单向补救,多给予包容与平等沟通的机会,OT-R30-Q82,MIXED,RQ1,school belonging; boundary work,ACTIVE,可与个别化支持并存
+OTC37,PREPARATORY_ORIENTATION,希望在正式参与前得到课堂模式校园或活动流程的预备介绍,回答提出预备工作提前熟悉或入学导向,事后补救而无提前准备,同学们不用刻意迁就改成普通话,OT-R04-Q82,MIXED,RQ1;RQ2,academic socialization; institutional context,ACTIVE,含线上小组时另加IND43
+OTC38,COMMUNICATION_FLEXIBILITY_WITHOUT_OVERACCOMMODATION,希望互动者灵活调整表达但不把普通话切换视为唯一照顾方式,明确提出可换普通话或反过来说无需刻意迁就,泛泛提出语言支持而无互动偏好,同学们不用刻意迁就改成普通话,OT-R04-Q82,MIXED,RQ1,agency and structure; contextual adaptation,ACTIVE,保留不同参与者对语言帮助的相反偏好
+OTC39,CONFIDENCE_BUILDING,希望支持关注个人能力差异并提升自信,明确提出提升插班生自信或能力肯定,只要求情绪支持但无自信内容,,,MIXED,RQ1;RQ2,learner identity,ACTIVE,不推断原本自信水平
+OTC40,ACADEMIC_CATCH_UP_SUPPORT,希望教师帮助补齐转入时已错过或不同步的课业,明确提出补齐落下课业或跟进进度,一般课程体系说明,,,MIXED,RQ2,academic socialization,ACTIVE,可能与课程衔接合并但先保留细分
+OTC41,OLD_RELATIONSHIP_MAINTENANCE_LOAD,同时维持原有社交关系被描述为适应压力的一部分,明确提到兼顾旧社交或维持旧关系的负担,只提新同伴进入,兼顾旧社交,OT-R35-Q82,MIXED,RQ1;RQ3,relationship functions; temporal trajectory,ACTIVE,单一回答中的新主题
+OTC42,EXISTING_SUPPORT_ACKNOWLEDGED,参与者在提出需要的同时说明既有学校支持已有成效,明确正面评价现有支援,仅提出未满足需求,香港学校已经做得相当之好了,OT-R10-Q82,MIXED,RQ1;RQ2,institutional context,ACTIVE,防止把所有建议写成完全缺口
+OTC43,ONLINE_GROUP_ONBOARDING,希望对线上学习群组加入方式或互动流程提供入门帮助,明确提到线上学习加入小组的不适应及预备支持,线下朋辈桥接但无线上内容,可以先了解做一个预备的工作,OT-R06-Q82,MIXED,RQ3,platform and relationship functions,ACTIVE,区别于已被拉入班级群的IND13
+OTC44,UNSPECIFIED_OR_UNCERTAIN_SUPPORT,回答提出需要支持但内容极简或明确表示不知道,回答为不知道或仅给出宽泛支持方向且无法进一步分类,虽短但明确指向某种具体支持,人各有异 需要什么提供什么就行,OT-R22-Q82,INDUCTIVE,RQ1;RQ2,,ACTIVE,不因信息少而排除回答
+OTC45,EXPLICIT_BELONGING_OR_INCLUSION,参与者直接把事件或关系描述为被接纳、成为班级一员或融入。,原文明示被接纳、班级成员感、融入或不再是外来者。,只有邀请或共同活动而未表达成员感。,那一刻我感受到被接纳,OT-R01-Q81,MIXED,RQ1,school belonging,ACTIVE,一次事件中的成员感不代表整体或长期归属；可与具体距离经验并存。
+OTC46,UNANNOUNCED_RULES,参与者明确指出规则未被提前说明，因而在课堂或活动中难以理解。,原文同时出现不理解规则及事前不知道或未获说明。,一般课程差距、陌生术语或正式评分标准说明需求。,有很多的规则是并不理解也并不提前知道的,OT-R20-Q82,DEDUCTIVE,RQ2,hidden curriculum; academic socialization,ACTIVE,仅一条回答直接达到本代码阈值；不把所有陌生要求都称为hidden curriculum。
+OTC47,SEQUENTIAL_DISTANCE_TO_ENTRY,同一回答先叙述初期门槛或未获邀，后叙述进入事件；不表示距离在进入后仍持续。,两个阶段或事件顺序清楚，后段进入是焦点,进入与距离在相近时期持续并存；或回答只包含进入/距离一端,起初同学们大多优先和熟识的同伴组队,OT-R15-Q81,MIXED,RQ1,temporal trajectory; school belonging,ACTIVE,与OTC19持续并存分开；当前仅一条。

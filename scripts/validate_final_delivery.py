@@ -59,6 +59,7 @@ MATRIX_COLUMNS = [
 ]
 SCOPES = {
     "complete survey sample",
+    "survey open-text sub-sample",
     "interview sub-sample",
     "within-case linked evidence",
     "cross-case interpretation",

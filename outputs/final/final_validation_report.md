@@ -7,9 +7,9 @@
 | 检查 | 状态 | 说明 |
 |---|---|---|
 | final_required_outputs | PASS | missing=none |
-| findings_register_schema | PASS | rows=30; bad_scopes=none |
+| findings_register_schema | PASS | rows=33; bad_scopes=none |
 | findings_have_traceable_basis | PASS | untraced=none |
-| rq_evidence_matrix_schema | PASS | rows=15; RQs=['RQ1', 'RQ2', 'RQ3'] |
+| rq_evidence_matrix_schema | PASS | rows=18; RQs=['RQ1', 'RQ2', 'RQ3'] |
 | evidence_hierarchy_abcd | PASS | A/B/C/D sections present |
 | sample_and_unique_linkage | PASS | survey=35/35; excluded=0; reclassified=11; links=3 unique |
 | qualitative_and_alignment_counts | PASS | coded=84; alignment={'EXPANSION': 34, 'CONVERGENCE': 21, 'SILENCE': 11, 'DIVERGENCE': 9} |
@@ -20,7 +20,7 @@
 | canonical_report_promoted | PASS | canonical final_report.md equals final_research_report.md |
 | public_privacy | PASS | files=17; hits=none |
 | summary_body_consistency | PASS | missing=none |
-| executive_summary_length | PASS | non_whitespace_characters=1781 |
+| executive_summary_length | PASS | non_whitespace_characters=1726 |
 | scope_and_causal_guardrails | PASS | unqualified_lines=0; missing_guardrails=none |
 | independent_reviews_and_resolution | PASS | two independent public reviews present; main-agent resolution records zero unresolved major issues |
 | academic_pipeline_failure_mode_checklist | PASS | implementation_bug=PASS; hallucinated_result=PASS; shortcut_reliance=PASS; bug_as_insight=PASS; method_fabrication=PASS; pipeline_frame_lock=PASS; citation_hallucination=PASS |

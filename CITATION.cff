@@ -4,8 +4,8 @@ type: software
 title: "内地—香港学校插班经历者的学校适应、同伴关系与数字生活"
 authors:
   - name: "内地—香港学校插班经历研究项目"
-version: "analysis-final"
-date-released: 2026-07-23
+version: "analysis-v5-open-text"
+date-released: 2026-07-24
 repository-code: "https://github.com/libliot2/-"
 url: "https://github.com/libliot2/-"
 keywords:

@@ -25,6 +25,8 @@ data/processed/survey_clean.csv
 data/processed/survey_construct_scores.csv
 data/processed/interview_survey_map.csv
 data/processed/restricted_redaction_terms.txt
+data/processed/survey_open_text_corpus.csv
+data/processed/open_text_response_adjudication.csv
 data/processed/linked_cases/
 data/processed/interviews/
 
@@ -36,9 +38,14 @@ outputs/agent_runs/20260723_full_pipeline/survey/
 outputs/agent_runs/20260723_full_pipeline/qualitative_synthesis/
 outputs/agent_runs/20260723_full_pipeline/mixed_methods/
 outputs/qualitative/
+outputs/open_text/open_text_coded_responses.csv
+outputs/open_text/open_closed_alignment.csv
+outputs/open_text/open_text_interview_alignment.csv
 outputs/tables/*
 !outputs/tables/exploratory_extension_v2.csv
 !outputs/tables/mechanism_propositions_v3.csv
+!outputs/tables/joint_display.csv
+!outputs/tables/open_text_theme_summary.csv
 
 # Generated internal reports remain local. Only the reviewed public-safe
 # deliverables and independent audits are committed.
@@ -63,3 +70,8 @@ outputs/reports/*
 !outputs/reports/final_report_v3.md
 !outputs/reports/validation_report_v3.md
 !outputs/reports/pipeline_summary_v3.md
+!outputs/reports/open_closed_integration.md
+!outputs/reports/open_text_linked_case_analysis.md
+!outputs/reports/open_text_qualitative_synthesis.md
+!outputs/reports/open_text_validation_report.md
+!outputs/reports/open_text_pipeline_summary.md

@@ -1,14 +1,14 @@
 # 内地—香港学校插班经历者的学校适应、同伴关系与数字生活
 
-本仓库保存一项本科课程层级的探索性链接混合方法研究。项目分析具有内地—香港学校插班经历者的同伴边界、学校归属、教育制度适应和数字平台实践，并通过三轮分析、独立复核及最终版本协调形成可审计的研究成果。
+本仓库保存一项本科课程层级的探索性链接混合方法研究。项目分析具有内地—香港学校插班经历者的同伴边界、学校归属、教育制度适应和数字平台实践，并通过基础分析、独立复核、多理论再分析、最终版本协调及开放题全量语义分析形成可审计成果。
 
-> **最终版本：** `analysis-final`<br>
-> **最终验证：** 18/18 项通过；完整本地再生检查 81/81 项通过<br>
+> **当前版本：** `analysis-v5-open-text`（保留`analysis-final`及此前版本）<br>
+> **验证：** 最终整理18/18、第五轮25/25、公开仓库8/8、完整再生101/101项通过<br>
 > **数据边界：** 原始问卷、访谈、逐行转写和问卷—访谈连接表不提交 Git
 
 ## 合作者快速导航
 
-`analysis-final`是当前规范结论，但仓库同时保留了研究设计、早期版本、独立审查、理论扩展和可复现脚本。可按目的选择入口：
+`analysis-v5-open-text`是当前规范结论；仓库同时保留`analysis-final`、早期版本、独立审查、理论扩展和可复现脚本。可按目的选择入口：
 
 | 想了解的内容 | 建议先读 | 继续追踪 |
 |---|---|---|
@@ -18,6 +18,7 @@
 | 结论如何跨版本变化 | [版本协调](outputs/final/version_reconciliation.md) | [最终结论登记册](outputs/final/findings_register.csv) |
 | 第二轮独立复核 | [v2修订记录](outputs/reports/revision_log_v2.md) | [量化审查](outputs/reviews/quantitative_audit_v2.md)、[质性审查](outputs/reviews/qualitative_audit_v2.md)、[整合审查](outputs/reviews/integration_audit_v2.md) |
 | 第三轮理论再分析 | [理论扩展报告](outputs/reports/theoretical_extension_report_v3.md) | [跨框架综合](outputs/reports/cross_framework_synthesis_v3.md)、[机制命题](outputs/tables/mechanism_propositions_v3.csv) |
+| 第五轮开放题分析 | [开放题质性综合](outputs/reports/open_text_qualitative_synthesis.md) | [Q8.1关键事件](outputs/open_text/q81_critical_incident_analysis.md)、[Q8.2支持需要](outputs/open_text/q82_support_needs_analysis.md)、[主题表](outputs/tables/open_text_theme_summary.csv) |
 | 文献依据 | [文献综述](docs/literature_context/literature_review.md) | [证据索引](docs/literature_context/evidence_index.csv)、[参考文献](docs/literature_context/references.bib) |
 | 隐私、复现与质量保证 | [最终验证](outputs/final/final_validation_report.md) | [隐私与复现审查](outputs/reviews/reproducibility_privacy_audit_v2.md)、[最终证据审查](outputs/final/final_evidence_audit.md) |
 | 继续运行或修改分析 | [分析流水线](docs/analysis_pipeline.md) | [数据契约](docs/data_contract.md)、`scripts/` |
@@ -39,8 +40,11 @@
   - 21 条一致；
   - 11 条未覆盖；
   - 9 条分歧。
+- Q8.1和Q8.2各26名开放题作答者，共52条文本、47个正式代码；
+- 93项开放—封闭题对照：51项扩展、36项一致、3项未覆盖、3项严格分歧；
+- 三名链接访谈者的6条开放回答均完成开放题—封闭题—访谈三源对照。
 
-问卷描述完整样本；三份访谈只用于解释链接个案、矛盾和可能机制，不代表完整样本或总体。研究为非概率、回顾性、横截面设计，不支持因果推断。
+封闭问卷描述35份样本；开放题只描述两题各26名自选作答者的主动表达；三份访谈只解释链接个案、矛盾和可能机制。研究为非概率、回顾性、横截面设计，不支持因果推断。
 
 详细方法见：
 
@@ -51,11 +55,12 @@
 
 ## 证据层次与结论状态
 
-本项目刻意区分五种证据范围，避免把三份访谈推广到35份问卷或把文献当作参与者资料：
+本项目刻意区分六种证据范围，避免把开放题或三份访谈推广到35份问卷，也不把文献当作参与者资料：
 
 | 证据范围 | 可以回答 | 不能回答 |
 |---|---|---|
 | 完整问卷样本 | 当前35份问卷中的分布、分母和探索性关联 | 香港所有插班生的总体情况 |
+| 开放题作答子样本 | Q8.1/Q8.2各26名作答者主动写出的事件、需要和反例 | 35人的经历率、需要率或未作答者经验 |
 | 访谈子样本 | 三份访谈覆盖了哪些经验 | 主题饱和或总体频率 |
 | 个案内链接 | 同一人的问卷与访谈如何一致、扩展或分歧 | 哪一种资料源必然“更真实” |
 | 跨个案解释 | 三案有哪些共同分析边界、差异和反例 | 固定适应类型或共同因果路径 |
@@ -78,6 +83,8 @@
 4. **获得支持不等于支持充分。** “帮助较大”“帮助有限”和“未获得但希望获得”是不同状态，不能合并为是否获得支持。
 5. **平台变化更接近并存与功能分工。** 微信有 26/35 保留、6/35 停止；WhatsApp 有 26/35 后期采用，Instagram 有 22/35 后期采用。
 6. **平台和文化中介均有明确解释边界。** 平台选择不能代理文化认同或本地同伴圈进入；少量具体解释行动也不能证明稳定的文化中介身份。
+7. **进入与距离可以持续并存或顺序反转。** Q8.1作答者中，焦点方向为进入16/26、距离4/26、混合6/26；混合包括持续并存5/26和顺序反转1/26。同伴邀请15/26、共同任务14/26、本地共同参照缺口11/26均为主动提及，不是经历率。
+8. **支持建议不等于支持缺口。** Q8.2作答者主动提到适应时间12/26、语言或术语支持12/26、课程衔接11/26及反缺陷化判断8/26；语言支持偏好并不统一。
 
 完整证据及限定条件见：
 
@@ -114,7 +121,8 @@
 │   └── processed/           # 公开代码本及受限参与者级派生资料
 ├── outputs/
 │   ├── final/               # 当前应优先阅读的最终交付
-│   ├── reports/             # v1—v3 报告、修订及流水线记录
+│   ├── open_text/           # 第五轮公开计划、代码协调与分题分析
+│   ├── reports/             # v1—v5 报告、修订及流水线记录
 │   ├── reviews/             # 独立审查记录
 │   ├── tables/              # 获准提交的汇总/探索表格
 │   └── theory/              # 第三轮理论框架比较
@@ -140,9 +148,14 @@
        ├─ exploratory_extension_v2.py
        └─ explore_theory_configurations_v3.py
 
+Q8.1/Q8.2开放题
+  └─ prepare_open_text_v5.py → 两条独立语义编码 → 代码协调
+       └─ 开放—封闭及三源对照 → integrate_open_text_v5.py
+
 版本化成果
   └─ 报告生成脚本 → promote_final_delivery.py
-       └─ validate_final_delivery.py → verify_reproducibility.py
+       └─ validate_final_delivery.py + validate_open_text_v5.py
+            └─ verify_reproducibility.py
 ```
 
 脚本按功能分组：
@@ -155,7 +168,8 @@
 | 质性与混合方法提升 | `promote_qualitative_synthesis.py`、`promote_mixed_methods.py` | 规范编码、框架矩阵和joint display |
 | 第二轮复核扩展 | `revise_qualitative_v2.py`、`exploratory_extension_v2.py` | 修订后的对照、支持缺口、平台转换和稳健性结果 |
 | 第三轮理论探索 | `explore_theory_configurations_v3.py` | 异常配置、提示语审计和理论综合输入 |
-| 最终晋升与验证 | `promote_final_delivery.py`、`validate_final_delivery.py`、`verify_reproducibility.py` | 规范报告、最终验证和逐字节再生检查 |
+| 第五轮开放题 | `prepare_open_text_v5.py`、`build_open_text_context_v5.py`、`integrate_open_text_v5.py` | 受限语料、主题表、整合表和修订后的公开证据矩阵 |
+| 最终晋升与验证 | `promote_final_delivery.py`、`validate_final_delivery.py`、`validate_open_text_v5.py`、`verify_reproducibility.py` | 规范报告、两层验证和逐字节再生检查 |
 
 `scripts/agent_runs/`中的文件是早期代理运行留档，不是当前优先入口；新修改应使用根级规范脚本。
 
@@ -225,13 +239,15 @@ python3 scripts/validate_github_repository.py
 ```bash
 python3 scripts/verify_reproducibility.py
 python3 scripts/validate_final_delivery.py
+python3 scripts/validate_open_text_v5.py
 ```
 
 最终封版时的结果为：
 
 ```text
 final validation checks=18 result=PASS
-reproducibility checked=81 failures=0
+open-text checks=25 result=PASS
+reproducibility checked=101 failures=0
 ```
 
 ## 数据隐私与可用性
@@ -259,8 +275,9 @@ Git标签记录执行批次，报告文件中的`v2`、`v3`记录报告修订代
 | `analysis-v3` | 独立复核与补充探索 | 修正多选限额、复合题、问卷—访谈裁决、公开隐私和探索性分级 | [v2报告](outputs/reports/final_report_v2.md)、[v2总结](outputs/reports/pipeline_summary_v2.md) |
 | `analysis-v4` | 多理论与开放式再分析 | 比较多个理论框架，加入竞争解释、异常组合和机制命题 | [v3报告](outputs/reports/final_report_v3.md)、[v3总结](outputs/reports/pipeline_summary_v3.md) |
 | `analysis-final` | 项目总梳理 | 调和全部版本，筛选A/B/C/D级结论，形成课程研究最终交付 | [最终报告](outputs/final/final_research_report.md)、[项目总结](outputs/final/final_project_summary.md) |
+| `analysis-v5-open-text` | 开放题全量质性分析 | 逐条编码Q8.1/Q8.2，完成开放—封闭及三源整合并修订最终报告 | [开放题综合](outputs/reports/open_text_qualitative_synthesis.md)、[第五轮总结](outputs/reports/open_text_pipeline_summary.md) |
 
-重要变化的逐条依据见[v2修订记录](outputs/reports/revision_log_v2.md)、[v3理论修订记录](outputs/reports/theoretical_revision_log_v3.md)和[最终审查处置](outputs/final/final_review_resolution.md)。
+重要变化的逐条依据见[v2修订记录](outputs/reports/revision_log_v2.md)、[v3理论修订记录](outputs/reports/theoretical_revision_log_v3.md)、[最终审查处置](outputs/final/final_review_resolution.md)和[开放题修订记录](outputs/open_text/open_text_revision_log.md)。
 
 ## 主要局限
 
@@ -269,13 +286,14 @@ Git标签记录执行批次，报告文件中的`v2`、`v3`记录报告修订代
 - 初期、香港校内后期和当前回顾不是等值纵向测量；
 - 自编探索指标不是经过验证的标准量表；
 - 多选限额、缺失导出列和访谈提纲缺失限制部分解释；
+- Q8.1/Q8.2各26名自选作答者，题干可能塑造转折或建议式叙述；AI双路径编码不等于人工编码者间一致性；
 - 当前设计不能识别因果、学校效果或总体代表性。
 
 ## 引用
 
 建议引用当前最终版本：
 
-> 内地—香港学校插班经历研究项目（2026）。《内地—香港学校插班经历者的学校适应、同伴关系与数字生活》。Git tag: `analysis-final`。
+> 内地—香港学校插班经历研究项目（2026）。《内地—香港学校插班经历者的学校适应、同伴关系与数字生活》。Git tag: `analysis-v5-open-text`。
 
 GitHub可通过[`CITATION.cff`](CITATION.cff)读取机器可读引用信息。
 
