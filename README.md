@@ -6,6 +6,22 @@
 > **最终验证：** 18/18 项通过；完整本地再生检查 81/81 项通过<br>
 > **数据边界：** 原始问卷、访谈、逐行转写和问卷—访谈连接表不提交 Git
 
+## 合作者快速导航
+
+`analysis-final`是当前规范结论，但仓库同时保留了研究设计、早期版本、独立审查、理论扩展和可复现脚本。可按目的选择入口：
+
+| 想了解的内容 | 建议先读 | 继续追踪 |
+|---|---|---|
+| 5分钟掌握研究 | [一页式发现摘要](outputs/final/key_findings_one_page.md) | [执行摘要](outputs/final/executive_summary.md) |
+| 完整研究结论 | [最终研究报告](outputs/final/final_research_report.md) | [研究问题—证据矩阵](outputs/final/research_question_evidence_matrix.csv) |
+| 样本、资格口径和方法 | [研究设计](docs/research_design.md) | [分析决定](notes/analysis_decisions.md)、[方法与审计摘要](outputs/final/methods_and_audit_summary.md) |
+| 结论如何跨版本变化 | [版本协调](outputs/final/version_reconciliation.md) | [最终结论登记册](outputs/final/findings_register.csv) |
+| 第二轮独立复核 | [v2修订记录](outputs/reports/revision_log_v2.md) | [量化审查](outputs/reviews/quantitative_audit_v2.md)、[质性审查](outputs/reviews/qualitative_audit_v2.md)、[整合审查](outputs/reviews/integration_audit_v2.md) |
+| 第三轮理论再分析 | [理论扩展报告](outputs/reports/theoretical_extension_report_v3.md) | [跨框架综合](outputs/reports/cross_framework_synthesis_v3.md)、[机制命题](outputs/tables/mechanism_propositions_v3.csv) |
+| 文献依据 | [文献综述](docs/literature_context/literature_review.md) | [证据索引](docs/literature_context/evidence_index.csv)、[参考文献](docs/literature_context/references.bib) |
+| 隐私、复现与质量保证 | [最终验证](outputs/final/final_validation_report.md) | [隐私与复现审查](outputs/reviews/reproducibility_privacy_audit_v2.md)、[最终证据审查](outputs/final/final_evidence_audit.md) |
+| 继续运行或修改分析 | [分析流水线](docs/analysis_pipeline.md) | [数据契约](docs/data_contract.md)、`scripts/` |
+
 ## 研究问题
 
 1. **同伴边界、归属与文化中介：** 学生如何进入并协商香港学校中的同伴关系？边界事件、成员感、身份表达和具体文化解释行动如何并存？
@@ -32,6 +48,27 @@
 - [分析流水线](docs/analysis_pipeline.md)
 - [数据契约](docs/data_contract.md)
 - [最终方法与审计摘要](outputs/final/methods_and_audit_summary.md)
+
+## 证据层次与结论状态
+
+本项目刻意区分五种证据范围，避免把三份访谈推广到35份问卷或把文献当作参与者资料：
+
+| 证据范围 | 可以回答 | 不能回答 |
+|---|---|---|
+| 完整问卷样本 | 当前35份问卷中的分布、分母和探索性关联 | 香港所有插班生的总体情况 |
+| 访谈子样本 | 三份访谈覆盖了哪些经验 | 主题饱和或总体频率 |
+| 个案内链接 | 同一人的问卷与访谈如何一致、扩展或分歧 | 哪一种资料源必然“更真实” |
+| 跨个案解释 | 三案有哪些共同分析边界、差异和反例 | 固定适应类型或共同因果路径 |
+| 文献解释 | 当前发现与既有研究如何相容、扩展或冲突 | 替代本项目的问卷和访谈证据 |
+
+最终结论另分为：
+
+- **A — Core findings：** 经复核后仍有直接支持，可进入摘要与结论；
+- **B — Qualified findings：** 有支持，但必须限定样本、时段或题意；
+- **C — Exploratory interpretations：** 依赖理论框架或少量个案，只进入讨论；
+- **D — Unsupported or rejected claims：** 不进入最终主体，只保留在审计记录。
+
+逐条分级见[证据层级](outputs/final/evidence_hierarchy.md)和[最终结论登记册](outputs/final/findings_register.csv)。
 
 ## 核心发现
 
@@ -84,6 +121,62 @@
 ```
 
 完整文件说明见[成果文件索引](outputs/final/artifact_index.md)。
+
+## 分析与脚本工作流
+
+```text
+原始问卷
+  └─ prepare_data.py → analyze_survey.py
+       └─ 完整样本描述与探索性统计
+
+原始访谈
+  └─ prepare_interviews.py → build_linked_profiles.py
+       └─ promote_qualitative_synthesis.py
+
+问卷 + 链接个案
+  └─ promote_mixed_methods.py
+       ├─ revise_qualitative_v2.py
+       ├─ exploratory_extension_v2.py
+       └─ explore_theory_configurations_v3.py
+
+版本化成果
+  └─ 报告生成脚本 → promote_final_delivery.py
+       └─ validate_final_delivery.py → verify_reproducibility.py
+```
+
+脚本按功能分组：
+
+| 功能 | 主要脚本 | 产物 |
+|---|---|---|
+| 问卷映射与清洗 | `prepare_data.py` | 处理后问卷、代码本、样本流和质量标记 |
+| 问卷分析 | `analyze_survey.py` | 描述统计、缺失、构念和探索性关联 |
+| 访谈准备与链接 | `prepare_interviews.py`、`build_linked_profiles.py` | 编号访谈、唯一映射和linked case profiles |
+| 质性与混合方法提升 | `promote_qualitative_synthesis.py`、`promote_mixed_methods.py` | 规范编码、框架矩阵和joint display |
+| 第二轮复核扩展 | `revise_qualitative_v2.py`、`exploratory_extension_v2.py` | 修订后的对照、支持缺口、平台转换和稳健性结果 |
+| 第三轮理论探索 | `explore_theory_configurations_v3.py` | 异常配置、提示语审计和理论综合输入 |
+| 最终晋升与验证 | `promote_final_delivery.py`、`validate_final_delivery.py`、`verify_reproducibility.py` | 规范报告、最终验证和逐字节再生检查 |
+
+`scripts/agent_runs/`中的文件是早期代理运行留档，不是当前优先入口；新修改应使用根级规范脚本。
+
+## 合作者工作约定
+
+开始修改前请依次阅读：
+
+1. [AGENTS.md](AGENTS.md)；
+2. [研究设计](docs/research_design.md)；
+3. [分析流水线](docs/analysis_pipeline.md)；
+4. [数据契约](docs/data_contract.md)；
+5. [最新分析决定](notes/analysis_decisions.md)。
+
+核心约定：
+
+- 不修改`data/raw/`和`data/interview/`中的源文件；
+- 不猜测问卷—访谈映射，不在公开文件暴露连接键或逐行证据；
+- 完整问卷、访谈子样本、个案内证据、跨案解释和文献背景必须分层；
+- 所有数字回到生成表，所有质性主张回到受限行段；
+- 不把回顾性横截面资料写成因果或总体结论；
+- 新产物分别放入`data/processed/`、`scripts/`和`outputs/`；
+- 修改规范报告前先处理相关审查意见，提交前运行相应验证并确认源资料未变。
 
 ## 环境与依赖
 
@@ -156,15 +249,19 @@ reproducibility checked=81 failures=0
 
 私有 GitHub 仓库也不自动构成适合存放这些资料的受控研究数据环境。任何后续共享必须先确认研究授权、访问范围、存储条件与去标识要求，并通过独立隐私审查。当前 `.gitignore` 是数据保护边界的一部分，不应为方便推送而删除相关规则。
 
-## 版本历史
+## 分析演变与版本历史
 
-| Tag | 内容 |
-|---|---|
-| `analysis-v1` | 初始资格口径下的基础端到端分析 |
-| `analysis-v2` | 扩展资格口径后的完整混合方法分析 |
-| `analysis-v3` | 独立复核、稳健性检查与补充探索 |
-| `analysis-v4` | 多理论框架、竞争解释与开放式再分析 |
-| `analysis-final` | 跨版本协调后的最终课程研究交付 |
+Git标签记录执行批次，报告文件中的`v2`、`v3`记录报告修订代次，两者用途不同：
+
+| Tag | 分析阶段 | 主要变化 | 阅读入口 |
+|---|---|---|---|
+| `analysis-v1` | 基础端到端分析 | 使用早期较严格资格口径，完成首轮问卷和链接个案分析 | Git历史基线 |
+| `analysis-v2` | 扩展资格口径 | 将跨境上学、较低年级插班和无法确认内地连续就读年限者纳入，最终35/35有效 | [流水线总结](outputs/reports/pipeline_summary.md) |
+| `analysis-v3` | 独立复核与补充探索 | 修正多选限额、复合题、问卷—访谈裁决、公开隐私和探索性分级 | [v2报告](outputs/reports/final_report_v2.md)、[v2总结](outputs/reports/pipeline_summary_v2.md) |
+| `analysis-v4` | 多理论与开放式再分析 | 比较多个理论框架，加入竞争解释、异常组合和机制命题 | [v3报告](outputs/reports/final_report_v3.md)、[v3总结](outputs/reports/pipeline_summary_v3.md) |
+| `analysis-final` | 项目总梳理 | 调和全部版本，筛选A/B/C/D级结论，形成课程研究最终交付 | [最终报告](outputs/final/final_research_report.md)、[项目总结](outputs/final/final_project_summary.md) |
+
+重要变化的逐条依据见[v2修订记录](outputs/reports/revision_log_v2.md)、[v3理论修订记录](outputs/reports/theoretical_revision_log_v3.md)和[最终审查处置](outputs/final/final_review_resolution.md)。
 
 ## 主要局限
 
