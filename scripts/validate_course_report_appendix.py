@@ -80,6 +80,41 @@ def main() -> None:
         all(title in master for title in section_titles),
         "six intended appendix sections present",
     )
+    add(
+        "appendix_toc_is_section_level",
+        r"\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}" in main_tex,
+        "printed contents retain Appendix A--F while suppressing appendix sublevels",
+    )
+    add(
+        "body_to_appendix_navigation",
+        all(
+            label in method_tex + "\n" + (SRC / "4findings.tex").read_text(encoding="utf-8")
+            for label in [
+                "app:questionnaire",
+                "app:interviews",
+                "app:survey-results",
+                "app:open-text",
+                "app:extended-analysis",
+                "app:reproducibility",
+            ]
+        ),
+        "method and findings provide entry points to all six appendix sections",
+    )
+    add(
+        "reader_friendly_question_labels",
+        "Q5.1(1)" in survey
+        and r"Q5.1\_1" not in survey
+        and "sixth item under Q5.1" in master,
+        "sub-item labels use instrument-style parentheses rather than code underscores",
+    )
+    add(
+        "open_text_translation_and_coding_anchor",
+        "Theme (authors' translation)" in open_text
+        and "Peer-initiated invitation" in open_text
+        and r"\texttt{OTC02}" in open_text
+        and "not a respondent" in master,
+        "selected themes have English labels and traceable non-participant coding anchors",
+    )
 
     forbidden_aliases = [
         r"\bP0[1-3]\b",
@@ -108,6 +143,33 @@ def main() -> None:
         and "structured-summary records" not in public_text
         and "structured-summary records" not in method_tex,
         "source-format limitations are reported without exact small-cell counts",
+    )
+    add(
+        "interview_publication_boundaries_present",
+        all(
+            phrase in master
+            for phrase in [
+                "consent did not explicitly authorize",
+                "are paraphrases",
+                "at most medium confidence",
+                "do not establish prevalence",
+            ]
+        ),
+        "consent, paraphrase, source-quality and non-generalisation limits remain adjacent to interview evidence",
+    )
+    add(
+        "special_response_states_remain_distinct",
+        all(
+            phrase in method_tex + "\n" + master
+            for phrase in [
+                "not applicable",
+                "cannot remember",
+                "unwilling to answer",
+                "invalid response",
+            ]
+        )
+        and "rather than treated as disagreement or zero" in method_tex,
+        "special response categories remain named, distinct and excluded from valid denominators",
     )
 
     exact_small_pattern = re.compile(r"(?<![<\d])(?:1|2)/(?:26|3[0-5])")
@@ -160,6 +222,12 @@ def main() -> None:
         "Q2.10, Q3.2 and Q5.4" in master
         and "mutually inconsistent selections" in master,
         "selection-limit and Q5.3 conflict notes present",
+    )
+    add(
+        "special_response_rule_not_repeated_per_row",
+        survey.count("special responses excluded from valid N") == 0
+        and "Special responses are excluded from the valid denominator" in survey,
+        "special states remain defined once without repeated row-level prose",
     )
     add(
         "no_reclassification_narrative",

@@ -163,21 +163,13 @@ def clean_item_text(text: object) -> str:
     return tex_escape(raw.strip())
 
 
-def format_special(value: object) -> str:
-    if pd.isna(value) or not str(value).strip():
-        return ""
-    labels = {
-        "NOT_APPLICABLE": "not applicable",
-        "CANNOT_REMEMBER": "cannot remember",
-        "UNWILLING_TO_ANSWER": "unwilling",
-        "INVALID_RESPONSE": "invalid",
-        "BLANK": "blank",
-    }
-    parts = []
-    for item in str(value).split("|"):
-        key, _, count = item.partition(":")
-        parts.append(f"{labels.get(key, key.lower())} {count}")
-    return "; ".join(parts)
+def display_question_id(value: object) -> str:
+    """Render sub-item IDs as Q5.1(1), avoiding code-like underscores."""
+    raw = "" if pd.isna(value) else str(value)
+    match = re.fullmatch(r"(Q\d+(?:\.\d+)?)_(\d+)", raw)
+    if match:
+        raw = f"{match.group(1)}({match.group(2)})"
+    return tex_escape(raw)
 
 
 def public_n_over_n(n: int, valid_n: int, *, include_percentage: bool = True) -> str:
@@ -190,7 +182,7 @@ def public_n_over_n(n: int, valid_n: int, *, include_percentage: bool = True) ->
     return f"{n}/{valid_n}"
 
 
-def ordinal_summary(group: pd.DataFrame) -> tuple[str, str]:
+def ordinal_summary(group: pd.DataFrame) -> str:
     valid_n = int(group["valid_n"].iloc[0])
     numeric = pd.to_numeric(group["response_or_statistic"], errors="coerce")
     positive_n = int(group.loc[numeric.isin([4, 5]), "n"].sum())
@@ -201,12 +193,7 @@ def ordinal_summary(group: pd.DataFrame) -> tuple[str, str]:
         f"4--5: {public_n_over_n(positive_n, valid_n)}; "
         f"median {median:.1f} [IQR {q1:.1f}--{q3:.1f}]"
     )
-    special = (
-        "special responses excluded from valid N"
-        if format_special(group["special_response_counts"].iloc[0])
-        else ""
-    )
-    return result, special
+    return result
 
 
 def multiple_choice_summary(group: pd.DataFrame) -> tuple[str, str]:
@@ -216,7 +203,7 @@ def multiple_choice_summary(group: pd.DataFrame) -> tuple[str, str]:
     return f"selected: {public_n_over_n(selected_n, valid_n)}", ""
 
 
-def support_summary(group: pd.DataFrame) -> tuple[str, str]:
+def support_summary(group: pd.DataFrame) -> str:
     valid_n = int(group["valid_n"].iloc[0])
     states = {
         "已获得，而且帮助较大": "major help",
@@ -252,12 +239,7 @@ def support_summary(group: pd.DataFrame) -> tuple[str, str]:
         else:
             displayed = f"{n}/{valid_n}"
         values.append(f"{display_label} {displayed}")
-    special = (
-        "special responses excluded from valid N"
-        if format_special(group["special_response_counts"].iloc[0])
-        else ""
-    )
-    return "; ".join(values), special
+    return "; ".join(values)
 
 
 def grouped_single_choice_rows(
@@ -305,13 +287,11 @@ def result_rows_for_role(df: pd.DataFrame, role: str) -> list[tuple[str, str, st
     rows: list[tuple[str, str, str]] = []
     for variable_name, group in subset.groupby("variable_name", sort=False):
         statistic_type = str(group["statistic_type"].iloc[0])
-        question_id = tex_escape(group["question_id"].iloc[0])
+        question_id = display_question_id(group["question_id"].iloc[0])
         item = clean_item_text(group["item_text"].iloc[0])
 
         if statistic_type == "ordinal_distribution":
-            result, special = ordinal_summary(group)
-            if special:
-                result += f"; {tex_escape(special)}"
+            result = ordinal_summary(group)
             rows.append((question_id, item, result))
         elif statistic_type == "multiple_choice":
             if variable_name in {"q6_2_later_wechat", "q6_2_later_instagram"}:
@@ -320,9 +300,7 @@ def result_rows_for_role(df: pd.DataFrame, role: str) -> list[tuple[str, str, st
                 result, _ = multiple_choice_summary(group)
             rows.append((question_id, item, result))
         elif statistic_type == "support_status_distribution":
-            result, special = support_summary(group)
-            if special:
-                result += f"; {tex_escape(special)}"
+            result = support_summary(group)
             rows.append((question_id, item, result))
         elif statistic_type == "single_choice":
             valid_n = int(group["valid_n"].iloc[0])
@@ -492,6 +470,7 @@ def survey_results_to_latex() -> str:
         "",
     ]
     for index, (title, roles) in enumerate(DOMAIN_ROLES, start=1):
+        parts.append(r"\needspace{15\baselineskip}")
         parts.append(r"\subsection{" + tex_escape(title) + "}")
         role_rows = [(role, result_rows_for_role(df, role)) for role in roles]
         parts.append(
@@ -508,6 +487,24 @@ def survey_results_to_latex() -> str:
 
 def open_text_to_latex() -> str:
     df = pd.read_csv(OPEN_TEXT_THEMES, encoding="utf-8-sig")
+    theme_labels = {
+        "焦点事件主要指向进入": "Focal event primarily described entry or acceptance",
+        "焦点事件主要指向距离": "Focal event primarily described distance",
+        "焦点事件方向为混合（并存或顺序反转）": "Mixed direction: coexistence or sequential reversal",
+        "同伴主动邀请": "Peer-initiated invitation",
+        "共同任务提供关系入口": "Shared task as a relational entry point",
+        "触发事件后关系延伸到日常": "Relationship extended beyond the triggering event",
+        "本地共同参照或笑点缺口": "Gap in local references or shared humour",
+        "直接听说语言门槛": "Direct spoken-language barrier",
+        "需要适应时间或缓冲": "Need for adaptation time or a transition period",
+        "语言、术语或表达支持": "Language, terminology or expression support",
+        "课程内容、教材或进度衔接": "Curriculum, textbook or pace bridging",
+        "同伴主动搭话、分享或邀约": "Peer-initiated contact, sharing or invitation",
+        "作业、评分、课堂或活动规则说明": "Explanation of assignment, assessment or participation rules",
+        "反对能力、性格或融入意愿的缺陷化判断": "Resistance to deficit interpretations",
+        "个别化评估与按需支持": "Individualized needs assessment and support",
+        "明确肯定既有支持": "Existing support explicitly acknowledged",
+    }
     selected_themes = {
         "Q8.1": [
             "焦点事件主要指向进入",
@@ -535,15 +532,15 @@ def open_text_to_latex() -> str:
         r"\begingroup",
         r"\footnotesize",
         r"\setlength{\tabcolsep}{4pt}",
-        r"\begin{longtable}{@{}p{1.2cm}>{\raggedright\arraybackslash}p{8.7cm}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{2.0cm}@{}}",
+        r"\begin{longtable}{@{}p{1.2cm}>{\raggedright\arraybackslash}p{8.0cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.1cm}@{}}",
         r"\caption{Selected open-text themes and respondent-deduplicated counts}\label{tab:appendix-open-text-themes}\\",
         r"\toprule",
-        r"Question & Theme & Mentioned & Evidence unit \\",
+        r"Question & Theme (authors' translation) & Coding anchor & Mentioned \\",
         r"\midrule",
         r"\endfirsthead",
         r"\multicolumn{4}{l}{\footnotesize\itshape Open-text themes (continued)}\\",
         r"\toprule",
-        r"Question & Theme & Mentioned & Evidence unit \\",
+        r"Question & Theme (authors' translation) & Coding anchor & Mentioned \\",
         r"\midrule",
         r"\endhead",
         r"\bottomrule",
@@ -555,17 +552,23 @@ def open_text_to_latex() -> str:
             if len(row) != 1:
                 raise ValueError(f"Expected one theme row for {question_id}: {theme}")
             record = row.iloc[0]
+            counting_basis = str(record["counting_basis"])
+            if counting_basis.startswith("EVENT_DIRECTION="):
+                coding_anchor = "event classification"
+            else:
+                coding_anchor = rf"\texttt{{{tex_escape(counting_basis)}}}"
             lines.append(
-                f"{tex_escape(question_id)} & {tex_escape(theme)} & "
-                f"{public_n_over_n(int(record['unique_respondents']), int(record['valid_open_text_n']), include_percentage=False)} & "
-                r"spontaneous mention \\"
+                f"{tex_escape(question_id)} & {tex_escape(theme_labels[theme])} & "
+                f"{coding_anchor} & "
+                f"{public_n_over_n(int(record['unique_respondents']), int(record['valid_open_text_n']), include_percentage=False)} "
+                r"\\"
             )
     lines.extend(
         [
             r"\end{longtable}",
             r"\endgroup",
             r"\begin{boundarybox}",
-            r"Each theme is counted at most once per respondent within a question. Themes overlap. Counts describe what respondents spontaneously mentioned among the 26 analyzable responses to each question; they are not prevalence estimates, and non-mention is not evidence that an experience was absent.",
+            r"Each theme is counted at most once per respondent within a question, and themes overlap. All counts are respondent-deduplicated spontaneous mentions among the 26 analyzable responses to that question; they are not prevalence estimates, and non-mention is not evidence that an experience was absent. Open-ended answers also do not provide interview-level depth.",
             r"\end{boundarybox}",
             "",
         ]
