@@ -1,0 +1,16 @@
+﻿dimension,category,n,denominator,percentage,multiple_response,privacy_note
+First Hong Kong school entry grade,Primary 4–6,6,35,17.1,False,Categories grouped so no displayed cell is below 3.
+First Hong Kong school entry grade,Secondary 1–3,13,35,37.1,False,Categories grouped so no displayed cell is below 3.
+First Hong Kong school entry grade,Secondary 4–6 or other,16,35,45.7,False,Categories grouped so no displayed cell is below 3.
+Time in Hong Kong local schools,Less than 2 years,3,35,8.6,False,Categories grouped so no displayed cell is below 3.
+Time in Hong Kong local schools,2 to less than 3 years,12,35,34.3,False,Categories grouped so no displayed cell is below 3.
+Time in Hong Kong local schools,3 to less than 5 years,12,35,34.3,False,Categories grouped so no displayed cell is below 3.
+Time in Hong Kong local schools,5 years or more,8,35,22.9,False,Categories grouped so no displayed cell is below 3.
+School attended for longest,Aided school,14,35,40.0,False,Categories grouped so no displayed cell is below 3.
+School attended for longest,Direct Subsidy Scheme school,10,35,28.6,False,Categories grouped so no displayed cell is below 3.
+School attended for longest,Government school,7,35,20.0,False,Categories grouped so no displayed cell is below 3.
+School attended for longest,Private or unknown,4,35,11.4,False,Categories grouped so no displayed cell is below 3.
+Teaching language (multiple response),Cantonese,30,35,85.7,True,Categories grouped so no displayed cell is below 3.
+Teaching language (multiple response),English,26,35,74.3,True,Categories grouped so no displayed cell is below 3.
+Teaching language (multiple response),Mixed or other classroom language,14,35,40.0,True,Categories grouped so no displayed cell is below 3.
+Teaching language (multiple response),Putonghua,11,35,31.4,True,Categories grouped so no displayed cell is below 3.

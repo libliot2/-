@@ -4,20 +4,25 @@
 Figure contract
 ---------------
 Core conclusions:
-1. Reported academic difficulty clustered at concrete language, task, and
+1. The three linked evidence layers have different coverage and analytical
+   roles; they are complementary rather than an attrition funnel.
+2. Reported academic difficulty clustered at concrete language, task, and
    assessment interfaces; later rule understanding is a separate construct.
-2. Open-text accounts described entry, distance, and mixed experiences through
+3. Recalled early peer boundaries and recalled later belonging indicators were
+   both present, but they measure different constructs and periods.
+4. Open-text accounts described entry, distance, and mixed experiences through
    multiple, overlapping events rather than one fixed sequence.
-3. Support states and support priorities varied, so availability, usefulness,
+5. Support states and support priorities varied, so availability, usefulness,
    unmet desire, and non-need must remain separate.
-4. Platform retention, adoption, and perceived functions support repertoire
+6. Platform retention, adoption, and perceived functions support repertoire
    expansion, not platform replacement or an identity proxy.
-5. The synthesis connects four analytical areas with multidimensional outcomes
-   without presenting a causal model.
+7. The synthesis connects three primary analytical areas and one supplementary
+   communication channel with multidimensional outcomes, without presenting a
+   causal model.
 
 Archetypes:
-- Figures 1--4: quantitative grid.
-- Figure 5: schematic-led synthesis.
+- Method map and final framework: schematic-led synthesis.
+- Empirical figures: quantitative grid.
 
 Backend and export:
 - Python / Matplotlib only.
@@ -30,8 +35,11 @@ Reviewer risks:
   prevalence estimates; overlapping themes are labelled as such.
 - Recalled early and later-period items are not connected as longitudinal
   change.
+- The method map uses parallel evidence layers, not a sample-attrition funnel;
+  literature is interpretive context rather than participant evidence.
 - Platform transition states are within-platform classifications and do not
   establish simultaneous cross-platform configurations.
+- Digital communication is supplementary in the final framework.
 - The final framework is organisational, not causal.
 """
 
@@ -143,6 +151,152 @@ def read_survey_stats() -> pd.DataFrame:
     )
 
 
+def build_public_sample_profile_table() -> None:
+    """Create a grouped, public-safe sample table from the cleaned survey."""
+    survey = pd.read_csv(
+        ROOT / "data" / "processed" / "survey_clean.csv",
+        encoding="utf-8-sig",
+    )
+    if len(survey) != 35:
+        raise ValueError(f"Expected 35 cleaned records; got {len(survey)}")
+
+    specifications = [
+        (
+            "First Hong Kong school entry grade",
+            "Primary 4–6",
+            "q1_3_entry_grade",
+            {"小学四年级", "小学五年级", "小学六年级"},
+            False,
+        ),
+        (
+            "First Hong Kong school entry grade",
+            "Secondary 1–3",
+            "q1_3_entry_grade",
+            {"中学一年级", "中学二年级", "中学三年级"},
+            False,
+        ),
+        (
+            "First Hong Kong school entry grade",
+            "Secondary 4–6 or other",
+            "q1_3_entry_grade",
+            {"中学四年级", "中学五年级", "中学六年级", "其他"},
+            False,
+        ),
+        (
+            "Time in Hong Kong local schools",
+            "Less than 2 years",
+            "q2_5_hk_school_duration",
+            {"不足1年", "1年至不足2年"},
+            False,
+        ),
+        (
+            "Time in Hong Kong local schools",
+            "2 to less than 3 years",
+            "q2_5_hk_school_duration",
+            {"2年至不足3年"},
+            False,
+        ),
+        (
+            "Time in Hong Kong local schools",
+            "3 to less than 5 years",
+            "q2_5_hk_school_duration",
+            {"3年至不足5年"},
+            False,
+        ),
+        (
+            "Time in Hong Kong local schools",
+            "5 years or more",
+            "q2_5_hk_school_duration",
+            {"5年或以上"},
+            False,
+        ),
+        (
+            "School attended for longest",
+            "Aided school",
+            "q2_7_school_type",
+            {"资助学校"},
+            False,
+        ),
+        (
+            "School attended for longest",
+            "Direct Subsidy Scheme school",
+            "q2_7_school_type",
+            {"直接资助计划学校"},
+            False,
+        ),
+        (
+            "School attended for longest",
+            "Government school",
+            "q2_7_school_type",
+            {"官立学校"},
+            False,
+        ),
+        (
+            "School attended for longest",
+            "Private or unknown",
+            "q2_7_school_type",
+            {"私立本地学校", "不知道"},
+            False,
+        ),
+        (
+            "Teaching language (multiple response)",
+            "Cantonese",
+            "q2_8_language_cantonese",
+            {"选择"},
+            True,
+        ),
+        (
+            "Teaching language (multiple response)",
+            "English",
+            "q2_8_language_english",
+            {"选择"},
+            True,
+        ),
+        (
+            "Teaching language (multiple response)",
+            "Mixed or other classroom language",
+            "q2_8_language_mixed",
+            {"选择"},
+            True,
+        ),
+        (
+            "Teaching language (multiple response)",
+            "Putonghua",
+            "q2_8_language_mandarin",
+            {"选择"},
+            True,
+        ),
+    ]
+
+    rows = []
+    for dimension, category, variable, accepted, multiple_response in specifications:
+        n = int(survey[variable].isin(accepted).sum())
+        rows.append(
+            {
+                "dimension": dimension,
+                "category": category,
+                "n": n,
+                "denominator": 35,
+                "percentage": round(n / 35 * 100, 1),
+                "multiple_response": multiple_response,
+                "privacy_note": "Categories grouped so no displayed cell is below 3.",
+            }
+        )
+
+    profile = pd.DataFrame(rows)
+    expected = [6, 13, 16, 3, 12, 12, 8, 14, 10, 7, 4, 30, 26, 14, 11]
+    if profile["n"].tolist() != expected:
+        raise ValueError(
+            "Unexpected grouped sample counts: "
+            f"{profile['n'].tolist()} (expected {expected})"
+        )
+    profile.to_csv(
+        TABLES / "course_report_sample_profile.csv",
+        index=False,
+        encoding="utf-8-sig",
+    )
+
+
 def positive_n(df: pd.DataFrame, variable: str) -> tuple[int, int]:
     """Return n selecting response 4 or 5 and the valid denominator."""
     rows = df[df["variable_name"].eq(variable)].copy()
@@ -190,6 +344,285 @@ def barh_with_n(
             fontweight="bold",
             color=INK,
         )
+
+
+def build_method_evidence_map() -> None:
+    """Show parallel evidence layers and their non-substitutable roles."""
+    fig, ax = plt.subplots(figsize=(7.2, 3.55))
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+
+    ax.text(
+        0.5,
+        0.955,
+        "LINKED MIXED-METHOD EVIDENCE",
+        ha="center",
+        va="center",
+        fontsize=9.2,
+        fontweight="bold",
+        color=BLUE,
+    )
+    ax.text(
+        0.5,
+        0.905,
+        "Parallel evidence layers with different coverage and analytical roles",
+        ha="center",
+        va="center",
+        fontsize=7.8,
+        color=GREY_DARK,
+    )
+
+    boxes = [
+        {
+            "x": 0.035,
+            "title": "CLOSED QUESTIONNAIRE",
+            "n": "n = 35",
+            "role": "Sample\ndistributions",
+            "scope": "RQ1 · RQ2 · RQ3",
+            "note": "Item denominator\nvaries",
+            "face": "#EDF4F8",
+            "edge": BLUE,
+        },
+        {
+            "x": 0.355,
+            "title": "OPEN TEXT",
+            "n": "Q8.1 n = 26\nQ8.2 n = 26",
+            "role": "Events & support\npriorities",
+            "scope": "RQ1 · RQ2  |  RQ3 sparse",
+            "note": "Spontaneous,\nnot prevalence",
+            "face": "#EAF4F3",
+            "edge": TEAL,
+        },
+        {
+            "x": 0.675,
+            "title": "LINKED INTERVIEWS",
+            "n": "n = 3",
+            "role": "Case process, context\n& divergence",
+            "scope": "RQ1 · RQ2  |  RQ3 sparse",
+            "note": "Case depth,\nnot representation",
+            "face": "#FBF5E7",
+            "edge": GOLD,
+        },
+    ]
+
+    box_width = 0.29
+    box_y = 0.33
+    box_height = 0.41
+    for spec in boxes:
+        patch = FancyBboxPatch(
+            (spec["x"], box_y),
+            box_width,
+            box_height,
+            boxstyle="round,pad=0.012,rounding_size=0.018",
+            linewidth=0.9,
+            facecolor=spec["face"],
+            edgecolor=spec["edge"],
+        )
+        ax.add_patch(patch)
+        centre_x = spec["x"] + box_width / 2
+        ax.text(
+            centre_x,
+            0.695,
+            spec["title"],
+            ha="center",
+            va="center",
+            fontsize=7.1,
+            fontweight="bold",
+            color=spec["edge"],
+        )
+        ax.text(
+            centre_x,
+            0.61,
+            spec["n"],
+            ha="center",
+            va="center",
+            fontsize=8.7,
+            fontweight="bold",
+            color=INK,
+        )
+        ax.text(
+            centre_x,
+            0.515,
+            spec["role"],
+            ha="center",
+            va="center",
+            fontsize=7.5,
+            fontweight="bold",
+            color=INK,
+        )
+        ax.text(
+            centre_x,
+            0.425,
+            spec["scope"],
+            ha="center",
+            va="center",
+            fontsize=7.0,
+            color=GREY_DARK,
+        )
+        ax.text(
+            centre_x,
+            0.355,
+            spec["note"],
+            ha="center",
+            va="center",
+            fontsize=6.8,
+            color=GREY_DARK,
+            style="italic",
+        )
+
+    # A shared bracket denotes record linkage without depicting attrition.
+    ax.plot([0.18, 0.82], [0.785, 0.785], color=GREY, lw=0.9)
+    for x in (0.18, 0.50, 0.82):
+        ax.plot([x, x], [0.765, 0.805], color=GREY, lw=0.9)
+    ax.text(
+        0.5,
+        0.815,
+        "participant-level linkage where available",
+        ha="center",
+        va="bottom",
+        fontsize=6.9,
+        color=GREY_DARK,
+    )
+
+    literature = FancyBboxPatch(
+        (0.13, 0.135),
+        0.74,
+        0.13,
+        boxstyle="round,pad=0.010,rounding_size=0.015",
+        linewidth=0.9,
+        linestyle=(0, (3, 2)),
+        facecolor="#F7F8FA",
+        edgecolor=GREY,
+    )
+    ax.add_patch(literature)
+    ax.text(
+        0.5,
+        0.215,
+        "LITERATURE CONTEXT",
+        ha="center",
+        va="center",
+        fontsize=7.4,
+        fontweight="bold",
+        color=GREY_DARK,
+    )
+    ax.text(
+        0.5,
+        0.165,
+        "Frames interpretation and comparison; it is not evidence about current participants",
+        ha="center",
+        va="center",
+        fontsize=7.2,
+        color=INK,
+    )
+    ax.text(
+        0.5,
+        0.045,
+        "Source-specific analysis  ·  cross-source integration  ·  traceability and privacy checks",
+        ha="center",
+        va="center",
+        fontsize=7.3,
+        fontweight="bold",
+        color=VIOLET,
+    )
+
+    export(fig, "linked_evidence_map")
+
+
+def build_peer_closed_figure() -> None:
+    """Contrast early boundary and later belonging distributions without change arrows."""
+    stats = read_survey_stats()
+    early_specs = [
+        (
+            "Local-reference barrier",
+            "q3_1_local_knowledge_barrier",
+            ORANGE,
+        ),
+        (
+            "Language / humour barrier",
+            "q3_1_language_humour_barrier",
+            ORANGE_LIGHT,
+        ),
+        (
+            "Participation withdrawal",
+            "q3_1_self_withdrawal",
+            GREY_DARK,
+        ),
+    ]
+    later_specs = [
+        (
+            "School / class membership",
+            "q3_3_member",
+            TEAL,
+        ),
+        (
+            "Trust-and-confiding item¹",
+            "q3_3_trusted_peer",
+            GREY,
+        ),
+    ]
+    early_counts = [positive_n(stats, variable) for _, variable, _ in early_specs]
+    later_counts = [positive_n(stats, variable) for _, variable, _ in later_specs]
+    assert early_counts == [(14, 35), (5, 31), (11, 33)]
+    assert later_counts == [(30, 33), (35, 35)]
+
+    # Draw at the report's final 150 mm width so the smallest printed labels
+    # remain at or above approximately 7 pt.
+    fig = plt.figure(figsize=(5.9, 2.85))
+    gs = fig.add_gridspec(
+        1,
+        2,
+        width_ratios=[1.1, 0.9],
+        wspace=0.62,
+        left=0.27,
+        right=0.97,
+        top=0.78,
+        bottom=0.22,
+    )
+    ax_a = fig.add_subplot(gs[0, 0])
+    ax_b = fig.add_subplot(gs[0, 1])
+
+    barh_with_n(
+        ax_a,
+        [x[0] for x in early_specs],
+        [x[0] for x in early_counts],
+        [x[1] for x in early_counts],
+        [x[2] for x in early_specs],
+    )
+    ax_a.set_title(
+        "Recalled first three months\n(often or very often)",
+        loc="left",
+        pad=11,
+    )
+    finish_percent_axis(ax_a, "Percentage of valid responses")
+    add_panel_label(ax_a, "a")
+
+    barh_with_n(
+        ax_b,
+        [x[0] for x in later_specs],
+        [x[0] for x in later_counts],
+        [x[1] for x in later_counts],
+        [x[2] for x in later_specs],
+    )
+    ax_b.set_title(
+        "Recalled later period\n(selecting 4 or 5)",
+        loc="left",
+        pad=11,
+    )
+    finish_percent_axis(ax_b, "Percentage of valid responses")
+    add_panel_label(ax_b, "b")
+
+    fig.text(
+        0.5,
+        0.045,
+        "¹ Composite item combining trust and confiding; not equivalent to a verified close friendship.",
+        ha="center",
+        va="center",
+        fontsize=7.0,
+        color=GREY_DARK,
+        style="italic",
+    )
+    export(fig, "peer_boundaries_belonging")
 
 
 def build_academic_figure() -> None:
@@ -689,6 +1122,8 @@ def add_box(
     facecolor: str,
     edgecolor: str,
     fontsize: float = 8.2,
+    linewidth: float = 0.9,
+    linestyle: str | tuple[int, tuple[float, ...]] = "solid",
 ) -> FancyBboxPatch:
     x, y = xy
     patch = FancyBboxPatch(
@@ -696,7 +1131,8 @@ def add_box(
         width,
         height,
         boxstyle="round,pad=0.012,rounding_size=0.018",
-        linewidth=0.9,
+        linewidth=linewidth,
+        linestyle=linestyle,
         facecolor=facecolor,
         edgecolor=edgecolor,
     )
@@ -717,7 +1153,7 @@ def add_box(
 def build_framework_figure() -> None:
     # The framework is organisational rather than causal. A portrait-leaning
     # canvas gives each layer enough room at the final 150 mm report width.
-    fig, ax = plt.subplots(figsize=(5.9, 4.3))
+    fig, ax = plt.subplots(figsize=(5.9, 4.55))
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
@@ -762,27 +1198,38 @@ def build_framework_figure() -> None:
     )
 
     domain_specs = [
-        (0.04, "Institutional\ndemands", "#DCE8F3", BLUE),
-        (0.28, "Relational\nopportunities &\nboundaries", "#DDEEEE", TEAL),
-        (0.52, "Usable\nsupport", "#F6E9C9", GOLD),
-        (0.76, "Communication\nplatforms", "#E7E2F1", VIOLET),
+        (0.06, "Institutional\ndemands", "#DCE8F3", BLUE),
+        (0.375, "Relational\nopportunities\n& boundaries", "#DDEEEE", TEAL),
+        (0.69, "Usable\nsupport", "#F6E9C9", GOLD),
     ]
     for x, text_value, face, edge in domain_specs:
         add_box(
             ax,
-            (x, 0.48),
-            0.20,
-            0.18,
+            (x, 0.53),
+            0.25,
+            0.15,
             text_value,
             face,
             edge,
             fontsize=8.1,
         )
 
+    add_box(
+        ax,
+        (0.18, 0.405),
+        0.64,
+        0.075,
+        "Supplementary communication channel:\nplatforms",
+        "#F7F5FA",
+        VIOLET,
+        fontsize=7.2,
+        linewidth=0.8,
+        linestyle=(0, (3, 2)),
+    )
     ax.text(
         0.5,
-        0.395,
-        "Observed in different combinations; analytical links are not causal arrows",
+        0.345,
+        "Observed in different combinations; the arrangement is analytical, not causal",
         ha="center",
         va="center",
         fontsize=7.7,
@@ -791,7 +1238,7 @@ def build_framework_figure() -> None:
     )
     ax.plot(
         [0.11, 0.89],
-        [0.35, 0.35],
+        [0.305, 0.305],
         color=GREY,
         lw=1.0,
         linestyle=(0, (2.5, 2.5)),
@@ -808,7 +1255,7 @@ def build_framework_figure() -> None:
     for x, outcome in zip(x_positions, outcomes):
         add_box(
             ax,
-            (float(x), 0.11),
+            (float(x), 0.09),
             0.16,
             0.15,
             outcome,
@@ -832,7 +1279,10 @@ def build_framework_figure() -> None:
 
 def main() -> None:
     apply_style()
+    build_public_sample_profile_table()
+    build_method_evidence_map()
     build_academic_figure()
+    build_peer_closed_figure()
     build_peer_open_text_figure()
     build_support_figure()
     build_digital_figure()
