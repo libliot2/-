@@ -121,17 +121,47 @@ def export(fig: mpl.figure.Figure, stem: str) -> None:
     plt.close(fig)
 
 
-def add_panel_label(ax: mpl.axes.Axes, label: str) -> None:
+def add_panel_header(
+    ax: mpl.axes.Axes,
+    label: str,
+    title: str,
+    color: str,
+    *,
+    y: float = 1.08,
+    title_x: float = 0.075,
+    fontsize: float = 9.4,
+) -> None:
+    """Add a compact, aligned panel tag and heading above an axis."""
     ax.text(
-        -0.02,
-        1.04,
+        0.0,
+        y,
         label,
         transform=ax.transAxes,
-        fontsize=10,
+        fontsize=7.2,
         fontweight="bold",
-        va="bottom",
-        ha="right",
+        va="center",
+        ha="left",
+        color="white",
+        clip_on=False,
+        bbox={
+            "boxstyle": "round,pad=0.24,rounding_size=0.12",
+            "facecolor": color,
+            "edgecolor": color,
+            "linewidth": 0,
+        },
+    )
+    ax.text(
+        title_x,
+        y,
+        title,
+        transform=ax.transAxes,
+        fontsize=fontsize,
+        fontweight="semibold",
+        va="center",
+        ha="left",
         color=INK,
+        linespacing=1.05,
+        clip_on=False,
     )
 
 
@@ -317,6 +347,7 @@ def barh_with_n(
     denominators: list[int],
     colors: list[str],
     y_positions: np.ndarray | None = None,
+    height: float = 0.62,
 ) -> None:
     if y_positions is None:
         y_positions = np.arange(len(labels))[::-1]
@@ -324,7 +355,7 @@ def barh_with_n(
     ax.barh(
         y_positions,
         percentages,
-        height=0.62,
+        height=height,
         color=colors,
         edgecolor="white",
         linewidth=0.8,
@@ -589,13 +620,16 @@ def build_peer_closed_figure() -> None:
         [x[1] for x in early_counts],
         [x[2] for x in early_specs],
     )
-    ax_a.set_title(
+    add_panel_header(
+        ax_a,
+        "a",
         "Recalled first three months\n(often or very often)",
-        loc="left",
-        pad=11,
+        ORANGE,
+        y=1.13,
+        title_x=0.09,
+        fontsize=9.0,
     )
     finish_percent_axis(ax_a, "Percentage of valid responses")
-    add_panel_label(ax_a, "a")
 
     barh_with_n(
         ax_b,
@@ -604,13 +638,16 @@ def build_peer_closed_figure() -> None:
         [x[1] for x in later_counts],
         [x[2] for x in later_specs],
     )
-    ax_b.set_title(
+    add_panel_header(
+        ax_b,
+        "b",
         "Recalled later period\n(selecting 4 or 5)",
-        loc="left",
-        pad=11,
+        TEAL,
+        y=1.13,
+        title_x=0.10,
+        fontsize=9.0,
     )
     finish_percent_axis(ax_b, "Percentage of valid responses")
-    add_panel_label(ax_b, "b")
 
     fig.text(
         0.5,
@@ -639,9 +676,9 @@ def build_academic_figure() -> None:
         ("Unstated or assumed rules", "q5_1_hidden_rules", GOLD),
     ]
     later_specs = [
-        ("Understood assessment rules", "q5_2_assessment_rules", VIOLET),
+        ("Understood assessment\nrules", "q5_2_assessment_rules", VIOLET),
         (
-            "Distinguished rules from ability",
+            "Distinguished rules\nfrom ability",
             "q5_2_distinguish_rules_ability",
             VIOLET,
         ),
@@ -661,12 +698,21 @@ def build_academic_figure() -> None:
     ]
     assert later_counts == [(32, 34), (30, 34)]
 
-    fig = plt.figure(figsize=(7.2, 5.0))
+    # The unequal item counts make a stacked composition more legible than two
+    # side-by-side axes. Both panels therefore use the full final report width.
+    fig = plt.figure(figsize=(5.9, 5.15))
     gs = fig.add_gridspec(
-        1, 2, width_ratios=[1.75, 1.0], wspace=0.48, left=0.25, right=0.97
+        2,
+        1,
+        height_ratios=[3.8, 1.25],
+        hspace=0.72,
+        left=0.33,
+        right=0.97,
+        top=0.91,
+        bottom=0.10,
     )
     ax_a = fig.add_subplot(gs[0, 0])
-    ax_b = fig.add_subplot(gs[0, 1])
+    ax_b = fig.add_subplot(gs[1, 0])
 
     y = np.array([9.0, 8.0, 7.0, 5.3, 4.3, 3.3, 1.6, 0.6])
     barh_with_n(
@@ -702,11 +748,16 @@ def build_academic_figure() -> None:
         fontsize=7.3,
         fontweight="bold",
     )
-    ax_a.set_title(
-        "Recalled initial difficulty\n(selecting 4 or 5)", loc="left", pad=18
+    add_panel_header(
+        ax_a,
+        "a",
+        "Recalled initial difficulty\n(selecting 4 or 5)",
+        BLUE,
+        y=1.09,
+        title_x=0.065,
+        fontsize=9.2,
     )
     finish_percent_axis(ax_a, "Percentage of valid responses")
-    add_panel_label(ax_a, "a")
 
     barh_with_n(
         ax_b,
@@ -714,13 +765,20 @@ def build_academic_figure() -> None:
         [x[0] for x in later_counts],
         [x[1] for x in later_counts],
         [x[2] for x in later_specs],
+        y_positions=np.array([0.70, 0.20]),
+        height=0.22,
     )
-    ax_b.set_ylim(-1.0, 2.0)
-    ax_b.set_title(
-        "Recalled later understanding\n(selecting 4 or 5)", loc="left", pad=18
+    ax_b.set_ylim(-0.02, 0.92)
+    add_panel_header(
+        ax_b,
+        "b",
+        "Recalled later understanding\n(selecting 4 or 5)",
+        VIOLET,
+        y=1.24,
+        title_x=0.065,
+        fontsize=9.2,
     )
     finish_percent_axis(ax_b, "Percentage of valid responses")
-    add_panel_label(ax_b, "b")
 
     export(fig, "academic_interfaces")
 
@@ -765,16 +823,16 @@ def build_peer_open_text_figure() -> None:
     assert direction_counts == [(16, 26), (6, 26), (4, 26)]
     assert event_counts == [(15, 26), (14, 26), (10, 26), (11, 26), (5, 26)]
 
-    fig = plt.figure(figsize=(7.2, 3.7))
+    fig = plt.figure(figsize=(5.9, 3.25))
     gs = fig.add_gridspec(
         2,
         1,
-        height_ratios=[0.8, 2.2],
-        hspace=0.6,
-        left=0.25,
+        height_ratios=[0.65, 2.2],
+        hspace=0.40,
+        left=0.30,
         right=0.97,
-        top=0.91,
-        bottom=0.14,
+        top=0.89,
+        bottom=0.15,
     )
     ax_a = fig.add_subplot(gs[0, 0])
     ax_b = fig.add_subplot(gs[1, 0])
@@ -808,8 +866,15 @@ def build_peer_open_text_figure() -> None:
     ax_a.set_yticks([])
     ax_a.set_xticks([])
     ax_a.spines["bottom"].set_visible(False)
-    ax_a.set_title("Focal direction of the Q8.1 account", loc="left", pad=8)
-    add_panel_label(ax_a, "a")
+    add_panel_header(
+        ax_a,
+        "a",
+        "Focal direction of the Q8.1 account",
+        BLUE,
+        y=1.25,
+        title_x=0.055,
+        fontsize=9.2,
+    )
 
     barh_with_n(
         ax_b,
@@ -818,11 +883,16 @@ def build_peer_open_text_figure() -> None:
         [x[1] for x in event_counts],
         [x[2] for x in events],
     )
-    ax_b.set_title(
-        "Spontaneously mentioned events (themes overlap)", loc="left", pad=8
+    add_panel_header(
+        ax_b,
+        "b",
+        "Spontaneously mentioned events (themes overlap)",
+        TEAL,
+        y=1.09,
+        title_x=0.055,
+        fontsize=9.2,
     )
     finish_percent_axis(ax_b, "Percentage of Q8.1 respondents (n = 26)")
-    add_panel_label(ax_b, "b")
 
     export(fig, "peer_entry_open_text")
 
@@ -875,12 +945,12 @@ def build_support_figure() -> None:
     # This figure is designed at the report's final 150 mm text width. Stacking
     # the panels prevents long labels from widening the tight bounding box and
     # keeps all on-page labels above 7 pt.
-    fig = plt.figure(figsize=(5.9, 4.8))
+    fig = plt.figure(figsize=(5.9, 4.45))
     gs = fig.add_gridspec(
         2,
         1,
         height_ratios=[0.9, 1.55],
-        hspace=0.72,
+        hspace=0.54,
         left=0.27,
         right=0.97,
         top=0.88,
@@ -941,7 +1011,15 @@ def build_support_figure() -> None:
     ax_a.set_xlabel("Percentage within valid responses")
     ax_a.tick_params(axis="y", length=0)
     ax_a.spines["bottom"].set_color(GREY)
-    ax_a.set_title("Reported support status", loc="left", pad=27)
+    add_panel_header(
+        ax_a,
+        "a",
+        "Reported support status",
+        BLUE,
+        y=1.34,
+        title_x=0.055,
+        fontsize=9.2,
+    )
     handles = [
         mpl.patches.Patch(facecolor=color, label=label)
         for label, _, color in category_columns
@@ -949,14 +1027,12 @@ def build_support_figure() -> None:
     ax_a.legend(
         handles=handles,
         loc="lower left",
-        bbox_to_anchor=(0, 1.02),
+        bbox_to_anchor=(0, 1.04),
         ncol=4,
         fontsize=7.0,
         columnspacing=0.8,
         handlelength=1.2,
     )
-    add_panel_label(ax_a, "a")
-
     barh_with_n(
         ax_b,
         [x[0] for x in priority_specs],
@@ -964,13 +1040,16 @@ def build_support_figure() -> None:
         [x[1] for x in priority_counts],
         [x[2] for x in priority_specs],
     )
-    ax_b.set_title(
+    add_panel_header(
+        ax_b,
+        "b",
         "Q8.2 support priorities (spontaneous, overlapping mentions)",
-        loc="left",
-        pad=10,
+        TEAL,
+        y=1.10,
+        title_x=0.055,
+        fontsize=9.2,
     )
     finish_percent_axis(ax_b, "Percentage of Q8.2 respondents (n = 26)")
-    add_panel_label(ax_b, "b")
 
     export(fig, "support_states_and_priorities")
 
@@ -1020,7 +1099,7 @@ def build_digital_figure() -> None:
         (
             "Multiple platforms\nserve different purposes",
             "q6_5_multiple_roles",
-            GOLD,
+            "#6FAAA7",
         ),
         (
             "Online rules or platforms\ncreated access difficulty",
@@ -1040,19 +1119,21 @@ def build_digital_figure() -> None:
         (14, 33),
     ]
 
-    fig = plt.figure(figsize=(7.2, 4.15))
+    # Stack the panels at final report width so long labels remain readable and
+    # the two evidence types are not mistaken for person-level pairings.
+    fig = plt.figure(figsize=(5.9, 5.25))
     gs = fig.add_gridspec(
-        1,
         2,
-        width_ratios=[0.9, 1.45],
-        wspace=0.65,
-        left=0.20,
+        1,
+        height_ratios=[1.25, 2.0],
+        hspace=0.58,
+        left=0.35,
         right=0.97,
-        top=0.90,
-        bottom=0.14,
+        top=0.91,
+        bottom=0.10,
     )
     ax_a = fig.add_subplot(gs[0, 0])
-    ax_b = fig.add_subplot(gs[0, 1])
+    ax_b = fig.add_subplot(gs[1, 0])
 
     labels = [x[0] for x in transition_specs]
     values = [x[0] for x in transition_counts]
@@ -1091,9 +1172,16 @@ def build_digital_figure() -> None:
             fontweight="bold",
             color=text_color,
         )
-    ax_a.set_title("Within-platform transition states", loc="left", pad=10)
+    add_panel_header(
+        ax_a,
+        "a",
+        "Within-platform transition states",
+        BLUE,
+        y=1.10,
+        title_x=0.065,
+        fontsize=9.0,
+    )
     finish_percent_axis(ax_a, "Percentage of respondents")
-    add_panel_label(ax_a, "a")
 
     barh_with_n(
         ax_b,
@@ -1102,13 +1190,16 @@ def build_digital_figure() -> None:
         [x[1] for x in function_counts],
         [x[2] for x in function_specs],
     )
-    ax_b.set_title(
+    add_panel_header(
+        ax_b,
+        "b",
         "Self-reported platform functions\n(selecting 4 or 5)",
-        loc="left",
-        pad=10,
+        TEAL,
+        y=1.10,
+        title_x=0.065,
+        fontsize=9.0,
     )
     finish_percent_axis(ax_b, "Percentage of valid responses")
-    add_panel_label(ax_b, "b")
 
     export(fig, "digital_repertoire")
 
