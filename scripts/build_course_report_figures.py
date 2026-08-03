@@ -112,12 +112,21 @@ def export(fig: mpl.figure.Figure, stem: str) -> None:
         (".pdf", {}),
         (".png", {"dpi": 300}),
     ):
+        output_path = FIGURES / f"{stem}{suffix}"
         fig.savefig(
-            FIGURES / f"{stem}{suffix}",
+            output_path,
             bbox_inches="tight",
             pad_inches=0.08,
             **kwargs,
         )
+        if suffix == ".svg":
+            # Matplotlib writes trailing spaces in path data; normalize them so
+            # generated vector assets pass repository whitespace checks.
+            svg_text = output_path.read_text(encoding="utf-8")
+            output_path.write_text(
+                "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+                encoding="utf-8",
+            )
     plt.close(fig)
 
 
@@ -1342,6 +1351,8 @@ def build_framework_figure() -> None:
         "Trust",
         "Relationship\ndepth",
     ]
+    # Keep the five labels comfortably inside separated boxes when the figure
+    # is reduced to 85% of the report text width.
     x_positions = np.linspace(0.04, 0.80, len(outcomes))
     for x, outcome in zip(x_positions, outcomes):
         add_box(
@@ -1352,7 +1363,7 @@ def build_framework_figure() -> None:
             outcome,
             "#F7F8FA",
             GREY,
-            fontsize=7.8,
+            fontsize=6.8,
         )
     ax.text(
         0.5,
