@@ -129,12 +129,19 @@ def export(fig: mpl.figure.Figure, stem: str) -> None:
         (".pdf", {}),
         (".png", {"dpi": 300}),
     ):
+        output_path = FIGURES / f"{stem}{suffix}"
         fig.savefig(
-            FIGURES / f"{stem}{suffix}",
+            output_path,
             bbox_inches="tight",
             pad_inches=0.08,
             **kwargs,
         )
+        if suffix == ".svg":
+            svg_text = output_path.read_text(encoding="utf-8")
+            output_path.write_text(
+                "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+                encoding="utf-8",
+            )
     plt.close(fig)
 
 
