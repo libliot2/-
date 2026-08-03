@@ -16,10 +16,7 @@ Core conclusions:
    unmet desire, and non-need must remain separate.
 6. Platform retention, adoption, and perceived functions support repertoire
    expansion, not platform replacement or an identity proxy.
-7. Expansion is the largest cross-source evidence relationship at each of the
-   three comparison layers; qualitative evidence most often adds context and
-   process rather than merely confirming closed responses.
-8. The synthesis connects three primary analytical areas and one supplementary
+7. The synthesis connects three primary analytical areas and one supplementary
    communication channel with multidimensional outcomes, without presenting a
    causal model.
 
@@ -42,8 +39,6 @@ Reviewer risks:
   literature is interpretive context rather than participant evidence.
 - Platform transition states are within-platform classifications and do not
   establish simultaneous cross-platform configurations.
-- Cross-source relationship counts describe coded evidence comparisons, not
-  participants, prevalence, or independent replications.
 - Digital communication is supplementary in the final framework.
 - The final framework is organisational, not causal.
 """
@@ -62,18 +57,6 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 TABLES = ROOT / "outputs" / "tables"
 FIGURES = ROOT / "6a58bbb68d0662ee12b5ab75" / "figures"
-SURVEY_INTERVIEW_ALIGNMENT = (
-    ROOT
-    / "outputs"
-    / "agent_runs"
-    / "20260723_independent_review_extension_v2"
-    / "revised_qualitative"
-    / "alignment_adjudication_v2.csv"
-)
-OPEN_CLOSED_ALIGNMENT = ROOT / "outputs" / "open_text" / "open_closed_alignment.csv"
-THREE_SOURCE_ALIGNMENT = (
-    ROOT / "outputs" / "open_text" / "open_text_interview_alignment.csv"
-)
 
 BLUE = "#1F4E79"
 BLUE_2 = "#4F81BD"
@@ -129,19 +112,12 @@ def export(fig: mpl.figure.Figure, stem: str) -> None:
         (".pdf", {}),
         (".png", {"dpi": 300}),
     ):
-        output_path = FIGURES / f"{stem}{suffix}"
         fig.savefig(
-            output_path,
+            FIGURES / f"{stem}{suffix}",
             bbox_inches="tight",
             pad_inches=0.08,
             **kwargs,
         )
-        if suffix == ".svg":
-            svg_text = output_path.read_text(encoding="utf-8")
-            output_path.write_text(
-                "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
-                encoding="utf-8",
-            )
     plt.close(fig)
 
 
@@ -1392,166 +1368,6 @@ def build_framework_figure() -> None:
     export(fig, "integrated_analytical_framework")
 
 
-def build_mixed_methods_integration_figure() -> None:
-    """Visualize adjudicated cross-source relationships at three evidence layers."""
-
-    sources = [
-        (
-            "Questionnaire–\ninterview",
-            SURVEY_INTERVIEW_ALIGNMENT,
-            {"EXPANSION": 34, "CONVERGENCE": 21, "DIVERGENCE": 9, "SILENCE": 11},
-        ),
-        (
-            "Open text–\nclosed items",
-            OPEN_CLOSED_ALIGNMENT,
-            {"EXPANSION": 51, "CONVERGENCE": 36, "DIVERGENCE": 3, "SILENCE": 3},
-        ),
-        (
-            "Three-source\nlinked set",
-            THREE_SOURCE_ALIGNMENT,
-            {"EXPANSION": 5, "CONVERGENCE": 1, "DIVERGENCE": 0, "SILENCE": 0},
-        ),
-    ]
-    relationships = [
-        ("EXPANSION", "adds context", BLUE),
-        ("CONVERGENCE", "aligns evidence", TEAL),
-        ("DIVERGENCE", "qualifies measures", ORANGE),
-        ("SILENCE", "bounds claims", VIOLET),
-    ]
-
-    verified: list[tuple[str, dict[str, int], int]] = []
-    for label, path, expected in sources:
-        frame = pd.read_csv(path, encoding="utf-8-sig")
-        counts = (
-            frame["relationship_type"]
-            .astype(str)
-            .str.upper()
-            .value_counts()
-            .reindex([key for key, _, _ in relationships], fill_value=0)
-            .astype(int)
-            .to_dict()
-        )
-        if counts != expected:
-            raise ValueError(
-                f"Unexpected relationship counts for {label}: {counts}; "
-                f"expected {expected}"
-            )
-        verified.append((label, counts, int(sum(counts.values()))))
-
-    fig, ax = plt.subplots(figsize=(5.9, 3.05))
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
-    ax.axis("off")
-
-    left = 0.24
-    gap = 0.016
-    cell_width = 0.172
-    cell_height = 0.19
-    column_x = [left + i * (cell_width + gap) for i in range(4)]
-    row_y = [0.59, 0.34, 0.09]
-
-    ax.text(
-        0.5,
-        0.975,
-        "Cross-source comparison profile",
-        ha="center",
-        va="top",
-        fontsize=9.0,
-        fontweight="bold",
-        color=BLUE,
-    )
-    for x, (relationship, subtitle, color) in zip(column_x, relationships):
-        ax.text(
-            x + cell_width / 2,
-            0.855,
-            relationship,
-            ha="center",
-            va="center",
-            fontsize=7.5,
-            fontweight="bold",
-            color=color,
-        )
-        ax.text(
-            x + cell_width / 2,
-            0.805,
-            subtitle,
-            ha="center",
-            va="center",
-            fontsize=6.7,
-            color=GREY_DARK,
-        )
-
-    for y, (row_label, counts, total) in zip(row_y, verified):
-        ax.text(
-            0.215,
-            y + cell_height * 0.61,
-            row_label,
-            ha="right",
-            va="center",
-            fontsize=7.5,
-            fontweight="bold",
-            color=INK,
-            linespacing=1.05,
-        )
-        ax.text(
-            0.215,
-            y + cell_height * 0.23,
-            f"{total} comparisons",
-            ha="right",
-            va="center",
-            fontsize=6.6,
-            color=GREY_DARK,
-        )
-
-        for x, (relationship, _, color) in zip(column_x, relationships):
-            value = counts[relationship]
-            is_expansion = relationship == "EXPANSION"
-            card = FancyBboxPatch(
-                (x, y),
-                cell_width,
-                cell_height,
-                boxstyle="round,pad=0.006,rounding_size=0.012",
-                linewidth=1.1 if is_expansion else 0.7,
-                facecolor="#F8FAFC",
-                edgecolor=color if is_expansion else GREY,
-            )
-            ax.add_patch(card)
-            ax.text(
-                x + cell_width / 2,
-                y + cell_height * 0.58,
-                f"{value} / {total}",
-                ha="center",
-                va="center",
-                fontsize=9.2,
-                fontweight="bold",
-                color=INK if value else GREY_DARK,
-            )
-            if is_expansion:
-                ax.text(
-                    x + cell_width / 2,
-                    y + cell_height * 0.25,
-                    "largest",
-                    ha="center",
-                    va="center",
-                    fontsize=6.5,
-                    fontweight="bold",
-                    color=BLUE,
-                )
-
-    ax.text(
-        0.5,
-        0.018,
-        "Coded evidence relationships—not participants, prevalence, or independent replications",
-        ha="center",
-        va="bottom",
-        fontsize=6.7,
-        color=GREY_DARK,
-        style="italic",
-    )
-
-    export(fig, "mixed_methods_integration")
-
-
 def main() -> None:
     apply_style()
     build_public_sample_profile_table()
@@ -1561,7 +1377,6 @@ def main() -> None:
     build_peer_open_text_figure()
     build_support_figure()
     build_digital_figure()
-    build_mixed_methods_integration_figure()
     build_framework_figure()
     print(f"Generated report figures in {FIGURES}")
 
