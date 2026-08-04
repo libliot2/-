@@ -1,6 +1,6 @@
 # Course-report appendix validation
 
-Overall result: **PASS** (21/21 checks passed).
+Overall result: **PASS** (26/26 checks passed).
 
 This report validates the newly generated appendix artefacts only. It does not replace or restate the status of the full historical analysis bundle.
 
@@ -23,6 +23,11 @@ This report validates the newly generated appendix artefacts only. It does not r
 | `cross_table_platform_suppression` | PASS | marginals and selected paired-transition rows use complementary protection |
 | `transition_algebra_does_not_recover_small_margin` | PASS | recovered exact small margins=none |
 | `instrument_notes_match_quality_audit` | PASS | selection-limit and Q5.3 conflict notes present |
+| `instrument_scope_and_export_boundaries` | PASS | instrument scope and unavailable export fields are disclosed without reconstructing data |
+| `complete_codebook_traceability` | PASS | all codes used in the selected theme table are defined or linked to the complete codebook |
+| `indicator_direction_and_missingness` | PASS | indicator directions and A3 opportunity-sensitive missingness are explicit |
+| `analysis_snapshot_recorded` | PASS | appendix records its analysis-source tag and audit date |
+| `cross_report_small_cell_consistency` | PASS | body text and support figure follow the appendix small-cell disclosure rule |
 | `special_response_rule_not_repeated_per_row` | PASS | special states remain defined once without repeated row-level prose |
 | `no_reclassification_narrative` | PASS | excluded user-specified reclassification narrative |
 | `protected_source_tree_unchanged` | PASS | git diff reports no changes under data/raw or data/interview |

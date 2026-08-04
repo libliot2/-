@@ -939,6 +939,31 @@ def build_support_figure() -> None:
         for _, row in support_rows
     ] == [(32, 17, 9, 2, 4), (30, 11, 5, 5, 9)]
 
+    # The public report suppresses the peer-integration cell below three.
+    # Combining its two non-receipt states prevents reconstruction from the
+    # displayed stack while preserving their distinction in the text.
+    support_segments = [
+        (
+            "Peer-integration support",
+            32,
+            [
+                ("Major help", 17, BLUE),
+                ("Limited help", 9, BLUE_LIGHT),
+                ("Non-receipt states combined", 6, GREY_FILL),
+            ],
+        ),
+        (
+            "Emotional / anti-exclusion support",
+            30,
+            [
+                ("Major help", 11, BLUE),
+                ("Limited help", 5, BLUE_LIGHT),
+                ("Wanted, not received", 5, ORANGE_LIGHT),
+                ("Not needed", 9, GREY_FILL),
+            ],
+        ),
+    ]
+
     priority_specs = [
         ("Adaptation time", "OTC27", BLUE),
         ("Language / terminology", "OTC31", BLUE_2),
@@ -969,11 +994,9 @@ def build_support_figure() -> None:
     ax_b = fig.add_subplot(gs[1, 0])
 
     y_positions = np.array([1, 0])
-    for y, (label, row) in zip(y_positions, support_rows):
-        denominator = int(row["valid_n"])
+    for y, (label, denominator, segments) in zip(y_positions, support_segments):
         left = 0.0
-        for _, column, color in category_columns:
-            n = int(row[column])
+        for segment_label, n, color in segments:
             pct = n / denominator * 100
             ax_a.barh(
                 y,
@@ -985,13 +1008,18 @@ def build_support_figure() -> None:
                 linewidth=0.7,
             )
             if pct >= 9:
+                display_label = (
+                    f"{n}\ncombined"
+                    if segment_label == "Non-receipt states combined"
+                    else str(n)
+                )
                 ax_a.text(
                     left + pct / 2,
                     y,
-                    str(n),
+                    display_label,
                     ha="center",
                     va="center",
-                    fontsize=7.6,
+                    fontsize=6.9 if "combined" in display_label else 7.6,
                     fontweight="bold",
                     color="white" if color == BLUE else INK,
                 )
@@ -1013,7 +1041,10 @@ def build_support_figure() -> None:
             left += pct
     ax_a.set_yticks(y_positions)
     ax_a.set_yticklabels(
-        [f"{label}\n(n = {int(row['valid_n'])})" for label, row in support_rows]
+        [
+            f"{label}\n(n = {denominator})"
+            for label, denominator, _ in support_segments
+        ]
     )
     ax_a.set_xlim(0, 100)
     ax_a.set_xticks([0, 25, 50, 75, 100])
@@ -1030,8 +1061,13 @@ def build_support_figure() -> None:
         fontsize=9.2,
     )
     handles = [
-        mpl.patches.Patch(facecolor=color, label=label)
-        for label, _, color in category_columns
+        mpl.patches.Patch(facecolor=BLUE, label="Major help"),
+        mpl.patches.Patch(facecolor=BLUE_LIGHT, label="Limited help"),
+        mpl.patches.Patch(facecolor=ORANGE_LIGHT, label="Wanted, not received"),
+        mpl.patches.Patch(
+            facecolor=GREY_FILL,
+            label="Not needed / combined non-receipt",
+        ),
     ]
     ax_a.legend(
         handles=handles,

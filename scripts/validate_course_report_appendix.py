@@ -36,6 +36,10 @@ def main() -> None:
     master = (SRC / "appendix_analysis.tex").read_text(encoding="utf-8")
     main_tex = (OVERLEAF / "main.tex").read_text(encoding="utf-8")
     method_tex = (SRC / "3method.tex").read_text(encoding="utf-8")
+    findings_tex = (SRC / "4findings.tex").read_text(encoding="utf-8")
+    figure_script = (
+        ROOT / "scripts" / "build_course_report_figures.py"
+    ).read_text(encoding="utf-8")
 
     checks: list[tuple[str, bool, str]] = []
 
@@ -222,6 +226,53 @@ def main() -> None:
         "Q2.10, Q3.2 and Q5.4" in master
         and "mutually inconsistent selections" in master,
         "selection-limit and Q5.3 conflict notes present",
+    )
+    add(
+        "instrument_scope_and_export_boundaries",
+        "instrument is reproduced unchanged" in master.lower()
+        and "migration- and grade-specific" in master
+        and "multiple-response unwilling-to-answer flags" in master
+        and "where those fields were present in the export" in master,
+        "instrument scope and unavailable export fields are disclosed without reconstructing data",
+    )
+    add(
+        "complete_codebook_traceability",
+        "data/processed/open_text_codebook.csv" in master
+        and all(code in master for code in ["OTC08", "OTC12", "OTC28", "OTC30", "OTC32"]),
+        "all codes used in the selected theme table are defined or linked to the complete codebook",
+    )
+    add(
+        "indicator_direction_and_missingness",
+        "Higher values represent more boundary or difficulty" in master
+        and "maximum observable count of seven" in master
+        and "opportunity-sensitive association" in master,
+        "indicator directions and A3 opportunity-sensitive missingness are explicit",
+    )
+    add(
+        "analysis_snapshot_recorded",
+        "analysis-v5-" in master
+        and "open-text" in master
+        and "2026-08-04" in master,
+        "appendix records its analysis-source tag and audit date",
+    )
+    disclosed_small_phrases = [
+        "two had not received",
+        "Two of 26",
+        "One of the 26 respondents",
+        "One of 26 Q8.1",
+        "one of 26 Q8.2",
+        "five described acceptance",
+        "while one described",
+        "one account welcomed",
+        "while another did not want",
+    ]
+    add(
+        "cross_report_small_cell_consistency",
+        not any(phrase in findings_tex for phrase in disclosed_small_phrases)
+        and "complementary small-cell counts are suppressed" in findings_tex
+        and "Non-receipt states combined" in figure_script
+        and "two peer-integration non-receipt states are combined" in findings_tex,
+        "body text and support figure follow the appendix small-cell disclosure rule",
     )
     add(
         "special_response_rule_not_repeated_per_row",
