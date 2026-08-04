@@ -34,6 +34,9 @@ def main() -> None:
     survey = (SRC / "appendix_survey_results.tex").read_text(encoding="utf-8")
     open_text = (SRC / "appendix_open_text.tex").read_text(encoding="utf-8")
     master = (SRC / "appendix_analysis.tex").read_text(encoding="utf-8")
+    appendix_f = master.split(
+        r"\section{Reproducibility and Data-Access Statement}", maxsplit=1
+    )[-1]
     main_tex = (OVERLEAF / "main.tex").read_text(encoding="utf-8")
     method_tex = (SRC / "3method.tex").read_text(encoding="utf-8")
     findings_tex = (SRC / "4findings.tex").read_text(encoding="utf-8")
@@ -77,7 +80,7 @@ def main() -> None:
         "Public-Safe Aggregate Questionnaire Summaries",
         "Open-Ended Response Analysis",
         "Exploratory Indicators and Mixed-Methods Integration",
-        "Reproducibility, Data Boundaries and Privacy",
+        "Reproducibility and Data-Access Statement",
     ]
     add(
         "appendix_sections_present",
@@ -236,10 +239,12 @@ def main() -> None:
         "instrument scope and unavailable export fields are disclosed without reconstructing data",
     )
     add(
-        "complete_codebook_traceability",
-        "data/processed/open_text_codebook.csv" in master
-        and all(code in master for code in ["OTC08", "OTC12", "OTC28", "OTC30", "OTC32"]),
-        "all codes used in the selected theme table are defined or linked to the complete codebook",
+        "public_reproducibility_resources",
+        "https://github.com/libliot2/-" in appendix_f
+        and "Participant-level survey rows" in appendix_f
+        and "full interview records are not reproduced" in appendix_f
+        and "restricted participant materials are publicly reusable" in appendix_f,
+        "GitHub access is paired with participant-data and reuse boundaries",
     )
     add(
         "indicator_direction_and_missingness",
@@ -249,11 +254,20 @@ def main() -> None:
         "indicator directions and A3 opportunity-sensitive missingness are explicit",
     )
     add(
-        "analysis_snapshot_recorded",
-        "analysis-v5-" in master
-        and "open-text" in master
-        and "2026-08-04" in master,
-        "appendix records its analysis-source tag and audit date",
+        "internal_audit_details_not_exposed",
+        all(
+            phrase not in appendix_f
+            for phrase in [
+                "analysis-v5-open-text",
+                "2026-08-04",
+                "appendix_validation_report.md",
+                "methods_and_audit_summary.md",
+                "open_text_validation_report.md",
+                "open_text_codebook.csv",
+                "raw_file_checksums.csv",
+            ]
+        ),
+        "public appendix omits internal paths, audit date and analysis-stage tag",
     )
     disclosed_small_phrases = [
         "two had not received",

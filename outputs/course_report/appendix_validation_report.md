@@ -24,9 +24,9 @@ This report validates the newly generated appendix artefacts only. It does not r
 | `transition_algebra_does_not_recover_small_margin` | PASS | recovered exact small margins=none |
 | `instrument_notes_match_quality_audit` | PASS | selection-limit and Q5.3 conflict notes present |
 | `instrument_scope_and_export_boundaries` | PASS | instrument scope and unavailable export fields are disclosed without reconstructing data |
-| `complete_codebook_traceability` | PASS | all codes used in the selected theme table are defined or linked to the complete codebook |
+| `public_reproducibility_resources` | PASS | GitHub access is paired with participant-data and reuse boundaries |
 | `indicator_direction_and_missingness` | PASS | indicator directions and A3 opportunity-sensitive missingness are explicit |
-| `analysis_snapshot_recorded` | PASS | appendix records its analysis-source tag and audit date |
+| `internal_audit_details_not_exposed` | PASS | public appendix omits internal paths, audit date and analysis-stage tag |
 | `cross_report_small_cell_consistency` | PASS | body text and support figure follow the appendix small-cell disclosure rule |
 | `special_response_rule_not_repeated_per_row` | PASS | special states remain defined once without repeated row-level prose |
 | `no_reclassification_narrative` | PASS | excluded user-specified reclassification narrative |
